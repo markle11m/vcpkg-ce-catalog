@@ -3,19 +3,58 @@
     "id": "tools/espressif/idf",
     "version": "1.10.2",
     "description": "Espressif IDF",
-    "summary": "Espressif IDF"
+    "summary": "Espressif IDF",
+    "options": ["espidf"]
   },
   "requires": {
-    "tools/languages/python": "3.10.1",
-    "system/git": "3.0.0"
+    "system/python": "3.0.0",
+    "system/git": "2.0.0"
   },
   "install": {
     "git": "https://github.com/espressif/esp-idf",
     "commit": "ebf7e811b12e3c1e347340e5b9ec014e9c6319ba",
     "options": [
       "recurse",
-      "espidf",
       "full"
     ]
+  },
+  "demands": {
+      "windows": {
+        "exports": {
+            "tools": {
+              "IDF_PATH": ".",
+              "IDF_TOOLS_PATH": "./.espressif"
+            },
+            "paths": {
+                "Path": ["./components/esptool_py/esptool", "./components/app_update", "./components/espcoredump", "./components/partition_table", "./.espressif"]
+            },
+            "aliases": {
+                "idf.py": "$environment.IDF_PYTHON_ENV_PATH/Scripts/python.exe $environment.IDF_PATH/tools/idf.py",
+                "esptool.py": "$environment.IDF_PYTHON_ENV_PATH/Scripts/python.exe $environment.IDF_PATH/components/esptool_py/esptool/esptool.py",
+                "espefuse.py": "$environment.IDF_PYTHON_ENV_PATH/Scripts/python.exe $environment.IDF_PATH/components/esptool_py/esptool/espefuse.py",
+                "otatool.py": "$environment.IDF_PYTHON_ENV_PATH/Scripts/python.exe $environment.IDF_PATH/components/app_update/otatool.py",
+                "parttool.py": "$environment.IDF_PYTHON_ENV_PATH/Scripts/python.exe $environment.IDF_PATH/components/partition_table/parttool.py"
+            }
+        }
+      },
+      "not windows": {
+        "exports": {
+            "tools": {
+              "IDF_PATH": ".",
+              "IDF_TOOLS_PATH": "./.espressif"
+            },
+            "paths": {
+                "PATH": ["./components/esptool_py/esptool", "./components/app_update", "./components/espcoredump", "./components/partition_table", "./.espressif"]
+            },
+            "aliases": {
+                "idf.py": "$environment.IDF_PYTHON_ENV_PATH/Scripts/python.exe $environment.IDF_PATH/tools/idf.py",
+                "esptool.py": "$environment.IDF_PYTHON_ENV_PATH/Scripts/python.exe $environment.IDF_PATH/components/esptool_py/esptool/esptool.py",
+                "espefuse.py": "$environment.IDF_PYTHON_ENV_PATH/Scripts/python.exe $environment.IDF_PATH/components/esptool_py/esptool/espefuse.py",
+                "otatool.py": "$environment.IDF_PYTHON_ENV_PATH/Scripts/python.exe $environment.IDF_PATH/components/app_update/otatool.py",
+                "parttool.py": "$environment.IDF_PYTHON_ENV_PATH/Scripts/python.exe $environment.IDF_PATH/components/partition_table/parttool.py"
+            }
+        }
+      }
   }
+  
 }
