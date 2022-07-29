@@ -1,0 +1,14 @@
+{
+  "registries": [
+    {
+      "name": "local",
+      "location": "c:/VcpkgDemos2/catalogs/vcpkg-ce-catalog.demo",
+      "kind": "artifact"
+    },
+    {
+      "name": "microsoft",
+      "location": "https://aka.ms/vcpkg-ce-default",
+      "kind": "artifact"
+    }
+  ]
+}
