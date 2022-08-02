@@ -12,23 +12,24 @@ set PATH=%PATH%;%VCPKG_ROOT%
 set $_id=
 
 :msbuild_environment
-set EnableExperimentalVcpkgIntegration=true
-rem Find msbuild.exe
+rem set EnableVcpkgArtifactsIntegration=true
+
+rem Find msbuild.exe and add to path
+:find_msbuild
 set $_MSBuildExe=
 for /f "usebackq tokens=1*" %%m in (`where /r "%HOMEDRIVE%\Program Files\Microsoft Visual Studio\2022" msbuild.exe ^| findstr /i amd64`) do (
     set $_MSBuildExe=%%m %%n
 )
 if "%$_MSBuildExe%" == "" (
     echo WARNING: Unable to locate msbuild.exe, please set $_MSBuildExe manually to the full path to msbuild.exe
+    goto :end_find_msbuild
 )
+pushd "%$_MSBuildExe%\.."
+set PATH=%PATH%;%CD%
+popd
+:end_find_msbuild
+
 rem Find VS Installer
-set $_MSBuildExe=
-for /f "usebackq tokens=1*" %%m in (`where /r "%HOMEDRIVE%\Program Files\Microsoft Visual Studio\2022" msbuild.exe ^| findstr /i amd64`) do (
-    set $_MSBuildExe=%%m %%n
-)
-if "%$_MSBuildExe%" == "" (
-    echo WARNING: Unable to locate msbuild.exe, please set $_MSBuildExe manually to the full path to msbuild.exe
-)
 
 :show_variables
 echo.
@@ -37,8 +38,8 @@ set $_varList=VCPKG Enable INC LIB VC_
 for %%e in (%$_varList%) do set %%e
 
 echo.
-echo Where is vcpkg?:
-where vcpkg
+echo Key binaries:
+for %%b in ("msbuild" "vcpkg  ") do @for /f "usebackq tokens=1*" %%p in (`where.exe %%b`) do @echo %%~b: %%p %%q
 echo.
 echo Done.
 

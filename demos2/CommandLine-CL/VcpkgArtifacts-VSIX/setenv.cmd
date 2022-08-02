@@ -11,7 +11,7 @@ echo - adding VCPKG_ROOT to path
 set PATH=%PATH%;%VCPKG_ROOT%
 set $_id=
 
-rem set EnableExperimentalVcpkgIntegration=true
+rem set EnableVcpkgArtifactsIntegration=true
 
 :show_variables
 echo.
@@ -20,8 +20,8 @@ set $_varList=VCPKG Enable INC LIB VC_
 for %%e in (%$_varList%) do set %%e
 
 echo.
-echo Where is vcpkg?:
-where vcpkg
+echo Key binaries:
+for %%b in ("vcpkg  ") do @for /f "usebackq tokens=1*" %%p in (`where.exe %%b`) do @echo %%~b: %%p %%q
 echo.
 echo Done.
 
