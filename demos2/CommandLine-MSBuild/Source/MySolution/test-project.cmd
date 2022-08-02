@@ -39,6 +39,7 @@ if "%$_MSBuildExe%" == "" (
     echo ERROR: unable to build - variable $_MSBuildExe not set
     echo - To install MSBuild, please run the install_vs command to download the Visual Studio installer
     echo - and install the Desktop C++ workload with only the C++ core desktop features option selected.
+    echo - Then re-run the bootstrap command to update the environment.
     exit /b 1
 )
 set $_MSBuildArgs=/t:%_msbuildTarget% /p:Configuration=%_msbuildConfig% /p:Platform=%_targetArch% /p:EnableExperimentalVcpkgIntegration=true

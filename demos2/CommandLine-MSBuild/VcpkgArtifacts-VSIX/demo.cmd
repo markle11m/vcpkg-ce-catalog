@@ -81,7 +81,7 @@ if exist .\vcpkg-init.cmd (
 :install_vcpkg_ce_catalog
 call :echo Installing vcpkg-ce-catalog (private)...
 if not exist %$_vcpkgCatalogRoot% (
-    set $cmd=git clone https://github.com/microsoft/vcpkg-ce-catalog.git %$_vcpkgCatalogRoot%
+    set $cmd=git clone https://github.com/$_vcpkgCatalogForkName%/vcpkg-ce-catalog.git %$_vcpkgCatalogRoot%
     call :run_command - Cloning...
     pushd %$_vcpkgCatalogRoot%
     echo - Updating to current branch...
@@ -227,6 +227,7 @@ set $cmd=start https://aka.ms/vs/17/intpreview/vs_community.exe
 call :run_command - Downloading latest internal preview VS Community installer...
 call :echo - To install MSBuild and C++ project support, run the installer and select
 call :echo - the Desktop C++ workload with only 'C++ core desktop features' enabled.
+call :echo - Then rerun the bootstrap command to update the environment.
 call :echo - Launch Programs and Features to verify VS installation...
 start appwiz.cpl
 echo [%TIME%] Finish Installing VS.

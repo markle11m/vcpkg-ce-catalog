@@ -18,6 +18,10 @@ if not exist %$_vcpkgDemoRoot%\%$_vcpkgDemoName% (
 set $_vcpkgDemoDir=%$_vcpkgDemoRoot%\%$_vcpkgDemoName%
 set $_vcpkgCatalogsDir=%$_vcpkgDemoRoot%\catalogs
 set $_vcpkgCatalogRoot=%$_vcpkgCatalogsDir%\vcpkg-ce-catalog.demo
+rem $_vcpkgCatalogForkName is used when cloning vcpkg-ce-catalog; the repo root name
+rem is microsoft, but but an alternate fork (markle11m, olgaark) can be used for 
+rem in-development work that hasn't reached main yet.
+set $_vcpkgCatalogForkName%=markle11m
 set $_vcpkgInstallDir=%USERPROFILE%\.vcpkg
 set $_vcpkgTempDir=%TEMP%\vcpkg
 set $_corextNugetCache=c:\NugetCache
