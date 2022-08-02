@@ -17,6 +17,9 @@ set $_action=
 set $_actionArg=
 set $_exitCode=
 set $_cmdVcpkg=%~dp0vcpkg-init.cmd
+for %%i in (yes y true) do @if /I "%_PAUSE%" == "%%i" set _pauseBeforeCommands=true
+for %%i in (no n false) do @if /I "%_PAUSE%" == "%%i" set _pauseBeforeCommands=false
+if "%_pauseBeforeCommands%" == "" set _pauseBeforeCommands=true
 
 :process_args
 set $_action=%1
@@ -79,7 +82,7 @@ if exist .\vcpkg-init.cmd (
 :install_vcpkg_ce_catalog
 call :echo Installing vcpkg-ce-catalog (private)...
 if not exist %$_vcpkgCatalogRoot% (
-    set $cmd=git clone https://github.com/$_vcpkgCatalogForkName%/vcpkg-ce-catalog.git %$_vcpkgCatalogRoot%
+    set $cmd=git clone https://github.com/%$_vcpkgCatalogForkName%/vcpkg-ce-catalog.git %$_vcpkgCatalogRoot%
     call :run_command - Cloning...
     pushd %$_vcpkgCatalogRoot%
     echo - Updating to current branch...
@@ -163,7 +166,7 @@ call :show_environment initial
 call :echo Activating %$_vcpkgActivateTarget%...
 pushd %$_vcpkgDemoSourceDir%
 set $cmd=%$_cmdVcpkg% activate --target:%$_vcpkgActivateTarget%
-call :run_command -activate
+call :run_command - activate
 popd
 call :show_environment activated
 :end_activate
@@ -195,8 +198,6 @@ setlocal
 pushd %$_vcpkgDemoDir%\Source\HelloWorld
 call test-project.cmd build %$_vcpkgActivateTarget% %$_buildArgs%
 call test-project.cmd run %$_vcpkgActivateTarget%
-rem call buildit.cmd %$_vcpkgActivateTarget%
-rem call runit.cmd %$_vcpkgActivateTarget%
 popd
 endlocal
 :end_build
@@ -262,9 +263,13 @@ exit /b 0
 :run_command
 rem exitCode run_command(message) [$cmd]
 rem Prints the message+command, runs the command (in $cmd), returns the exit code from the command
-echo %* [command: %$cmd%]
+set _cmdToEcho=%$cmd%
+for /f "usebackq tokens=1*" %%i in (`echo %$cmd%`) do if "%%i" == "%$_cmdVcpkg%" set _cmdToEcho=vcpkg %%j
+echo %* [command: %_cmdToEcho%]
+if /I "%_pauseBeforeCommands%" == "true" pause
 call %$cmd%
 set _exitCode=%ERRORLEVEL%
+for %%i in (_cmdToEcho _pauseBeforeCommands) do set %%i=
 exit /b %_exitCode%
 
 :done

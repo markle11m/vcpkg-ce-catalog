@@ -28,6 +28,10 @@ if /I "%_targetArch%" == "x86" set _archOutputDir=Win32
 
 :start
 
+for %%i in (yes y true) do @if /I "%_PAUSE%" == "%%i" set _pauseBeforeCommands=true
+for %%i in (no n false) do @if /I "%_PAUSE%" == "%%i" set _pauseBeforeCommands=false
+if "%_pauseBeforeCommands%" == "" set _pauseBeforeCommands=true
+
 set _msbuildConfig=Release
 set _msbuildTarget=%_action%
 goto :%_action%
@@ -43,7 +47,8 @@ if "%$_MSBuildExe%" == "" (
     exit /b 1
 )
 set $_MSBuildArgs=/t:%_msbuildTarget% /p:Configuration=%_msbuildConfig% /p:Platform=%_targetArch% /p:EnableExperimentalVcpkgIntegration=true
-echo Running %_msbuildTarget% command 'msbuild.exe %$_MSBuildArgs%'
+echo Running %_msbuildTarget% [command=msbuild.exe %$_MSBuildArgs%]
+if /I "%_pauseBeforeCommands%" == "true" pause
 "%$_MSBuildExe%" %$_MSBuildArgs%
 goto :done
 
@@ -54,6 +59,7 @@ if not exist %$_exeFile% (
     exit /b 1
 )
 echo Running '%$_exeFile%'...
+if /I "%_pauseBeforeCommands%" == "true" pause
 %$_exeFile%
 goto :done
 

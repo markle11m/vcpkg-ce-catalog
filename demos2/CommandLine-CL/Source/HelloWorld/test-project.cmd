@@ -24,18 +24,25 @@ if /I "%_targetArch%" == "x86" set _archOutputDir=Win32
 
 :start
 
+for %%i in (yes y true) do @if /I "%_PAUSE%" == "%%i" set _pauseBeforeCommands=true
+for %%i in (no n false) do @if /I "%_PAUSE%" == "%%i" set _pauseBeforeCommands=false
+if "%_pauseBeforeCommands%" == "" set _pauseBeforeCommands=true
+
 goto :%_action%
 
 :clean
-echo Cleaning build directory...
-del *.exe *.obj *.pdb *.ilk >nul 2>&1
+set $cmd=del *.exe *.obj *.pdb *.ilk
+echo Cleaning build directory... [command=%$cmd%]
+if /I "%_pauseBeforeCommands%" == "true" pause
+%$cmd% >nul 2>&1
 exit /b 0
 goto :done
 
 :build
-echo Building for %_targetArch%...
-echo on
-cl.exe /EHsc /Bv hello.cpp %_extraArgs%
+set $cmd=cl.exe /EHsc /Bv hello.cpp %_extraArgs%
+echo Building for %_targetArch%... [command=%$cmd%]
+if /I "%_pauseBeforeCommands%" == "true" pause
+%$cmd%
 exit /b 0
 goto :done
 
@@ -51,6 +58,7 @@ if not exist %$_exeFile% (
     exit /b 1
 )
 echo Running '%$_exeFile%'...
+if /I "%_pauseBeforeCommands%" == "true" pause
 %$_exeFile%
 where link.exe >nul 2>&1
 if errorlevel 0 if not errorlevel 1 (
