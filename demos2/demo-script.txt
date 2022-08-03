@@ -1,0 +1,64 @@
+Commands for Vcpkg artifacts demo:
+
+- Install:
+set PROMPT=($D $T) [$+$P]$S
+pushd c:\
+rd /s /q VcpkgDemos2
+md c:\VcpkgDemos2
+git clone https://github.com/markle11m/vcpkg-ce-catalog.git c:\VcpkgDemos2\msvc-experiments-demos
+pushd c:\VcpkgDemos2\msvc-experiments-demos
+git checkout msvc-experiments-demos
+pushd demos2
+set _pause=no
+reset-machine.cmd
+
+- Bootstrap MSBuild demo (in one window to show prereqs unrelated to toolset acquisition):
+set-demo-environment.cmd CommandLine-MSBuild
+pushd VcpkgArtifacts-VSIX
+bootstrap
+
+- MSBuild demo (in a second window for toolset acquisition specifically):
+set PROMPT=($D $T) [$+$P]$S
+pushd c:\VcpkgDemos2\msvc-experiments-demos\demos2
+set _pause=no
+set-demo-environment.cmd CommandLine-MSBuild
+pushd VcpkgArtifacts-VSIX
+bootstrap
+pushd ..\Source\MySolution
+copy ..\..\VcpkgArtifacts-VSIX\vcpkg-configuration.json-demo vcpkg-configuration.json
+notepad vcpkg-configuration.json
+msbuild
+where /r . *.exe
+msbuild /p:Platform=x64 /p:Configuration=Release /m
+where /r . *.exe
+Outputs\x64\Release\ConsoleApplication.exe
+msbuild /p:Platform=x86 /p:Configuration=Release /m
+Outputs\x86\Release\ConsoleApplication.exe
+@rem Edit vcpkg-configuration.json: changes WinSDK and MSVC versions to 10.0.22621 and 14.28.29915
+@rem Currently, the catalog contains two MSVC toolsets available (14.28.29915, 14.29.30037) 
+@rem and 4 WinSDKs (10.0.17763, 18362, 19041, 22621)
+
+- CL.exe demo (in a third window)
+set PROMPT=($D $T) [$+$P]$S
+pushd c:\VcpkgDemos2\msvc-experiments-demos\demos2
+set _pause=no
+set-demo-environment.cmd CommandLine-CL
+pushd VcpkgArtifacts-VSIX
+bootstrap
+pushd ..\Source\HelloWorld
+copy ..\..\VcpkgArtifacts-VSIX\vcpkg-configuration.json-demo vcpkg-configuration.json
+notepad vcpkg-configuration.json
+vcpkg activate --target:x86
+where cl.exe
+set INC
+set LIB
+set _CL_=/Bv /Be
+cl /EHsc hello.cpp
+hello.exe
+vcpkg activate --target:x64
+cl /EHsc hello.cpp
+hello.exe
+@rem Edit vcpkg-configuration.json: changes WinSDK and MSVC versions to 10.0.22621 and 14.28.29915
+@rem Currently, the catalog contains two MSVC toolsets available (14.28.29915, 14.29.30037) 
+@rem and 4 WinSDKs (10.0.17763, 18362, 19041, 22621)
+
