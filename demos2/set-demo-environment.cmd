@@ -12,7 +12,7 @@ echo INFO: no demo name specified - using %$_vcpkgDemoName%
 set $_vcpkgDemoRoot=%~dp0
 set $_vcpkgDemoRoot=%$_vcpkgDemoRoot:~,-1%
 if not exist %$_vcpkgDemoRoot%\%$_vcpkgDemoName% (
-    echo ERROR: demo directory '%$_vcpkgDemoName%' not found
+    if "%SET_DEMO_ENVIRONMENT%" NEQ "-quiet" echo ERROR: demo directory '%$_vcpkgDemoName%' not found
     exit /b 1
 )
 set $_vcpkgDemoDir=%$_vcpkgDemoRoot%\%$_vcpkgDemoName%
