@@ -1,19 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project>
-
-	<PropertyGroup>
-		<!-- Enable msbuild integration with vcpkg artifacts (currently disabled by default) -->
-		<EnableVcpkgArtifactsIntegration>true</EnableVcpkgArtifactsIntegration>
-		<!-- Use this property if the build is expected to use only downloaded tools and not the ones installed by VS -->
-		<DisableRegistryUse>true</DisableRegistryUse>
-		<!-- currently needed to avoid build warnings/errors about mismatch of MSVC and cpp targets versions as we don’t have artifacts for v143 MSVC yet. 
-			    Not recommended to use in the future. -->
-		<CheckMSVCComponents>false</CheckMSVCComponents>
-	</PropertyGroup>
-	<PropertyGroup>
-		<!-- These properties make all build outputs be under [RootDir]\Outputs directory -->
-		<OutDir>$(MsbuildThisFileDirectory)Outputs\$(Platform)\$(Configuration)\</OutDir>
-		<IntDir>$(MsbuildThisFileDirectory)Outputs\Intermediate\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</IntDir>
-	</PropertyGroup>
+    <PropertyGroup>
+        <!-- Enable msbuild integration with vcpkg artifacts (currently disabled by default) -->
+        <EnableVcpkgArtifactsIntegration>true</EnableVcpkgArtifactsIntegration>
+        <!-- Use this property if the build is expected to use only downloaded tools and not the ones installed by VS -->
+        <DisableRegistryUse>true</DisableRegistryUse>
+        <!-- currently needed to avoid build warnings/errors about mismatch of MSVC and cpp targets versions as we don’t have artifacts for v143 MSVC yet. 
+             Not recommended to use in the future. -->
+        <CheckMSVCComponents>false</CheckMSVCComponents>
+    </PropertyGroup>
+    <PropertyGroup>
+        <!-- Use x64-hosted compiler toolset -->
+        <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+        <!-- These properties make all build outputs be under [RootDir]\Outputs directory -->
+        <OutDir>$(MsbuildThisFileDirectory)Outputs\$(Platform)\$(Configuration)\</OutDir>
+        <IntDir>$(MsbuildThisFileDirectory)Outputs\Intermediate\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    </PropertyGroup>
 </Project>
 
