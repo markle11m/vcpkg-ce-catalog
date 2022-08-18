@@ -3,12 +3,13 @@ Commands for Vcpkg artifacts demo:
 - Install:
 set PROMPT=($D $T) [$+$P]$S
 pushd c:\
-rd /s /q VcpkgDemos2
+if exist VcpkgDemos2 rd /s /q VcpkgDemos2
 md c:\VcpkgDemos2
 git clone https://github.com/markle11m/vcpkg-ce-catalog.git c:\VcpkgDemos2\msvc-experiments-demos
 pushd c:\VcpkgDemos2\msvc-experiments-demos
 git checkout msvc-experiments-demos
 pushd demos2
+notepad demo-script.txt
 set _pause=no
 reset-machine.cmd
 
