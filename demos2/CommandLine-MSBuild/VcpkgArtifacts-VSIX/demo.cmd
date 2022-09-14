@@ -73,7 +73,8 @@ if exist "%$_vcpkgInstallDir%" if exist .\vcpkg-init.cmd (
     echo - Vcpkg is already installed
     goto :end_install_vcpkg
 )
-set $cmd=curl -LO https://aka.ms/vcpkg-init.cmd
+rem set $cmd=curl -LO https://aka.ms/vcpkg-init.cmd
+set $cmd=curl -LO https://github.com/microsoft/vcpkg-tool/releases/download/2022-07-21/vcpkg-init.cmd
 call :run_command - Downloading vcpkg...
 if exist .\vcpkg-init.cmd (
     set $cmd=.\vcpkg-init.cmd
