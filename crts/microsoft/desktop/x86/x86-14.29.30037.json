@@ -1,30 +1,23 @@
 {
-  "info": {
-    "id": "crts/microsoft/desktop/x86",
-    "version": "14.29.30037",
-    "summary": "MSVC standard library libraries (desktop / kernel32)",
-    "options": [ "dependencyOnly" ]
-  },
   "contacts": {
     "Mark Levine": {
       "email": "markle@microsoft.com",
-      "role": [ "publisher" ]
+      "role": [
+        "publisher"
+      ]
     }
   },
   "requires": {
     "crts/microsoft/headers": "14.29.30037"
   },
-  "demands": {
-    "windows": {
-      "exports": {
-        "paths": {
-          "LIB": ".",
-          "LIBPATH": "."
-        },
-        "locations": {
-          "VC_LibraryPath_VC_x86_Desktop": "."
-        }
-      }
+  "exports": {
+    "paths": {
+      "LIB": ".",
+      "LIBPATH": "."
+    },
+    "msbuild-properties": {
+      "VC_LibraryPath_VC_x86_Desktop": "{root}",
+      "VC_LibraryPath_VC_x86": "{root};$(VC_LibraryPath_VC_x86)"
     }
   },
   "install": [
@@ -36,5 +29,11 @@
       "sha256": "02b2e54551c4692d6e270c538e8008d1a9c55b1fa727bddf2126c796a64c3161",
       "strip": 7
     }
+  ],
+  "id": "crts/microsoft/desktop/x86",
+  "version": "14.29.30037",
+  "summary": "MSVC standard library libraries (desktop / kernel32)",
+  "options": [
+    "dependencyOnly"
   ]
 }
