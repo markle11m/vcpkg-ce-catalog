@@ -1,0 +1,29 @@
+{
+  "registries": [
+    {
+      "kind": "artifact",
+      "name": "local",
+      "location": "D:/src/markle/vcpkg-ce-catalog"
+    }
+  ],
+
+
+  "demands" : {  
+    "msbuild_only": {
+      "requires": {
+        "local:tools/microsoft/msbuild/vc/v143": "17.0.0"
+      }
+    },
+    "not msbuild_only": {
+      "requires": {
+        "local:microsoft/msvc": "14.29.30037",
+        "local:crts/microsoft/desktop": "14.29.30037",
+        "local:sdks/microsoft/windows": "10.0.22621",
+        "local:sdks/microsoft/atl-headers": "14.29.30037",
+        "local:sdks/microsoft/atl": "14.29.30037",
+        "local:sdks/microsoft/mfc/unicode": "14.29.30037",
+        "local:sdks/microsoft/mfc-headers": "14.29.30037"
+      }
+    }
+  }
+}
