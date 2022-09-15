@@ -1,0 +1,37 @@
+Commands for Vcpkg artifacts demo:
+
+- Install:
+set PROMPT=($D $T) [$+$P]$S
+pushd c:\
+if exist VcpkgDemos2 rd /s /q VcpkgDemos2
+md c:\VcpkgDemos2
+pushd c:\VcpkgDemos2
+git clone https://github.com/markle11m/vcpkg-ce-catalog.git c:\VcpkgDemos2\msvc-experiments-demos
+pushd c:\VcpkgDemos2\msvc-experiments-demos
+git checkout msvc-experiments-demos
+popd
+set _pause=no
+pushd c:\VcpkgDemos2\msvc-experiments-demos\demos2
+reset-machine.cmd
+popd
+git clone https://github.com/microsoft/vcpkg-ce-catalog.git c:\VcpkgDemos2\catalogs\vcpkg-ce-catalog.demo
+pushd c:\VcpkgDemos2\catalogs\vcpkg-ce-catalog.demo
+git checkout msvc-experiments
+popd
+popd
+
+- Build demo using vcpkg
+  - Copy demo to a temp workspace
+xcopy /sdvci c:\VcpkgDemos2\msvc-experiments-demos\demos2\CommandLine-MSBuild\Source\ConsoleApplication1-Default c:\VcpkgDemos2\ConsoleApplication1-Test
+pushd c:\VcpkgDemos2\ConsoleApplication1-Test
+  - Add msbuild to the path
+set PATH.0=%PATH%
+set PATH=%PATH.0%;C:\Program Files\Microsoft Visual Studio\2022\Preview\MSBuild\Current\Bin\amd64
+where msbuild.exe
+  - Install vcpkg
+curl -LO https://aka.ms/vcpkg-init.cmd && .\vcpkg-init.cmd
+  - build
+msbuild /p:EnableVcpkgArtifactsIntegration=True /p:DisableRegistryUse=True /p:CheckMSVCComponents=False
+
+
+
