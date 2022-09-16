@@ -1,0 +1,9 @@
+namespace UWP_CppWinRT_RuntimeComponent1
+{
+    [default_interface]
+    runtimeclass Class
+    {
+        Class();
+        Int32 MyProperty;
+    }
+}
