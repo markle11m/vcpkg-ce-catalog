@@ -18,7 +18,9 @@
     ],
     "requires": {
         "local:sdks/microsoft/windows": "*",
-        "local:crts/microsoft/desktop": "* 14.29.30037",
-        "local:microsoft/msvc": "14.29.30037"
+        "local:crts/microsoft/desktop": "*",
+        "local:crts/microsoft/headers": "*",
+        "local:crts/microsoft/asan": "*",
+        "local:microsoft/msvc": "*"
     }
 }

@@ -10,6 +10,7 @@ exit /b -100
 set _action=%1
 set _targetArch=%2
 set _extraArgs=%~3
+set _filenameRoot=hello-ASAN
 
 for %%a in (clean build rebuild run) do (
     if "%_action%" == "%%a" goto :check_targetArch
@@ -45,7 +46,7 @@ exit /b 0
 goto :done
 
 :build
-set $cmd=cl.exe /EHsc /Bv hello.cpp %_extraArgs%
+set $cmd=cl.exe /fsanitize=address /Zi /MD /EHsc /Bv %_filenameRoot%.cpp %_extraArgs%
 echo Building for %_targetArch%... [command=%$cmd%]
 if /I "%_pauseBeforeCommands%" == "true" pause
 %$cmd%
@@ -58,7 +59,7 @@ call :build
 goto :done
 
 :run
-set $_exeFile=.\hello.exe
+set $_exeFile=.\%_filenameRoot%.exe
 if not exist %$_exeFile% (
     echo - error: unable to run - '%$_exeFile%' does not exist
     exit /b 1
