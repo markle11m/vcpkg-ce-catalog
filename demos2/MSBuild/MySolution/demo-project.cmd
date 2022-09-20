@@ -1,8 +1,19 @@
 @echo off
 @setlocal enabledelayedexpansion
+goto :init
 
+:usage
+echo usage: %~nx0 ACTION [ARCH]
+echo.
+echo ^  ACTION      one of {clean build rebuild run}
+echo ^  ARCH        target architecture to build, one of {x64, x86}
+rem echo ^  CL_OPTIONS  quoted string containing additional compiler options, e.g. "/O2 /Zi"
+echo.
+
+:init
 set _action=%1
 set _targetArch=%2
+set $_MSBuildExe=msbuild.exe
 
 for %%a in (clean build rebuild run reset) do (
     if "%_action%" == "%%a" goto :check_targetArch

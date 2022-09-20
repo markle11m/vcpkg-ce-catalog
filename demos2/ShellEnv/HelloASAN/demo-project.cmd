@@ -3,7 +3,12 @@
 goto :init
 
 :usage
-echo usage: %~nx0 [clean build rebuild run]
+echo usage: %~nx0 ACTION [ARCH] ["EXTRA-ARGS"]
+echo.
+echo ^  ACTION      one of {clean build rebuild run}
+echo ^  ARCH        target architecture to build, one of {x64, x86}
+echo ^  CL_OPTIONS  quoted string containing additional compiler options, e.g. "/O2 /Zi"
+echo.
 exit /b -100
 
 :init
