@@ -50,7 +50,7 @@ exit /b 0
 goto :done
 
 :build
-set $cmd=cl.exe /EHsc /Bv hello.cpp %_extraArgs%
+set $cmd=cl.exe /EHsc /Bv %_extraArgs% hello.cpp
 echo Building for %_targetArch%... [command=%$cmd%]
 if /I "%_pauseBeforeCommands%" == "true" pause
 %$cmd%

@@ -1,19 +1,31 @@
 Commands for Vcpkg artifacts demo:
 
+set $_demoRoot=c:\VcpkgDemos
+
 - Install:
 set PROMPT=($D $T) [$+$P]$S
-pushd c:\
-if exist VcpkgDemos2 rd /s /q VcpkgDemos2
-md c:\VcpkgDemos2
-git clone https://github.com/markle11m/vcpkg-ce-catalog.git c:\VcpkgDemos2\msvc-experiments-demos
-pushd c:\VcpkgDemos2\msvc-experiments-demos
+if exist %$_demoRoot% rd /s /q VcpkgDemos
+md %$_demoRoot%
+pushd %$_demoRoot%
+git clone https://github.com/markle11m/vcpkg-ce-catalog.git %$_demoRoot%\msvc-experiments-demos
+pushd %$_demoRoot%\msvc-experiments-demos
 git checkout msvc-experiments-demos
-pushd demos
-notepad demo-script.txt
+popd
 set _pause=no
+pushd %$_demoRoot%\msvc-experiments-demos\demos2
 reset-machine.cmd
+popd
+git clone https://github.com/markle11m/vcpkg-ce-catalog.git %$_demoRoot%\catalogs\vcpkg-ce-catalog.demo
+pushd %$_demoRoot%\catalogs\vcpkg-ce-catalog.demo
+git checkout msvc-experiments
+popd
 
-- 
+- Open the Clock app and switch to the Stopwatch
+
+- Install git
+@rem Git homepage: start https://git-scm.com/
+@rem Git for Windows download: start https://git-scm.com/download/win
+@rem alternate Git for Windows: start https://gitforwindows.org/
 
 - Install vcpkg
 @rem To install a particular release of the vcpkg tool
@@ -22,49 +34,44 @@ curl -LO https://aka.ms/vcpkg-init.cmd
 call vcpkg-init.cmd
 set PATH.0=%PATH%
 set PATH=%PATH%;%VCPKG_ROOT%
+set $_vcpkgCmd="%VCPKG_ROOT%\vcpkg-init.cmd"
 
-- MSBuild demo (in a second window for toolset acquisition specifically):
-set PROMPT=($D $T) [$+$P]$S
-pushd c:\VcpkgDemos2\msvc-experiments-demos\demos2
-set _pause=no
-set-demo-environment.cmd CommandLine-MSBuild
-pushd VcpkgArtifacts-VSIX
-bootstrap
-pushd ..\Source\MySolution
-copy ..\..\VcpkgArtifacts-VSIX\vcpkg-configuration.json-demo vcpkg-configuration.json
-notepad vcpkg-configuration.json
-msbuild
-where /r . *.exe
-msbuild /p:Platform=x64 /p:Configuration=Release /m
-where /r . *.exe
-Outputs\x64\Release\ConsoleApplication.exe
-msbuild /p:Platform=x86 /p:Configuration=Release /m
-Outputs\x86\Release\ConsoleApplication.exe
-@rem Edit vcpkg-configuration.json: changes WinSDK and MSVC versions to 10.0.22621 and 14.28.29915
-@rem Currently, the catalog contains two MSVC toolsets available (14.28.29915, 14.29.30037) 
-@rem and 4 WinSDKs (10.0.17763, 18362, 19041, 22621)
+- Install latest msbuild.exe shipping with VS
+@rem Internal dogfood build: start https://aka.ms/vs/17/intpreview/vs_community.exe
+@rem To install MSBuild, run the installer and select the Desktop C++ workload
+@rem with only the C++ core desktop features selected.
 
-- CL.exe demo (in a third window)
+@rem Currently, the catalog contains 
+@rem - 3 MSVC toolsets (14.28.29915, 14.29.30037, 14.32.31328) 
+@rem - 4 WinSDKs (10.0.17763, 18362, 19041, 22621)
+
+@rem Set compiler environment variables
+@rem - /Bv = show compiler versions
+@rem - /Be = show environment variables (LIB, INCLUDE) being used by the compiler
+set _CL_=/nologo /Bv /Be
+
+- Shell environment demo
 set PROMPT=($D $T) [$+$P]$S
-pushd c:\VcpkgDemos2\msvc-experiments-demos\demos2
-set _pause=no
-set-demo-environment.cmd CommandLine-CL
-pushd VcpkgArtifacts-VSIX
-bootstrap
-pushd ..\Source\HelloWorld
-copy ..\..\VcpkgArtifacts-VSIX\vcpkg-configuration.json-demo vcpkg-configuration.json
-notepad vcpkg-configuration.json
-vcpkg activate --target:x86
-where cl.exe
-set INC
-set LIB
-set _CL_=/Bv /Be
-cl /EHsc hello.cpp
-hello.exe
-vcpkg activate --target:x64
-cl /EHsc hello.cpp
-hello.exe
-@rem Edit vcpkg-configuration.json: changes WinSDK and MSVC versions to 10.0.22621 and 14.28.29915
-@rem Currently, the catalog contains two MSVC toolsets available (14.28.29915, 14.29.30037) 
-@rem and 4 WinSDKs (10.0.17763, 18362, 19041, 22621)
+pushd %$_demoRoot%\msvc-experiments-demos\demos\ShellEnv
+for %l in (/MD /MDd /MT /MTd) do @for %h in (x64 x86) do @for %t in (x64 x86) do @%$_vcpkgCmd% activate --target:%t --%h & demo-project.cmd rebuild %t "%l" & demo-project run %t & %$_vcpkgCmd% deactivate 
+
+- MSBuild demo
+set PROMPT=($D $T) [$+$P]$S
+pushd %$_demoRoot%\msvc-experiments-demos\demos\MSBuild
+set PATH.0=%PATH%
+set PATH=%PATH.0%;C:\Program Files\Microsoft Visual Studio\2022\Preview\MSBuild\Current\Bin\amd64
+where msbuild.exe
+set $_msbuildEnableVcpkg=/p:EnableVcpkgArtifactsIntegration=True /p:DisableRegistryUse=True /p:CheckMSVCComponents=False
+@rem These msbuild demos have the msbuild-enabling properties in Directory.Build.Props, so they don't need to be specified on the command-line.
+set $_msbuildEnableVcpkg=
+for %c in (Release Debug) do @for %a in (x86 x64) do @for %h in (x86 x64) do msbuild /m /t:rebuild /p:Configuration=%c /p:Platform=%a /p:PreferredToolArchitecture=%h %$_msbuildEnableVcpkg% 
+
+- VSTarget demo
+set PROMPT=($D $T) [$+$P]$S
+pushd %$_demoRoot%\msvc-experiments-demos\demos\VSTemplate
+@rem For MSBuild projects, add msbuild to the path (same as for MSBuild demo)
+@rem For CMake projects, add cmake to the path
+set $_msbuildEnableVcpkg=/p:EnableVcpkgArtifactsIntegration=True /p:DisableRegistryUse=True /p:CheckMSVCComponents=False
+@rem These msbuild demos don't have the msbuild-enabling properties set in Directory.Build.Props, so they must be on the command-line.
+
 
