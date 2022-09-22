@@ -1,26 +1,37 @@
 {
-    "default-registry": {
-        "kind": "git",
-        "baseline": "032d9d0820db290ce9ff644dabfdf564343013ae",
-        "repository": "https://github.com/microsoft/vcpkg"
-    },
-    "registries": [
-        {
-            "kind": "artifact",
-            "name": "local",
-            "location": "c:/VcpkgDemos2/catalogs/vcpkg-ce-catalog.demo"
-        }
-    ],
-    "requires": {
-        "local:tools/microsoft/msbuild/vc/Desktop/v143": "17.0.0"
-    },
-    "demands": {
-        "not msbuild_only": {
-            "requires": {
-                "local:microsoft/msvc": "14.29.30037",
-                "local:crts/microsoft/desktop": "14.29.30037",
-                "local:sdks/microsoft/windows": "10.0.19041"
+    {
+        "default-registry": {
+            "kind": "git",
+            "baseline": "032d9d0820db290ce9ff644dabfdf564343013ae",
+            "repository": "https://github.com/microsoft/vcpkg"
+        },
+        "registries": [
+            {
+                "kind": "artifact",
+                "location": "https://aka.ms/vcpkg-ce-default",
+                "name": "microsoft"
+            },
+            {
+                "kind": "artifact",
+                "location": "https://github.com/markle11m/vcpkg-ce-catalog/archive/refs/heads/msvc-experiments.zip",
+                "name": "demo"
+            },
+            {
+                "kind": "artifact",
+                "name": "local",
+                "location": "c:/VcpkgDemos2/catalogs/vcpkg-ce-catalog.demo"
+            }
+        ],
+        "requires": {
+            "demo:tools/microsoft/msbuild/vc/Desktop/v143": "17.0.0"
+        },
+        "demands": {
+            "not msbuild_only": {
+                "requires": {
+                    "demo:microsoft/msvc": "14.29.30037",
+                    "demo:crts/microsoft/desktop": "14.29.30037",
+                    "demo:sdks/microsoft/windows": "10.0.19041"
+                }
             }
         }
     }
-}
