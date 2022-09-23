@@ -44,15 +44,15 @@ goto :%_action%
 
 :clean
 set $cmd=del *.exe *.obj *.pdb *.ilk
-echo Cleaning build directory... [command=%$cmd%]
+echo *** Cleaning build directory... [command=%$cmd%]
 if /I "%_pauseBeforeCommands%" == "true" pause
 %$cmd% >nul 2>&1
 exit /b 0
 goto :done
 
 :build
-set $cmd=cl.exe /fsanitize=address /Zi /MD /EHsc /Bv %_filenameRoot%.cpp %_extraArgs%
-echo Building for %_targetArch%... [command=%$cmd%]
+set $cmd=cl.exe /fsanitize=address /Zi /MD /EHsc /Bv %_extraArgs% %_filenameRoot%.cpp
+echo *** Building for %_targetArch%... [command=%$cmd%]
 if /I "%_pauseBeforeCommands%" == "true" pause
 %$cmd%
 exit /b 0
@@ -69,7 +69,7 @@ if not exist %$_exeFile% (
     echo - error: unable to run - '%$_exeFile%' does not exist
     exit /b 1
 )
-echo Running '%$_exeFile%'...
+echo *** Running '%$_exeFile%'...
 if /I "%_pauseBeforeCommands%" == "true" pause
 %$_exeFile%
 goto :done

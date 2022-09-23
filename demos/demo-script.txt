@@ -53,7 +53,17 @@ set _CL_=/nologo /Bv /Be
 - Shell environment demo
 set PROMPT=($D $T) [$+$P]$S
 pushd %$_demoRoot%\msvc-experiments-demos\demos\ShellEnv
-for %l in (/MD /MDd /MT /MTd) do @for %h in (x64 x86) do @for %t in (x64 x86) do @%$_vcpkgCmd% activate --target:%t --%h & demo-project.cmd rebuild %t "%l" & demo-project run %t & %$_vcpkgCmd% deactivate 
+pushd HelloWorld
+notepad vcpkg-configuration.json
+for %l in (/MD /MT /MTd) do @for %h in (x64 x86) do @for %t in (x64 x86) do @echo. & echo ===== Creating %h-hosted, %t-targeted build environment =====  & %$_vcpkgCmd% activate --target:%t --%h & demo-project.cmd rebuild %t "%l" & demo-project run %t & echo. & %$_vcpkgCmd% deactivate
+for %l in (/MDd) do @for %h in (x64) do @for %t in (x86) do @echo. & echo ===== Creating %h-hosted, %t-targeted build environment ===== & %$_vcpkgCmd% activate --target:%t --%h & demo-project.cmd rebuild %t "%l" & demo-project run %t & echo. & %$_vcpkgCmd% deactivate
+cd ..\HelloASAN
+notepad vcpkg-configuration.json
+for %l in (/MD) do @for %h in (x64 x86) do @for %t in (x64 x86) do @echo. & echo ===== Creating %h-hosted, %t-targeted build environment ===== & %$_vcpkgCmd% activate --target:%t --%h & demo-project.cmd rebuild %t "%l" & demo-project run %t & echo. & %$_vcpkgCmd% deactivate
+popd
+cd ..\HelloWorld
+rem change MSVC and WinSDK versions to 14.28.29915 and 10.0.18362
+for %l in (/MD) do @for %h in (x86) do @for %t in (x86) do @echo. & echo ===== Creating %h-hosted, %t-targeted build environment =====  & %$_vcpkgCmd% activate --target:%t --%h & demo-project.cmd rebuild %t "%l" & demo-project run %t & echo. & %$_vcpkgCmd% deactivate
 
 - MSBuild demo
 set PROMPT=($D $T) [$+$P]$S
@@ -66,7 +76,7 @@ set $_msbuildEnableVcpkg=/p:EnableVcpkgArtifactsIntegration=True /p:DisableRegis
 set $_msbuildEnableVcpkg=
 for %c in (Release Debug) do @for %a in (x86 x64) do @for %h in (x86 x64) do msbuild /m /t:rebuild /p:Configuration=%c /p:Platform=%a /p:PreferredToolArchitecture=%h %$_msbuildEnableVcpkg% 
 
-- VSTarget demo
+- VSTemplate demos
 set PROMPT=($D $T) [$+$P]$S
 pushd %$_demoRoot%\msvc-experiments-demos\demos\VSTemplate
 @rem For MSBuild projects, add msbuild to the path (same as for MSBuild demo)

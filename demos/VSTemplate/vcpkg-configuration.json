@@ -24,8 +24,7 @@
             "requires": {
                 "demo:microsoft/msvc": "14.29.30037",
                 "demo:crts/microsoft/desktop": "14.29.30037",
-                "demo:sdks/microsoft/mfc/unicode": "14.29.30037",
-                "demo:sdks/microsoft/windows": "10.0.19041"
+                "demo:sdks/microsoft/windows": "*"
             }
         }
     }

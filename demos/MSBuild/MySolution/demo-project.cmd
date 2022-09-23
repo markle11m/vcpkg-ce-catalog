@@ -48,8 +48,15 @@ set _msbuildTarget=%_action%
 goto :%_action%
 
 :rebuild
+echo *** Rebuilding for %_targetArch%... 
+goto :common
 :build
+echo *** Building for %_targetArch%... 
+goto :common
 :clean
+echo *** Cleaning build directory...
+goto :common
+:common
 if "%$_MSBuildExe%" == "" (
     echo ERROR: unable to build - variable $_MSBuildExe not set
     echo - To install MSBuild, please run the install_vs command to download the Visual Studio installer
