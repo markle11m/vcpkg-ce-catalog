@@ -1,0 +1,141 @@
+Script for vcpkg artifacts demo:
+
+0. Machine setup
+----------------
+
+- Install demos
+open Native command shell
+title Demo Machine Prep
+appwiz.cpl
+get-vcpkg-demos.cmd
+    @echo off
+    set $_demoRoot=c:\VcpkgDemos
+    set PROMPT=($D $T) [$+$P]$S
+
+    @echo Creating demo directory %$_demoRoot%...
+    if exist %$_demoRoot% rd /s /q %$_demoRoot%
+    md %$_demoRoot%
+    pushd %$_demoRoot%
+
+    @echo Getting demo sources...
+    git clone https://github.com/markle11m/vcpkg-ce-catalog.git %$_demoRoot%\msvc-experiments-demos
+    pushd %$_demoRoot%\msvc-experiments-demos
+    git checkout msvc-experiments-demos
+    popd
+
+    @echo Resetting machine...
+    pushd %$_demoRoot%\msvc-experiments-demos\demos
+    reset-machine.cmd
+
+    :done
+
+- Install latest VS internal dogfood build with default Desktop C++ workload
+start https://aka.ms/vs/17/intpreview/vs_community.exe
+
+- Install and bootstrap vcpkg
+@rem To install a particular release of the vcpkg tool (by release date)
+@rem curl -LO https://github.com/microsoft/vcpkg-tool/releases/download/2022-09-20/vcpkg-init.cmd
+curl -LO https://aka.ms/vcpkg-init.cmd
+call vcpkg-init.cmd
+set PATH.0=%PATH%
+set PATH=%PATH%;%VCPKG_ROOT%
+set $_vcpkgCmd="%VCPKG_ROOT%\vcpkg-init.cmd"
+cd Bootstrap\Vcpkg
+bootstrap.cmd
+
+[if needed]
+- Install git
+@rem Git homepage: start https://git-scm.com/
+@rem Git for Windows download: start https://git-scm.com/download/win
+@rem alternate Git for Windows: start https://gitforwindows.org/
+
+1. Demo #1 - MSBuild ConsoleApplication
+rem Shows msbuild integration, VS/vcpkg coexistence, switching target- and host-architectures
+rem Does not show switching MSVC versions (can show switching WinSDK versions)
+
+- regular MSBuild
+open Developer Command Prompt
+doskey build=echo [*** Running command '$*'] ^& %$*%
+set _CL_=/nologo /Bv /Be
+set PROMPT=($D $T) [$+$P]$S
+set $_demoRoot=c:\VcpkgDemos
+pushd %$_demoRoot%\msvc-experiments-demos\demos\VSTemplate\ConsoleApplication1
+rem note presence of vcpkg-configuration.json (not used)
+set demo1=msbuild.exe
+set demo2=msbuild /p:Configuration=Release /p:Platform=x64
+set demo3=msbuild /p:Configuration=Release /p:Platform=x86 /p:PreferredToolArchitecture=x64
+
+- MSBuild + Vcpkg integration
+open Native command shell
+rem Shows msbuild integration, VS/vcpkg coexistence, switching target- and host-architectures
+rem Does not show switching MSVC versions (can show switching WinSDK versions)
+title Demo #1 - MSBuild ConsoleApplication
+doskey build=echo [*** Running command '$*'] ^& %$*%
+set _CL_=/nologo /Bv /Be
+set PROMPT=($D $T) [$+$P]$S
+set $_demoRoot=c:\VcpkgDemos
+pushd %$_demoRoot%\msvc-experiments-demos\demos\VSTemplate\ConsoleApplication1
+set PATH.0=%PATH%
+curl -LO https://aka.ms/vcpkg-init.cmd
+call vcpkg-init.cmd
+set PATH.0=%PATH%
+set PATH=%PATH%;%VCPKG_ROOT%
+set $_vcpkgCmd="%VCPKG_ROOT%\vcpkg-init.cmd"
+set PATH=%PATH%;C:\Program Files\Microsoft Visual Studio\2022\Preview\MSBuild\Current\Bin\amd64
+where msbuild.exe
+set $_msbuildUseVcpkg=/p:EnableVcpkgArtifactsIntegration=True /p:DisableRegistryUse=True /p:CheckMSVCComponents=False
+set demo1=msbuild %$_msbuildUseVcpkg%
+set demo2=msbuild /p:Configuration=Release /p:Platform=x64 %$_msbuildUseVcpkg%
+set demo3=msbuild /p:Configuration=Release /p:Platform=x86 /p:PreferredToolArchitecture=x64 %$_msbuildUseVcpkg%
+
+2. Demo #2 - MSBuild NativeProjectSolution
+rem Shows msbuild integration w/Directory.Build.props, VS/vcpkg coexistence, MFC, ...
+rem Does not show switching MSVC versions (can show switching WinSDK versions)
+
+- MSBuild + Vcpkg integration
+open Native command shell
+title Demo #2 - MSBuild NativeProjectSolution
+doskey build=echo [*** Running command '$*'] ^& %$*%
+set _CL_=/nologo /Bv /Be
+set PROMPT=($D $T) [$+$P]$S
+set $_demoRoot=c:\VcpkgDemos
+pushd %$_demoRoot%\msvc-experiments-demos\demos\MSBuild\NativeProjectSolution
+set PATH.0=%PATH%
+set PATH=%PATH.0%;C:\Program Files\Microsoft Visual Studio\2022\Preview\MSBuild\Current\Bin\amd64
+where msbuild.exe
+set $_msbuildUseVcpkg=/p:EnableVcpkgArtifactsIntegration=True /p:DisableRegistryUse=True /p:CheckMSVCComponents=False
+set demo1=msbuild %$_msbuildUseVcpkg%
+set demo2=msbuild /p:Configuration=Release /p:Platform=x64 %$_msbuildUseVcpkg%
+set demo3=msbuild /p:Configuration=Release /p:Platform=x86 /p:PreferredToolArchitecture=x64 %$_msbuildUseVcpkg%
+
+3. Demo #3 - Command Shell builds
+rem Shows activations, switching MSVC & WinSDK versions, adding features (MFC, ASAN)
+uninstall VS
+open Native command shell
+title Demo #3 - Command Shell builds
+doskey build=echo [*** Running command '$*'] ^& %$*%
+@rem Set compiler environment variables
+@rem - /Bv = show compiler versions
+@rem - /Be = show environment variables (LIB, INCLUDE) being used by the compiler
+set _CL_=/nologo /Bv /Be
+set PROMPT=($D $T) [$+$P]$S
+set $_demoRoot=c:\VcpkgDemos
+pushd %$_demoRoot%\msvc-experiments-demos\demos\ShellEnv\HelloWorld
+curl -LO https://aka.ms/vcpkg-init.cmd
+call vcpkg-init.cmd
+set PATH.0=%PATH%
+set PATH=%PATH.0%;%USERPROFILE%\.vcpkg
+where vcpkg.exe
+for %e in (LIB INCLUDE) do @set %e
+set demo1=demo-project.cmd Hello.cpp target:x86 "/MD"
+set demo2=demo-project.cmd Hello.cpp target:x64 host:x86 "/MD"
+set demo3=demo-project.cmd Hello.cpp target:x86 host:x64 "/MTd"
+set demo4=demo-project.cmd Hello-MFC.cpp target:x64 
+set demo5=demo-project.cmd Hello-ASAN.cpp target:x64 host:x86
+set demo6=demo-project.cmd Hello.cpp target:arm64 
+@rem The demo catalog currently contains:
+@rem - 3 MSVC toolsets (14.28.29915, 14.29.30037, 14.32.31328) 
+@rem - 4 WinSDKs (10.0.17763, 18362, 19041, 22621)
+@rem Compilation options:
+@rem - /MT=static release; /MD=dynamic release
+@rem - /MTd=static debug; /MDd=dynamic debug
