@@ -16,11 +16,19 @@
             "name": "demo"
         }
     ],
-    "requires": {
-        "demo:tools/microsoft/msbuild/vc/Desktop/v143": "17.0.0"
-    },
     "demands": {
-        "not msbuild_only": {
+        "tag:msbuild-only": {
+            "requires": {
+                "demo:tools/microsoft/msbuild/vc/v143": "17.0.0"
+            }
+        },
+        "tag:headers": {
+            "requires": {
+                "demo:crts/microsoft/headers": "14.29.30037",
+                "demo:sdks/microsoft/windows/core": "10.0.19041"
+            }
+        },
+        "not tag": {
             "requires": {
                 "demo:microsoft/msvc": "14.29.30037",
                 "demo:crts/microsoft/desktop": "14.29.30037",
