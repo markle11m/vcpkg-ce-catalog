@@ -29,8 +29,6 @@
     "requires": {
         "demo:sdks/microsoft/windows": "*",
         "mydemo:crts/microsoft/desktop": "*",
-        "mydemo:crts/microsoft/headers": "*",
-        "mydemo:crts/microsoft/asan": "*",
         "mydemo:microsoft/msvc": "*"
     }
 }
