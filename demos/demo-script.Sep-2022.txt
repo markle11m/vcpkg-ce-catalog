@@ -29,7 +29,7 @@ get-vcpkg-demos.cmd
 
     @echo Getting demo sources...
     git clone https://github.com/markle11m/vcpkg-ce-catalog.git %$_demoRoot%\catalogs\vcpkg-ce-catalog.demo
-    pushd %$_demoRoot%\msvc-experiments-demos
+    pushd %$_demoRoot%\catalogs\vcpkg-ce-catalog.demo
     git checkout msvc-experiments
     popd
 
@@ -61,12 +61,12 @@ rem Does not show switching MSVC versions (can show switching WinSDK versions)
 
 - regular MSBuild
 open Developer Command Prompt
-doskey build=echo [*** Running command '$*'] ^& %$*%
 set _CL_=/nologo /Bv /Be
 set PROMPT=($D $T) [$+$P]$S
 set $_demoRoot=c:\VcpkgDemos
 pushd %$_demoRoot%\msvc-experiments-demos\demos\VSTemplate\ConsoleApplication1
 rem note presence of vcpkg-configuration.json (not used)
+doskey build=echo [*** Running command '%$*%'] ^& %$*%
 set demo1=msbuild.exe
 set demo2=msbuild /p:Configuration=Release /p:Platform=x86
 set demo3=msbuild /p:Configuration=Release /p:Platform=x64 /p:PreferredToolArchitecture=x86
@@ -76,24 +76,24 @@ open Native command shell
 rem Shows msbuild integration, VS/vcpkg coexistence, switching target- and host-architectures
 rem Does not show switching MSVC versions (can show switching WinSDK versions)
 title Demo #1 - MSBuild ConsoleApplication
-doskey build=echo [*** Running command '%$%*'] ^& %$*%
 set _CL_=/nologo /Bv /Be
 set PROMPT=($D $T) [$+$P]$S
 set $_demoRoot=c:\VcpkgDemos
-pushd %$_demoRoot%\msvc-experiments-demos\demos\VSTemplate\ConsoleApplication1
+pushd %$_demoRoot%\msvc-experiments-demos\demos
 set PATH.0=%PATH%
-curl -LO https://aka.ms/vcpkg-init.cmd
+rem curl -LO https://aka.ms/vcpkg-init.cmd
 call vcpkg-init.cmd
-set PATH.0=%PATH%
 set PATH=%PATH%;%VCPKG_ROOT%
 set $_vcpkgCmd="%VCPKG_ROOT%\vcpkg-init.cmd"
 set PATH=%PATH%;C:\Program Files\Microsoft Visual Studio\2022\Preview\MSBuild\Current\Bin\amd64
 where msbuild.exe
 set $_msbuildArgs=/m /t:rebuild
 set $_msbuildUseVcpkg=/p:EnableVcpkgArtifactsIntegration=True /p:DisableRegistryUse=True /p:CheckMSVCComponents=False
+doskey build=echo [*** Running command '%$*%'] ^& %$*%
 set demo1=msbuild %$_msbuildArgs% %$_msbuildUseVcpkg%
 set demo2=msbuild %$_msbuildArgs% /p:Configuration=Release /p:Platform=x86 %$_msbuildUseVcpkg%
 set demo3=msbuild %$_msbuildArgs% /p:Configuration=Release /p:Platform=x64 /p:PreferredToolArchitecture=x86 %$_msbuildUseVcpkg%
+pushd VSTemplate\ConsoleApplication1
 
 2. Demo #2 - MSBuild NativeProjectSolution
 rem Shows msbuild integration w/Directory.Build.props, VS/vcpkg coexistence, MFC, ...
@@ -102,23 +102,28 @@ rem Does not show switching MSVC versions (can show switching WinSDK versions)
 - MSBuild + Vcpkg integration
 open Native command shell
 title Demo #2 - MSBuild NativeProjectSolution
-doskey build=echo [*** Running command '%$*%'] ^& %$*%
 set _CL_=/nologo /Bv /Be
 set PROMPT=($D $T) [$+$P]$S
 set $_demoRoot=c:\VcpkgDemos
-pushd %$_demoRoot%\msvc-experiments-demos\demos\MSBuild\NativeProjectsSolution
+pushd %$_demoRoot%\msvc-experiments-demos\demos
 set PATH.0=%PATH%
-curl -LO https://aka.ms/vcpkg-init.cmd
+rem curl -LO https://aka.ms/vcpkg-init.cmd
 call vcpkg-init.cmd
 set PATH=%PATH%;%VCPKG_ROOT%
 set $_vcpkgCmd="%VCPKG_ROOT%\vcpkg-init.cmd"
 set PATH=%PATH.0%;C:\Program Files\Microsoft Visual Studio\2022\Preview\MSBuild\Current\Bin\amd64
 where msbuild.exe
-set $_msbuildArgs=/m /t:rebuild
-set $_msbuildUseVcpkg=/p:EnableVcpkgArtifactsIntegration=True /p:DisableRegistryUse=True /p:CheckMSVCComponents=False
-set demo1=msbuild %$_msbuildArgs% %$_msbuildUseVcpkg%
-set demo2=msbuild %$_msbuildArgs% /p:Configuration=Release /p:Platform=x86 %$_msbuildUseVcpkg%
-set demo3=msbuild %$_msbuildArgs% /p:Configuration=Release /p:Platform=x64 /p:PreferredToolArchitecture=x86 %$_msbuildUseVcpkg%
+set $_msbuildCommonArgs=/m /t:rebuild
+set $_msbuildUseVcpkg=
+set $_msbuildArgs=%$_msbuildCommonArgs% %$_msbuildUseVcpkg%
+rem doskey build=echo [*** Running command '%$*%'] ^& %$*%
+rem set demo1=msbuild %$_msbuildArgs%
+rem set demo2=msbuild %$_msbuildArgs% /p:Configuration=Release /p:Platform=x86
+rem set demo3=msbuild %$_msbuildArgs% /p:Configuration=Release /p:Platform=x64 /p:PreferredToolArchitecture=x86
+doskey demo1=for %s in ("msbuild %$_msbuildArgs%") do @echo %~s
+doskey demo2=for %s in ("msbuild %$_msbuildArgs% /p:Configuration=Release /p:Platform=x86") do @echo %~s
+doskey demo3=for %s in ("msbuild %$_msbuildArgs% /p:Configuration=Release /p:Platform=x64 /p:PreferredToolArchitecture=x86") do @echo %~s
+pushd MSBuild\NativeProjectsSolution
 
 3. Demo #3 - Command Shell builds
 rem Shows activations, switching MSVC & WinSDK versions, adding features (MFC, ASAN)
@@ -132,19 +137,25 @@ doskey build=echo [*** Running command '%$%*'] ^& %$*%
 set _CL_=/nologo /Bv /Be
 set PROMPT=($D $T) [$+$P]$S
 set $_demoRoot=c:\VcpkgDemos
-pushd %$_demoRoot%\msvc-experiments-demos\demos\ShellEnv\HelloWorld
-curl -LO https://aka.ms/vcpkg-init.cmd
-call vcpkg-init.cmd
+pushd %$_demoRoot%\msvc-experiments-demos\demos
 set PATH.0=%PATH%
-set PATH=%PATH.0%;%USERPROFILE%\.vcpkg
+rem curl -LO https://aka.ms/vcpkg-init.cmd
+call vcpkg-init.cmd
+set PATH=%PATH%;%VCPKG_ROOT%
 where vcpkg.exe
 for %e in (LIB INCLUDE) do @set %e
-set demo1=demo-project.cmd build hello.cpp target:x86 "/MD"
-set demo2=demo-project.cmd build hello.cpp target:x64 host:x86 "/MD"
-set demo3=demo-project.cmd build hello.cpp target:x86 host:x64 "/MTd"
-set demo4=demo-project.cmd build hello-MFC.cpp target:x64 
-set demo5=demo-project.cmd build hello-ASAN.cpp target:x64 host:x86 "/Zi /MD /fsanitize=address"
-set demo6=demo-project.cmd build hello.cpp target:arm64 
+rem set demo1a=demo-project.cmd build hello.cpp target:x86 "/MD"
+rem set demo2a=demo-project.cmd build hello.cpp target:x64 host:x86 "/MD"
+rem set demo3a=demo-project.cmd build hello.cpp target:x86 host:x64 "/MTd"
+rem set demo4a=demo-project.cmd build hello-MFC.cpp target:x64 
+rem set demo5a=demo-project.cmd build hello-ASAN.cpp target:x64 host:x86 "/Zi /MD /fsanitize=address"
+rem set demo6a=demo-project.cmd build hello.cpp target:arm64
+doskey demo1=for %s in ("vcpkg activate --target:x86" "cl.exe /EHsc /Bv /MD hello.cpp" "hello.exe" "vcpkg deactivate") do @echo %~s
+doskey demo2=for %s in ("vcpkg activate --target:x64 --x86" "cl.exe /EHsc /Bv /MD hello.cpp" "hello.exe" "vcpkg deactivate") do @echo %~s
+doskey demo3=for %s in ("vcpkg activate --target:x86 --x64" "cl.exe /EHsc /Bv /MTd hello.cpp" "hello.exe" "vcpkg deactivate") do @echo %~s
+doskey demo4=for %s in ("vcpkg activate --target:x64" "cl.exe /EHsc /Bv hello-MFC.cpp" "hello-MFC.exe" "vcpkg deactivate") do @echo %~s
+doskey demo5=for %s in ("vcpkg activate --target:x64 --x86" "cl.exe /EHsc /Bv /MD /Zi /fsanitize=address hello-ASAN.cpp" "hello-ASAN.exe" "vcpkg deactivate") do @echo %~s
+doskey demo6=for %s in ("vcpkg activate --target:arm64" "cl.exe /EHsc /Bv /MT hello.cpp" "vcpkg deactivate") do @echo %~s
 @rem The demo catalog currently contains:
 @rem - 3 MSVC toolsets (14.28.29915, 14.29.30037, 14.32.31328) 
 @rem - 4 WinSDKs (10.0.17763, 18362, 19041, 22621)
