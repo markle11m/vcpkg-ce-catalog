@@ -3,38 +3,51 @@
 goto :init
 
 :usage
-echo usage: %~nx0 ACTION [ARCH] ["EXTRA-ARGS"]
+echo usage: %~nx0 ACTION [FILE] [ARCH] ["EXTRA-ARGS"]
 echo.
 echo ^  ACTION      one of {clean build rebuild run}
+echo ^  FILE        name of the file to build
 echo ^  ARCH        target architecture to build, one of {x64, x86}
 echo ^  CL_OPTIONS  quoted string containing additional compiler options, e.g. "/O2 /Zi"
 echo.
 exit /b -100
 
 :init
-set _action=%1
-set _targetArch=%2
-set _extraArgs=%~3
-set _filenameRoot=hello
+set _validActions=clean build rebuild run
+set _validFiles=hello.cpp hello-MFC.cpp hello-ASAN.cpp
+set _validTargets=x64 x86
+set _action=
+set _filename=
+set _filenameRoot=
+set _targetArch=
 
-for %%a in (clean build rebuild run) do (
-    if "%_action%" == "%%a" goto :check_targetArch
-)
-echo %~n0: invalid action '%_action%'& exit /b 1
+:getargs
+set _arg=%1
+set _argT=%~1
+if "%_argT%" == "" goto :validateargs
+for %%a in (%_validActions%) do if /I "%%a" == "%_argT%" set _action=%_argT%& goto :nextarg
+for %%a in (%_validFiles%) do if /I "%%a" == "%_argT%" set _filename=%_argT%& goto :nextarg
+for %%a in (%_validTargets%) do if /I "%%a" == "%_argT%" set _targetArch=%_argT%& goto :nextarg
+if .%_arg%. == ."%_argT%". set _extraArgs=%_extraArgs% %_argT%& goto :nextarg
+echo - WARNING: ignoring unknown parameter '%_arg%'
+:nextarg
+shift
+goto :getargs
+
+:validateargs
 
 :check_targetArch
 if "%_targetArch%" == "" (
     echo INFO: no Platform specified - using x64
     set _targetArch=x64
 ) 
-if /I "%_targetArch%" NEQ "x64" if /I "%_targetArch%" NEQ "x86" (
-    echo invalid Platform architecture '%_targetArch%' - running x64 instead
-    set _targetArch=x64
-)
 set _archOutputDir=!_targetArch!
 if /I "%_targetArch%" == "x86" set _archOutputDir=Win32
 
 :start
+if "%_filename%" == "" echo ERROR: filename not specified & exit /b -1
+if not exist %_filename% echo ERROR: file '%_filename%' does not exist & exit /b -2
+for %%f in (%_filename%) do set _filenameRoot=%%~nf
 
 for %%i in (yes y true) do @if /I "%_PAUSE%" == "%%i" set _pauseBeforeCommands=true
 for %%i in (no n false) do @if /I "%_PAUSE%" == "%%i" set _pauseBeforeCommands=false
@@ -51,7 +64,7 @@ exit /b 0
 goto :done
 
 :build
-set $cmd=cl.exe /EHsc /Bv %_extraArgs% %_filenameRoot%..cpp
+set $cmd=cl.exe /EHsc /Bv %_extraArgs% %_filenameRoot%.cpp
 echo *** Building for %_targetArch%... [command=%$cmd%]
 if /I "%_pauseBeforeCommands%" == "true" pause
 %$cmd%
@@ -66,7 +79,7 @@ goto :done
 :run
 set $_exeFile=.\%_filenameRoot%.exe
 if not exist %$_exeFile% (
-    echo - error: unable to run - '%$_exeFile%' does not exist
+    echo - ERROR: unable to run - '%$_exeFile%' does not exist
     exit /b 1
 )
 echo *** Running '%$_exeFile%'...
