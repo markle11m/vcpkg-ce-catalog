@@ -139,12 +139,12 @@ set PATH.0=%PATH%
 set PATH=%PATH.0%;%USERPROFILE%\.vcpkg
 where vcpkg.exe
 for %e in (LIB INCLUDE) do @set %e
-set demo1=demo-project.cmd hello.cpp target:x86 "/MD"
-set demo2=demo-project.cmd hello.cpp target:x64 host:x86 "/MD"
-set demo3=demo-project.cmd hello.cpp target:x86 host:x64 "/MTd"
-set demo4=demo-project.cmd hello-MFC.cpp target:x64 
-set demo5=demo-project.cmd hello-ASAN.cpp target:x64 host:x86
-set demo6=demo-project.cmd hello.cpp target:arm64 
+set demo1=demo-project.cmd build hello.cpp target:x86 "/MD"
+set demo2=demo-project.cmd build hello.cpp target:x64 host:x86 "/MD"
+set demo3=demo-project.cmd build hello.cpp target:x86 host:x64 "/MTd"
+set demo4=demo-project.cmd build hello-MFC.cpp target:x64 
+set demo5=demo-project.cmd build hello-ASAN.cpp target:x64 host:x86 "/Zi /MD /fsanitize=address"
+set demo6=demo-project.cmd build hello.cpp target:arm64 
 @rem The demo catalog currently contains:
 @rem - 3 MSVC toolsets (14.28.29915, 14.29.30037, 14.32.31328) 
 @rem - 4 WinSDKs (10.0.17763, 18362, 19041, 22621)

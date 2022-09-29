@@ -3,11 +3,12 @@
 goto :init
 
 :usage
-echo usage: %~nx0 ACTION [FILE] [ARCH] ["EXTRA-ARGS"]
+echo usage: %~nx0 ACTION [FILE] [TARGET] [HOST] ["EXTRA-ARGS"]
 echo.
 echo ^  ACTION      one of {clean build rebuild run}
 echo ^  FILE        name of the file to build
-echo ^  ARCH        target architecture to build, one of {x64, x86}
+echo ^  TARGET      target architecture to build, one of {target:x64, target:x86}
+echo ^  HOST        host architecture for the build toolset, one of {host:x64, host:x86}
 echo ^  CL_OPTIONS  quoted string containing additional compiler options, e.g. "/O2 /Zi"
 echo.
 exit /b -100
@@ -15,7 +16,8 @@ exit /b -100
 :init
 set _validActions=clean build rebuild run
 set _validFiles=hello.cpp hello-MFC.cpp hello-ASAN.cpp
-set _validTargets=x64 x86
+set _validTargets=target:x64 target:x86
+set _validHosts=host:x64 host:x86
 set _action=
 set _filename=
 set _filenameRoot=
@@ -28,6 +30,7 @@ if "%_argT%" == "" goto :validateargs
 for %%a in (%_validActions%) do if /I "%%a" == "%_argT%" set _action=%_argT%& goto :nextarg
 for %%a in (%_validFiles%) do if /I "%%a" == "%_argT%" set _filename=%_argT%& goto :nextarg
 for %%a in (%_validTargets%) do if /I "%%a" == "%_argT%" set _targetArch=%_argT%& goto :nextarg
+for %%a in (%_validHosts%) do if /I "%%a" == "%_argT%" set _hostArch=%_argT%& goto :nextarg
 if .%_arg%. == ."%_argT%". set _extraArgs=%_extraArgs% %_argT%& goto :nextarg
 echo - WARNING: ignoring unknown parameter '%_arg%'
 :nextarg

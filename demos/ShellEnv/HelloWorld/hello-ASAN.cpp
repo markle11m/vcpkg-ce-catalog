@@ -14,9 +14,18 @@ int HelloCppStyle(void)
     return 2;
 }
 
+int x[100];
+int HelloASAN(void)
+{
+    printf("Hello from ASAN, gonna crash now...!\n");
+    x[100] = 5; // Boom!
+    return 0;
+}
+
 int main()
 {
     HelloCStyle();
     HelloCppStyle();
+    HelloASAN();
     return 0;
 }
