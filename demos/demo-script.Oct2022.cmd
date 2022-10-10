@@ -1,9 +1,9 @@
 @echo off
 @rem Script/commands for vcpkg artifacts demos
-set _shellCount=3
+set _shellCount=4
 if "%1" == "" echo no demo# specified; please provide a number between 0 and %_shellCount%
 set demo0=
-for %%n in (0 1 2 3) do if "%1" == "%%n" goto :setup_shell_%%n
+for /l %%n in (0,1,4) do if "%1" == "%%n" goto :setup_shell_%%n
 echo invalid demo# '%1' specified; please provide a number between 0 and %_shellCount%
 goto :done
 
@@ -96,7 +96,7 @@ call :add_msbuild
 pushd MSBuild\NativeProjectsSolution
 set $_msbuildUseVcpkg=
 set demo0=MSBuild restore
-doskey demo0=for %%s in ("msbuild /t:restore") do @echo %%~s
+doskey d0=for %%s in ("Demo0: MSBuild restore" "msbuild /t:restore") do @echo %%~s
 call :msbuild_demo_common
 goto :done
 
@@ -117,14 +117,14 @@ call :demo_common
 pushd ShellEnv\HelloWorld
 call :setup_vcpkg
 for %%e in (LIB INCLUDE) do @set %%e
-doskey demo1=for %%s in ("Demo1: target x86" "vcpkg activate --target:x86" "cl.exe /EHsc /Bv /MD hello.cpp" "hello.exe" "vcpkg deactivate") do @echo %%~s
-doskey demo2=for %%s in ("Demo2: target x64, x86-hosted tools" "vcpkg activate --target:x64 --x86" "cl.exe /EHsc /Bv /MD hello.cpp" "hello.exe" "vcpkg deactivate") do @echo %%~s
-doskey demo3=for %%s in ("Demo3: target x86, x64-hosted tools" "vcpkg activate --target:x86 --x64" "cl.exe /EHsc /Bv /MTd hello.cpp" "hello.exe" "vcpkg deactivate") do @echo %%~s
-doskey demo4=for %%s in ("Demo4: add MFC" "vcpkg activate --target:x64" "cl.exe /EHsc /Bv hello-MFC.cpp" "hello-MFC.exe" "vcpkg deactivate") do @echo %%~s
-doskey demo5=for %%s in ("Demo5: add ASAN" "vcpkg activate --target:x64 --x86" "cl.exe /EHsc /Bv /MD /Zi /fsanitize=address hello-ASAN.cpp" "hello-ASAN.exe" "vcpkg deactivate") do @echo %%~s
-doskey demo6=for %%s in ("Demo6: target arm64" "vcpkg activate --target:arm64" "cl.exe /EHsc /Bv /MT hello.cpp" "vcpkg deactivate") do @echo %%~s
-doskey demo7=for %%s in ("Demo7: change toolset version to 14.28.19915 and rerun demo1" "vcpkg activate --target:arm64" "cl.exe /EHsc /Bv /MT hello.cpp" "vcpkg deactivate") do @echo %%~s
-doskey demo8=for %%s in ("Demo8: change Windows SDK version to 10.0.17763 and rerun demo1" "vcpkg activate --target:arm64" "cl.exe /EHsc /Bv /MT hello.cpp" "vcpkg deactivate") do @echo %%~s
+doskey d1=for %%s in ("Demo1: target x86" "vcpkg activate --target:x86" "cl.exe /EHsc /Bv /MD hello.cpp" "hello.exe" "vcpkg deactivate") do @echo %%~s
+doskey d2=for %%s in ("Demo2: target x64, x86-hosted tools" "vcpkg activate --target:x64 --x86" "cl.exe /EHsc /Bv /MD hello.cpp" "hello.exe" "vcpkg deactivate") do @echo %%~s
+doskey d3=for %%s in ("Demo3: target x86, x64-hosted tools" "vcpkg activate --target:x86 --x64" "cl.exe /EHsc /Bv /MTd hello.cpp" "hello.exe" "vcpkg deactivate") do @echo %%~s
+doskey d4=for %%s in ("Demo4: add ATL/MFC" "update vcpkg-configuration.json" "vcpkg activate --target:x64" "cl.exe /EHsc /Bv hello-ATL.cpp" "hello-ATL.exe" "vcpkg deactivate") do @echo %%~s
+doskey d5=for %%s in ("Demo5: add ASAN" "update vcpkg-configuration.json" "vcpkg activate --target:x64 --x86" "cl.exe /EHsc /Bv /MD /Zi /fsanitize=address hello-ASAN.cpp" "hello-ASAN.exe" "vcpkg deactivate") do @echo %%~s
+doskey d6=for %%s in ("Demo6: target arm64" "vcpkg activate --target:arm64" "cl.exe /EHsc /Bv /MT hello.cpp" "vcpkg deactivate") do @echo %%~s
+doskey d7=for %%s in ("Demo7: change toolset version to 14.28.29915 and rerun demo1" "update vcpkg-configuration.json" "vcpkg activate --target:x64" "cl.exe /EHsc /Bv /MT hello.cpp" "vcpkg deactivate") do @echo %%~s
+doskey d8=for %%s in ("Demo8: change Windows SDK version to 10.0.17763 and rerun demo1" "update vcpkg-configuration.json" "vcpkg activate --target:x64" "cl.exe /EHsc /Bv /MT hello.cpp" "vcpkg deactivate") do @echo %%~s
 echo.
 echo Demos:
 echo 1. Target x86, dynamic linkage
@@ -168,9 +168,9 @@ exit /b 0
 where msbuild.exe
 set $_msbuildCommonArgs=/m /t:rebuild
 set $_msbuildArgs=%$_msbuildCommonArgs% %$_msbuildUseVcpkg%
-doskey demo1=for %%s in ("msbuild %$_msbuildArgs%") do @echo %%~s
-doskey demo2=for %%s in ("msbuild %$_msbuildArgs% /p:Configuration=Release /p:Platform=x86") do @echo %%~s
-doskey demo3=for %%s in ("msbuild %$_msbuildArgs% /p:Configuration=Release /p:Platform=x64 /p:PreferredToolArchitecture=x86") do @echo %%~s
+doskey d1=for %%s in ("Demo1: MSBuild default" "msbuild %$_msbuildArgs%") do @echo %%~s
+doskey d2=for %%s in ("Demo1: MSBuild release x86, default tools host-architecture" "msbuild %$_msbuildArgs% /p:Configuration=Release /p:Platform=x86") do @echo %%~s
+doskey d3=for %%s in ("Demo1: MSBuild release x64, x86-hosted tools" "msbuild %$_msbuildArgs% /p:Configuration=Release /p:Platform=x64 /p:PreferredToolArchitecture=x86") do @echo %%~s
 echo.
 echo Demos:
 if "%demo0%" NEQ "" echo 0. %demo0%

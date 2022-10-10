@@ -18,7 +18,7 @@ int HelloCppStyle(void)
 
 int HelloATLStyle(void)
 {
-    CString cString = "Hello from MFC";
+    CString cString = "Hello from ATL";
     printf("%s, using printf [function %s]\n", cString.GetString(), __FUNCTION__);
     return 1;
 }
