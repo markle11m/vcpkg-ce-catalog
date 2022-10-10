@@ -6,6 +6,6 @@
 		<IntDir>$(MsbuildThisFileDirectory)Outputs\Intermediate\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</IntDir>
 	</PropertyGroup>
 
-	 <!--<Import Project="$(MsbuildThisFileDirectory)EnableVcpkgArtifacts.props"/>--> 
+	 <Import Project="$(MsbuildThisFileDirectory)EnableVcpkgArtifacts.props"/> 
 </Project>
 
