@@ -1,4 +1,5 @@
 {
+    "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg-tool/main/docs/artifact.schema.json",
     "default-registry": {
         "kind": "git",
         "baseline": "032d9d0820db290ce9ff644dabfdf564343013ae",
