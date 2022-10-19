@@ -1,4 +1,5 @@
 {
+    "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg-tool/main/docs/artifact.schema.json",
     "default-registry": {
         "kind": "git",
         "baseline": "032d9d0820db290ce9ff644dabfdf564343013ae",
@@ -17,8 +18,13 @@
         },
         {
             "kind": "artifact",
-            "location": "https://github.com/markle11m/vcpkg-ce-catalog/archive/32029b6099dfc096be52ca9d92214cfd615ed46b.zip",
+            "location": "https://github.com/markle11m/vcpkg-ce-catalog/archive/refs/heads/msvc-experiments.zip",
             "name": "mydemo"
+        },
+        {
+            "kind": "artifact",
+            "location": "https://github.com/markle11m/vcpkg-ce-catalog/archive/32029b6099dfc096be52ca9d92214cfd615ed46b.zip",
+            "name": "mydemo-old"
         },
         {
             "kind": "artifact",
