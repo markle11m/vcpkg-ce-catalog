@@ -130,7 +130,7 @@ echo Demos:
 echo 1. Target x86, dynamic linkage
 echo 2. Target x86, x64-hosted tools, dynamic linkage
 echo 3. Target x64, x86-hosted tools
-echo 4. Target x64, using MFC
+echo 4. Target x64, using ATL
 echo 5. Target x86, using ASAN
 echo 6. Target arm64
 echo 7. Change toolset version to 14.28.29915 and repeat demo1
