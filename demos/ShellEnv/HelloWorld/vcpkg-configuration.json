@@ -34,7 +34,7 @@
     ],
     "requires": {
         "demo:sdks/microsoft/windows": "*",
-        "mydemo:crts/microsoft/desktop": "*",
-        "mydemo:microsoft/msvc": "*"
+        "mydemo:crts/microsoft/desktop": "14.30.30705",
+        "mydemo:microsoft/msvc": "14.30.30705"
     }
 }
