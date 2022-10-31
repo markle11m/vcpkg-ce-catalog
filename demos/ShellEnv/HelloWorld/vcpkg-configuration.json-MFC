@@ -23,7 +23,7 @@
         },
         {
             "kind": "artifact",
-            "location": "https://github.com/markle11m/vcpkg-ce-catalog/archive/32029b6099dfc096be52ca9d92214cfd615ed46b.zip",
+            "location": "https://github.com/markle11m/vcpkg-ce-catalog/archive/d7c1a4f7a9ec671cf5a248728c012ad2c5ff3262.zip",
             "name": "mydemo-old"
         },
         {
@@ -34,8 +34,8 @@
     ],
     "requires": {
         "demo:sdks/microsoft/windows": "*",
-        "mydemo:crts/microsoft/desktop": "*",
-        "mydemo:crts/microsoft/mfc/unicode": "*",
-        "mydemo:microsoft/msvc": "*"
+        "mydemo:crts/microsoft/desktop": "14.30.30705",
+        "mydemo:crts/microsoft/mfc/unicode": "14.30.30705",
+        "mydemo:microsoft/msvc": "14.30.30705"
     }
 }
