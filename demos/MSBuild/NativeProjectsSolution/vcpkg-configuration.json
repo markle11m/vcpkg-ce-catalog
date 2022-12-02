@@ -33,9 +33,14 @@
         }
     ],
     "demands": {
+        "tag:msbuild-bootstrap": {
+            "requires": {
+                "local:microsoft.vs.msbuild": "17.4.0"
+            }
+        },
         "tag:msbuild-only": {
             "requires": {
-                "demo:tools/microsoft/msbuild/vc/v143": "17.0.0"
+                "local:microsoft.vs.msbuild.vc.v143": "17.4.0"
             }
         },
         "tag:headers": {
