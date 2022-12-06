@@ -30,12 +30,12 @@
     "demands": {
         "tag:msbuild-bootstrap": {
             "requires": {
-                "local:microsoft.vs.msbuild": "17.4.0"
+                "mydemo:microsoft.vs.msbuild": "17.4.0"
             }
         },
         "tag:msbuild-only": {
             "requires": {
-                "local:microsoft.vs.msbuild.vc.v143": "17.4.0"
+                "mydemo:microsoft.vs.msbuild.vc.v143": "17.4.0"
             }
         },
         "tag:headers": {
