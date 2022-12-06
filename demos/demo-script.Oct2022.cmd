@@ -97,6 +97,7 @@ pushd MSBuild\NativeProjectsSolution
 set $_msbuildUseVcpkg=
 set demo0=MSBuild restore
 doskey d0=for %%s in ("Demo0: MSBuild restore" "msbuild /t:restore") do @echo %%~s
+doskey r1=msbuild /t:restore
 call :msbuild_demo_common
 goto :done
 
@@ -121,11 +122,11 @@ set _clean="del *.obj *.exe *.pdb"
 doskey d1=for %%s in ("Demo1: target x86" %_clean% "vcpkg activate --target:x86" "cl.exe /EHsc /Bv /MD hello.cpp" "hello.exe" "vcpkg deactivate") do @echo %%~s
 doskey d2=for %%s in ("Demo2: target x64, x86-hosted tools" %_clean% "vcpkg activate --target:x64 --x86" "cl.exe /EHsc /Bv /MD hello.cpp" "hello.exe" "vcpkg deactivate") do @echo %%~s
 doskey d3=for %%s in ("Demo3: target x86, x64-hosted tools" %_clean% "vcpkg activate --target:x86 --x64" "cl.exe /EHsc /Bv /MTd hello.cpp" "hello.exe" "vcpkg deactivate") do @echo %%~s
-doskey d4=for %%s in ("Demo4: add ATL/MFC" "update vcpkg-configuration.json" %_clean% "vcpkg activate --target:x64" "cl.exe /EHsc /Bv hello-ATL.cpp" "hello-ATL.exe" "vcpkg deactivate") do @echo %%~s
-doskey d5=for %%s in ("Demo5: add ASAN" "update vcpkg-configuration.json" %_clean% "vcpkg activate --target:x64 --x86" "cl.exe /EHsc /Bv /MD /Zi /fsanitize=address hello-ASAN.cpp" "hello-ASAN.exe" "vcpkg deactivate") do @echo %%~s
+doskey d4=for %%s in ("Demo4: add ATL/MFC" "add crts/microsoft/atl to vcpkg-configuration.json" %_clean% "vcpkg activate --target:x64" "cl.exe /EHsc /Bv hello-ATL.cpp" "hello-ATL.exe" "vcpkg deactivate") do @echo %%~s
+doskey d5=for %%s in ("Demo5: add ASAN" "add crts/microsoft/asan to vcpkg-configuration.json" %_clean% "vcpkg activate --target:x64 --x86" "cl.exe /EHsc /Bv /MD /Zi /fsanitize=address hello-ASAN.cpp" "hello-ASAN.exe" "vcpkg deactivate") do @echo %%~s
 doskey d6=for %%s in ("Demo6: target arm64" %_clean% "vcpkg activate --target:arm64" "cl.exe /EHsc /Bv /MT hello.cpp" "vcpkg deactivate") do @echo %%~s
-doskey d7=for %%s in ("Demo7: change toolset version to 14.28.29915 and rerun demo1" "update vcpkg-configuration.json" %_clean% "vcpkg activate --target:x64" "cl.exe /EHsc /Bv /MT hello.cpp" "vcpkg deactivate") do @echo %%~s
-doskey d8=for %%s in ("Demo8: change Windows SDK version to 10.0.17763 and rerun demo1" "update vcpkg-configuration.json" %_clean% "vcpkg activate --target:x64" "cl.exe /EHsc /Bv /MT hello.cpp" "vcpkg deactivate") do @echo %%~s
+doskey d7=for %%s in ("Demo7: change toolset version to 14.32.31328 and rerun demo1" "update vcpkg-configuration.json" %_clean% "vcpkg activate --target:x64" "cl.exe /EHsc /Bv /MT hello.cpp" "hello.exe" "vcpkg deactivate") do @echo %%~s
+doskey d8=for %%s in ("Demo8: change Windows SDK version to 10.0.17763 and rerun demo1" "update vcpkg-configuration.json" %_clean% "vcpkg activate --target:x64" "cl.exe /EHsc /Bv /MT hello.cpp" "hello.exe" "vcpkg deactivate") do @echo %%~s
 echo.
 echo Demos:
 echo 1. Target x86, dynamic linkage
