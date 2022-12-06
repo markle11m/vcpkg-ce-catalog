@@ -32,7 +32,7 @@ if exist .\vcpkg-init.cmd (
 :end_install_vcpkg
 
 :install_empty_manifest
-echo Activating empty manifest to bootstrap core dependencies...
+echo Activating empty manifest to bootstrap core vcpkg dependencies...
 set $cmd=%$_cmdVcpkg% activate
 call :run_command - activate 
 

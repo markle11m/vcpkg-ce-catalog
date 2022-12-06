@@ -11,8 +11,6 @@ goto :done
 @rem ----------------
 :setup_shell_0
 title Vcpkg artifacts demo machine prep
-appwiz.cpl
-set PAUSE=no
 
 @rem Install git [if needed]
 @rem Git homepage: start https://git-scm.com/
@@ -21,7 +19,8 @@ set PAUSE=no
 
 set $_demoRoot=c:\VcpkgDemos
 set PROMPT=($D $T) [$+$P]$S
-echo Begin setting up demo at %DATE% %TIME%...
+set _demoSetupStart=%DATE% %TIME%
+echo Begin setting up demo at %_demoSetupStart%...
 echo Creating demo directory %$_demoRoot%...
 if exist %$_demoRoot% rd /s /q %$_demoRoot%
 md %$_demoRoot%
@@ -41,8 +40,15 @@ git checkout msvc-experiments
 popd
 
 @rem Install latest VS internal dogfood build with default Desktop C++ workload
-echo Getting latest VS installer (internal dogfood build); please install default Desktop C++ workload
-start https://aka.ms/vs/17/intpreview/vs_community.exe
+set /P _responseT=Install VS (latest internal dogfood build)? [y/n] 
+set _fInstallingVS=false
+if "%_responseT:~0,1%" == "y" (
+    echo - Please install the Desktop C++ workload:
+    echo ^  - for the C++ toolset and MSBuild, use default options
+    echo ^  - for MSBuild components only, select just 'C++ core desktop features'
+    %_echo% start https://aka.ms/vs/17/intpreview/vs_community.exe
+    set _fInstallingVS=true
+)
 
 @rem Install and bootstrap vcpkg
 @rem To install a particular release of the vcpkg tool (by release date)
@@ -56,10 +62,19 @@ set PATH=%PATH%;%VCPKG_ROOT%
 where.exe vcpkg
 set $_vcpkgCmd="%VCPKG_ROOT%\vcpkg-init.cmd"
 cd Bootstrap\Vcpkg
+set _PAUSE=no
 call bootstrap.cmd
+set _PAUSE=
 
-pause
-echo Finished installing demo prereqs at %DATE% %TIME%.
+@rem If installing VS, pause here and continue when the VS install completes (to report accurate finish time).
+if "%_fInstallingVS%" == "true" pause
+set _demoSetupFinish=%DATE% %TIME%
+echo Finished installing demo at %_demoSetupFinish%.
+echo.
+echo Summary:
+echo - setup started:	%_demoSetupStart%
+echo - setup finished:	%_demoSetupFinish%
+echo.
 goto :done
 
 @rem Demo #1 - MSBuild ConsoleApplication (VSDevCmd)
@@ -81,9 +96,9 @@ title Demo #2 - MSBuild ConsoleApplication (vcpkg)
 call :demo_common
 call :setup_vcpkg
 call :add_msbuild
-pushd VSTemplate\ConsoleApplication1
 set $_msbuildUseVcpkg=/p:EnableVcpkgArtifactsIntegration=True /p:DisableRegistryUse=True /p:CheckMSVCComponents=False
 call :msbuild_demo_common
+pushd VSTemplate\ConsoleApplication1 
 goto :done
 
 @rem 3. Demo #3 - MSBuild NativeProjectsSolution (vcpkg)
@@ -93,12 +108,12 @@ title Demo #3 - MSBuild NativeProjectsSolution (vcpkg)
 call :demo_common
 call :setup_vcpkg
 call :add_msbuild
-pushd MSBuild\NativeProjectsSolution
 set $_msbuildUseVcpkg=
 set demo0=MSBuild restore
 doskey d0=for %%s in ("Demo0: MSBuild restore" "msbuild /t:restore") do @echo %%~s
-doskey r1=msbuild /t:restore
+doskey r0=msbuild /t:restore
 call :msbuild_demo_common
+pushd MSBuild\NativeProjectsSolution 
 goto :done
 
 @rem Demo #4 - Command Shell builds
@@ -171,8 +186,8 @@ where msbuild.exe
 set $_msbuildCommonArgs=/m /t:rebuild
 set $_msbuildArgs=%$_msbuildCommonArgs% %$_msbuildUseVcpkg%
 doskey d1=for %%s in ("Demo1: MSBuild default" "msbuild %$_msbuildArgs%") do @echo %%~s
-doskey d2=for %%s in ("Demo1: MSBuild release x86, default tools host-architecture" "msbuild %$_msbuildArgs% /p:Configuration=Release /p:Platform=x86") do @echo %%~s
-doskey d3=for %%s in ("Demo1: MSBuild release x64, x86-hosted tools" "msbuild %$_msbuildArgs% /p:Configuration=Release /p:Platform=x64 /p:PreferredToolArchitecture=x86") do @echo %%~s
+doskey d2=for %%s in ("Demo2: MSBuild release x86, default tools host-architecture" "msbuild %$_msbuildArgs% /p:Configuration=Release /p:Platform=x86") do @echo %%~s
+doskey d3=for %%s in ("Demo3: MSBuild release x64, x86-hosted tools" "msbuild %$_msbuildArgs% /p:Configuration=Release /p:Platform=x64 /p:PreferredToolArchitecture=x86") do @echo %%~s
 doskey r1=msbuild %$_msbuildArgs%
 doskey r2=msbuild %$_msbuildArgs% /p:Configuration=Release /p:Platform=x86
 doskey r3=msbuild %$_msbuildArgs% /p:Configuration=Release /p:Platform=x64 /p:PreferredToolArchitecture=x86
