@@ -40,14 +40,18 @@ git checkout msvc-experiments
 popd
 
 @rem Install latest VS internal dogfood build with default Desktop C++ workload
-set /P _responseT=Install VS (latest internal dogfood build)? [y/n] 
 set _fInstallingVS=false
+set /P _responseT=Install VS (latest internal dogfood build)? [y/n] 
 if "%_responseT:~0,1%" == "y" (
     echo - Please install the Desktop C++ workload:
     echo ^  - for the C++ toolset and MSBuild, use default options
     echo ^  - for MSBuild components only, select just 'C++ core desktop features'
-    %_echo% start https://aka.ms/vs/17/intpreview/vs_community.exe
+    rem %_echo% start https://aka.ms/vs/17/intpreview/vs_community.exe
+    pushd %TEMP%
+    %_echo% curl -LO https://aka.ms/vs/17/intpreview/vs_community.exe
+    if exist .\vs_community.exe start vs_community.exe
     set _fInstallingVS=true
+    popd
 )
 
 @rem Install and bootstrap vcpkg
@@ -126,9 +130,13 @@ goto :done
 @rem - /MTd=static debug; /MDd=dynamic debug
 :setup_shell_4
 title Demo #4 - Command Shell builds
-echo Uninstall MSVC tools from VS...
-appwiz.cpl
-pause
+set _fLaunchAppWiz=false
+set /P _responseT=Uninstall (or modify) VS? [y/n] 
+if "%_responseT:~0,1%" == "y" (
+    set _fLaunchAppWiz=true    
+    start appwiz.cpl
+    pause
+)
 call :demo_common
 pushd ShellEnv\HelloWorld
 call :setup_vcpkg
