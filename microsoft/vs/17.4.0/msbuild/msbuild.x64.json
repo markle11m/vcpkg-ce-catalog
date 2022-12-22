@@ -24,7 +24,8 @@
             "Microsoft.VisualStudio.NuGet.Core (skipped: NuGetSDKResolver is in NuGet.BuildTools)",
             "Microsoft.DataAI.NuGetRecommender",
             "Microsoft.VisualStudio.NuGet.BuildTools",
-            "Microsoft.VisualStudio.VC.MSBuild.v170.base (+resources)"
+            "Microsoft.VisualStudio.VC.MSBuild.v170.base (+resources)",
+            "Microsoft.CodeAnalysis.Compilers.x64 (Roslyn compilers and MSBuild .targets)"
         ]
     },
     "install": [
@@ -189,6 +190,13 @@
             "sha256": "32f042164bc0f1a6546e1194a731b4dcf83152bbf5bb18a1565e5c9b02393714",
             "lang": "zh-TW",
             "strip": 5
+        },
+        {
+            "unzip": [
+                "https://download.visualstudio.microsoft.com/download/pr/cde982a4-682b-4d9d-b852-53a3116d0014/685356c63853bf13d06a933d5cb15dfd66cb59af8ca969d997d0cc62a59720ea/Microsoft.CodeAnalysis.Compilers.x64.vsix"
+            ],
+            "sha256": "685356c63853bf13d06a933d5cb15dfd66cb59af8ca969d997d0cc62a59720ea",
+            "strip": 1
         }
     ]
 }
