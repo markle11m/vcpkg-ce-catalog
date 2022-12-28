@@ -13,7 +13,7 @@
     },
     "exports": {
         "paths": {
-            "PATH": "MSBuild/Current/bin/amd64",
+            "PATH": "MSBuild/Current/Bin/amd64",
             "VCTargetsPath": "MSBuild/Microsoft/VC/v170/"
         },
         "environment": [
@@ -25,7 +25,8 @@
             "Microsoft.DataAI.NuGetRecommender",
             "Microsoft.VisualStudio.NuGet.BuildTools",
             "Microsoft.VisualStudio.VC.MSBuild.v170.base (+resources)",
-            "Microsoft.CodeAnalysis.Compilers.x64 (Roslyn compilers and MSBuild .targets)"
+            "Microsoft.CodeAnalysis.Compilers.x64 (Roslyn compilers and MSBuild .targets)",
+            "Microsoft.Net.Core.SDK.MSBuildExtensions (Roslyn project support)"
         ]
     },
     "install": [
@@ -196,6 +197,13 @@
                 "https://download.visualstudio.microsoft.com/download/pr/cde982a4-682b-4d9d-b852-53a3116d0014/685356c63853bf13d06a933d5cb15dfd66cb59af8ca969d997d0cc62a59720ea/Microsoft.CodeAnalysis.Compilers.x64.vsix"
             ],
             "sha256": "685356c63853bf13d06a933d5cb15dfd66cb59af8ca969d997d0cc62a59720ea",
+            "strip": 1
+        },
+        {
+            "unzip": [
+                "https://download.visualstudio.microsoft.com/download/pr/de71f641-13a1-4991-92dc-ba1d44ac1605/3f6f307a7646ee6cacf9d76d8778cf937be8b2f95614cdb4797b2ac0ed0daaa1/payload.vsix"
+            ],
+            "sha256": "3f6f307a7646ee6cacf9d76d8778cf937be8b2f95614cdb4797b2ac0ed0daaa1",
             "strip": 1
         }
     ]

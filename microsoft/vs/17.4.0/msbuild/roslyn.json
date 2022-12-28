@@ -1,0 +1,21 @@
+{
+    "id": "microsoft.vs.roslyn",
+    "version": "17.4.0",
+    "summary": "VBCS compilers (Roslyn)",
+    "options": [
+        "dependencyOnly"
+    ],
+    "contacts": {
+        "Vcpkg Team": {
+            "email": "vcpkg@microsoft.com",
+            "role": "publisher"
+        }
+    },
+    "demands": {
+        "x64": {
+            "requires": {
+                "microsoft.vs.roslyn.x64": "17.4.0"
+            }
+        }
+    }
+}
