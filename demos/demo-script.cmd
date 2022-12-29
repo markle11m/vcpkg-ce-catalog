@@ -170,6 +170,9 @@ exit /b 0
 set _CL_=/nologo /Bv /Be
 set PROMPT=($D $T) [$+$P]$S
 set $_demoRoot=c:\VcpkgDemos
+rem Remove all .vcpkg subdirectories
+doskey rmdir_vcpkg=for /F "delims=" %d in ('dir "*vcpkg" /AD /B /S 2^^^>nul') do @if "%~nxd" == ".vcpkg" rd /s /q "%~d"
+doskey show_vcpkg_macros=doskey /macros ^| findstr /i "_vcpkg vcpkg_"
 pushd %$_demoRoot%\msvc-experiments-demos\demos
 exit /b 0
 
