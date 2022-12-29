@@ -79,6 +79,7 @@ echo Summary:
 echo - setup started:	%_demoSetupStart%
 echo - setup finished:	%_demoSetupFinish%
 echo.
+title Vcpkg demo installation complete
 goto :done
 
 @rem Demo #1 - MSBuild ConsoleApplication (VSDevCmd)
@@ -88,7 +89,7 @@ goto :done
 set _vsdevcmd="C:\Program Files\Microsoft Visual Studio\2022\Preview\Common7\Tools\VsDevCmd.bat"
 call %_vsdevcmd%
 call :demo_common
-pushd VSTemplate\ConsoleApplication1
+pushd VSTemplate\MultiLangSolution1
 set $_msbuildUseVcpkg=
 call :msbuild_demo_common
 goto :done
@@ -102,7 +103,7 @@ call :setup_vcpkg
 call :add_msbuild
 set $_msbuildUseVcpkg=/p:EnableVcpkgArtifactsIntegration=True /p:DisableRegistryUse=True /p:CheckMSVCComponents=False
 call :msbuild_demo_common
-pushd VSTemplate\ConsoleApplication1 
+pushd VSTemplate\MultiLangSolution1
 goto :done
 
 @rem 3. Demo #3 - MSBuild NativeProjectsSolution (vcpkg)
@@ -140,6 +141,8 @@ if "%_responseT:~0,1%" == "y" (
 call :demo_common
 pushd ShellEnv\HelloWorld
 call :setup_vcpkg
+call :where_vcpkg_tools
+echo.
 for %%e in (LIB INCLUDE) do @set %%e
 set _clean="del *.obj *.exe *.pdb"
 doskey d1=for %%s in ("Demo1: target x86" %_clean% "vcpkg activate --target:x86" "cl.exe /EHsc /Bv /MD hello.cpp" "hello.exe" "vcpkg deactivate") do @echo %%~s
@@ -171,9 +174,9 @@ set _CL_=/nologo /Bv /Be
 set PROMPT=($D $T) [$+$P]$S
 set $_demoRoot=c:\VcpkgDemos
 rem Remove all .vcpkg subdirectories
-doskey rmdir_vcpkg=echo Removing .vcpkg directories... ^& for /F "delims=" %d in ('dir "*vcpkg" /AD /B /S 2^^^>nul') do @if "%~nxd" == ".vcpkg" rd /s /q "%~d"
+doskey rmdir_vcpkg=echo Removing .vcpkg directories... ^& for /F "delims=" %%d in ('dir "*vcpkg" /AD /B /S 2^^^>nul') do @if "%%~nxd" == ".vcpkg" rd /s /q "%%~d"
 doskey show_vcpkg_macros=echo Macros for vcpkg demos: ^& doskey /macros ^| findstr /i "_vcpkg vcpkg_"
-doskey where_vcpkg_tools=for %t in (vcpkg msbuild dotnet cl csc vbc) do @for /f "tokens=1 delims=" %p in ('where.exe %t 2^^^>^^^&1') do @if "%p" == "INFO: Could not find files for the given pattern(s)." (echo Where is %t?:) else (echo Where is %t?:  %p)
+doskey where_vcpkg_tools=for %%t in (vcpkg dotnet msbuild cl csc vbc) do @for /f "tokens=1 delims=" %%p in ('where.exe %%t 2^^^>^^^&1') do @if "%%p" == "INFO: Could not find files for the given pattern(s)." (echo Where is %%t?:) else (echo Where is %%t?:  %%p)
 pushd %$_demoRoot%\msvc-experiments-demos\demos
 exit /b 0
 
@@ -184,7 +187,7 @@ call vcpkg-init.cmd
 echo Adding vcpkg to PATH...
 set PATH=%PATH%;%VCPKG_ROOT%
 set $_vcpkgCmd="%VCPKG_ROOT%\vcpkg-init.cmd"
-call :show_where vcpkg.exe
+rem call :show_where vcpkg.exe
 doskey reset_vcpkg_artifact_cache=echo Killing processes... ^& taskkill /IM mspdbsrv.exe /F ^& taskkill /IM msbuild.exe /F ^& for %%p in (.vcpkg .\Outputs %USERPROFILE%\.vcpkg\downloads\artifacts) do @if exist %%p echo Deleting %%p... ^& @rd /s /q %%p ^>nul
 exit /b 0
 
@@ -194,8 +197,9 @@ set PATH=%PATH%;C:\Program Files\Microsoft Visual Studio\2022\Preview\MSBuild\Cu
 exit /b 0
 
 :msbuild_demo_common
-call :show_where dotnet.exe
-call :show_where msbuild.exe
+rem call :show_where dotnet.exe
+rem call :show_where msbuild.exe
+call :where_vcpkg_tools
 set $_msbuildCommonArgs=/m /t:rebuild
 set $_msbuildArgs=%$_msbuildCommonArgs% %$_msbuildUseVcpkg%
 doskey d1=for %%s in ("Demo1: MSBuild default" "msbuild %$_msbuildArgs%") do @echo %%~s
@@ -211,6 +215,11 @@ echo 1. MSBuild with default properties for configuration, target platform and h
 echo 2. MSBuild for x86, Release config
 echo 3. MSBuild for x64, using x86-hosted tools, Release config
 echo.
+exit /b 0
+
+:where_vcpkg_tools
+echo. 
+for %%t in (vcpkg dotnet msbuild cl csc vbc) do @for /f "tokens=1 delims=" %%p in ('where.exe %%t 2^>^&1') do @if "%%p" == "INFO: Could not find files for the given pattern(s)." (echo Where is %%t?:) else (echo Where is %%t?:  %%p)
 exit /b 0
 
 :show_where
