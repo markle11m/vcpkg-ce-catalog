@@ -45,7 +45,7 @@ popd
 @rem Install latest VS internal dogfood build with default Desktop C++ workload
 :install_vs
 set _fInstallingVS=false
-if "%_fInteractieMode%" == "false" goto :end_install_vs
+if "%_fInteractiveMode%" == "false" goto :end_install_vs
 call :yesorno "Install VS (latest internal dogfood build)?"
 if not errorlevel 1 (
     echo - Please install the Desktop C++ workload:
