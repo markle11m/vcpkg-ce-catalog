@@ -11,6 +11,13 @@ goto :done
 @rem ----------------
 :setup_shell_0
 title Vcpkg artifacts demo machine prep
+echo on
+set _fSkipAllPrompts=true
+call :yesorno "Skip all prompts"
+echo %ERRORLEVEL%
+if errorlevel 1 set _fSkipAllPrompts=false
+set _fSkip
+echo off
 
 @rem Install git [if needed]
 @rem Git homepage: start https://git-scm.com/
@@ -40,7 +47,9 @@ git checkout msvc-experiments
 popd
 
 @rem Install latest VS internal dogfood build with default Desktop C++ workload
+:install_vs
 set _fInstallingVS=false
+if "%_fSkipAllPrompts%" == "true" goto :end_install_vs
 set /P _responseT=Install VS (latest internal dogfood build)? [y/n] 
 if "%_responseT:~0,1%" == "y" (
     echo - Please install the Desktop C++ workload:
@@ -53,6 +62,7 @@ if "%_responseT:~0,1%" == "y" (
     set _fInstallingVS=true
     popd
 )
+:end_install_vs
 
 @rem Install and bootstrap vcpkg
 @rem To install a particular release of the vcpkg tool (by release date)
@@ -135,20 +145,23 @@ goto :done
 @rem Demo #4 - Command Shell builds
 @rem Shows activations, switching MSVC & WinSDK versions, adding features (MFC, ASAN)
 @rem Available versions:
-@rem - 3 MSVC toolsets (14.28.29915, 14.29.30037, 14.32.31328) 
+@rem - 4 MSVC toolsets (14.28.29915, 14.29.30037, 14.30.30705, 14.32.31328)
 @rem - 4 WinSDKs (10.0.17763, 18362, 19041, 22621)
 @rem Compilation options:
 @rem - /MT=static release; /MD=dynamic release
 @rem - /MTd=static debug; /MDd=dynamic debug
 :setup_shell_4
 title Demo #4 - Command Shell builds
+:launch_appwiz
 set _fLaunchAppWiz=false
+rem if "%_fSkipAllPrompt%" == "true" goto :end_launch_appwiz
 set /P _responseT=Uninstall (or modify) VS? [y/n] 
 if "%_responseT:~0,1%" == "y" (
     set _fLaunchAppWiz=true    
     start appwiz.cpl
     pause
 )
+:end_launch_appwiz
 call :demo_common
 pushd ShellEnv\HelloWorld
 call :setup_vcpkg
@@ -237,5 +250,10 @@ exit /b 0
 echo Where is %~1?:
 where.exe %1
 exit /b 0
+
+:yesornoset _prompt=%~1
+set /P _responseT=%_prompt% [y/n] 
+if /I "%_responseT%:~0,1%" == "y" exit /b 0
+exit /b 1
 
 :done
