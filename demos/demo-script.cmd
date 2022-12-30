@@ -86,8 +86,19 @@ goto :done
 @rem Shows msbuild integration, VS/vcpkg coexistence, switching target- and host-architectures
 @rem Does not show switching MSVC versions (can show switching WinSDK versions)
 :setup_shell_1
-set _vsdevcmd="C:\Program Files\Microsoft Visual Studio\2022\Preview\Common7\Tools\VsDevCmd.bat"
-call %_vsdevcmd%
+set _vsdevcmd=
+for %%s in (Preview Enterprise Professional Community) do (
+    if exist "C:\Program Files\Microsoft Visual Studio\2022\%%s\Common7\Tools\VsDevCmd.bat" (
+        set _vsdevcmd="C:\Program Files\Microsoft Visual Studio\2022\%%s\Common7\Tools\VsDevCmd.bat"
+    )
+)
+if "%_vsdevcmd%" == "" (
+    echo *** WARNING ***
+    echo Unable to find a VS installation and/or VsDevCmd.bat; this console will not work
+    echo *** WARNING ***
+) else (
+    call %_vsdevcmd%
+)
 call :demo_common
 pushd VSTemplate\MultiLangSolution1
 set $_msbuildUseVcpkg=
