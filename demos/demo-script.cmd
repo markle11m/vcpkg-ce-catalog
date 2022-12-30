@@ -99,7 +99,7 @@ goto :done
 set _vsdevcmd=
 for %%s in (Preview Enterprise Professional Community) do (
     if exist "C:\Program Files\Microsoft Visual Studio\2022\%%s\Common7\Tools\VsDevCmd.bat" (
-        set _vsdevcmd="C:\Program Files\Microsoft Visual Studio\2022\%%s\Common7\Tools\VsDevCmd.bat"
+        set _vsdevcmd=C:\Program Files\Microsoft Visual Studio\2022\%%s\Common7\Tools\VsDevCmd.bat
     )
 )
 if "%_vsdevcmd%" == "" (
@@ -107,7 +107,7 @@ if "%_vsdevcmd%" == "" (
     echo Unable to find a VS installation and/or VsDevCmd.bat; this console will not work
     echo *** WARNING ***
 ) else (
-    call %_vsdevcmd%
+    call "%_vsdevcmd%"
 )
 call :demo_common
 pushd VSTemplate\MultiLangSolution1
