@@ -11,13 +11,9 @@ goto :done
 @rem ----------------
 :setup_shell_0
 title Vcpkg artifacts demo machine prep
-echo on
-set _fSkipAllPrompts=true
-call :yesorno "Skip all prompts"
-echo %ERRORLEVEL%
-if errorlevel 1 set _fSkipAllPrompts=false
-set _fSkip
-echo off
+set _fInteractiveMode=true
+call :yesorno "Do you want an interactive install (prompted for optional steps?"
+if errorlevel 1 set _fInteractiveMode=false
 
 @rem Install git [if needed]
 @rem Git homepage: start https://git-scm.com/
@@ -49,9 +45,9 @@ popd
 @rem Install latest VS internal dogfood build with default Desktop C++ workload
 :install_vs
 set _fInstallingVS=false
-if "%_fSkipAllPrompts%" == "true" goto :end_install_vs
-set /P _responseT=Install VS (latest internal dogfood build)? [y/n] 
-if "%_responseT:~0,1%" == "y" (
+if "%_fInteractieMode%" == "false" goto :end_install_vs
+call :yesorno "Install VS (latest internal dogfood build)?"
+if not errorlevel 1 (
     echo - Please install the Desktop C++ workload:
     echo ^  - for the C++ toolset and MSBuild, use default options
     echo ^  - for MSBuild components only, select just 'C++ core desktop features'
@@ -110,7 +106,7 @@ if "%_vsdevcmd%" == "" (
     call "%_vsdevcmd%"
 )
 call :demo_common
-pushd VSTemplate\MultiLangSolution1
+pushd MSBuild\MultiLangSolution
 set $_msbuildUseVcpkg=
 call :msbuild_demo_common
 goto :done
@@ -124,7 +120,7 @@ call :setup_vcpkg
 call :add_msbuild
 set $_msbuildUseVcpkg=/p:EnableVcpkgArtifactsIntegration=True /p:DisableRegistryUse=True /p:CheckMSVCComponents=False
 call :msbuild_demo_common
-pushd VSTemplate\MultiLangSolution1
+pushd MSBuild\MultiLangSolution
 goto :done
 
 @rem 3. Demo #3 - MSBuild NativeProjectsSolution (vcpkg)
@@ -154,9 +150,9 @@ goto :done
 title Demo #4 - Command Shell builds
 :launch_appwiz
 set _fLaunchAppWiz=false
-rem if "%_fSkipAllPrompt%" == "true" goto :end_launch_appwiz
-set /P _responseT=Uninstall (or modify) VS? [y/n] 
-if "%_responseT:~0,1%" == "y" (
+if "%_fInteractiveMode%" == "false" goto :end_launch_appwiz
+call :yesorno "Launch 'Programs and Features' to uninstall or modify VS?"
+if not errorlevel 1 (
     set _fLaunchAppWiz=true    
     start appwiz.cpl
     pause

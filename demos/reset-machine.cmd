@@ -48,7 +48,7 @@ for %%s in (vcpkg npm-cache) do (
         %_echo% rd /s /q %_appdataRoot%\%%s
     )
 )
-if "%_fSkipAllPrompts%" == "true" goto :skip_interactive_reset
+if "%_fInteractiveMode%" == "false" goto :skip_interactive_reset
 for %%a in (no n false) do if /I "%_pause%" == "%%a" goto :skip_interactive_reset
 rem VS Install resets are interactive by default
 if "%_VSInstalled%" == "true" (
