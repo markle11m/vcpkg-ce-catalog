@@ -1,0 +1,57 @@
+{
+    "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg-tool/main/docs/artifact.schema.json",
+    "default-registry": {
+        "kind": "git",
+        "baseline": "032d9d0820db290ce9ff644dabfdf564343013ae",
+        "repository": "https://github.com/microsoft/vcpkg"
+    },
+    "registries": [
+        {
+            "kind": "artifact",
+            "location": "https://aka.ms/vcpkg-ce-default",
+            "name": "microsoft"
+        },
+        {
+            "kind": "artifact",
+            "location": "https://github.com/microsoft/vcpkg-ce-catalog/archive/refs/heads/msvc-experiments.zip",
+            "name": "demo"
+        },
+        {
+            "kind": "artifact",
+            "location": "https://github.com/markle11m/vcpkg-ce-catalog/archive/refs/heads/msvc-experiments.zip",
+            "name": "mydemo"
+        },
+        {
+            "kind": "artifact",
+            "location": "c:/VcpkgDemos/catalogs/vcpkg-ce-catalog.demo",
+            "name": "local"
+        }
+    ],
+    "demands": {
+        "tag:msbuild-bootstrap": {
+            "requires": {
+                "local:microsoft.vs.msbuild": "17.4.0",
+                "local:microsoft.vs.roslyn": "17.4.0"
+            }
+        },
+        "tag:msbuild-only": {
+            "requires": {
+                "mydemo:microsoft.vs.msbuild.vc.v143": "17.4.0"
+            }
+        },
+        "tag:headers": {
+            "requires": {
+                "demo:crts/microsoft/headers": "14.30.30705",
+                "demo:sdks/microsoft/windows/core": "*"
+            }
+        },
+        "not tag": {
+            "requires": {
+                "mydemo:microsoft/msvc": "14.30.30705",
+                "mydemo:crts/microsoft/desktop": "14.30.30705",
+                "mydemo:crts/microsoft/mfc": "14.30.30705",
+                "demo:sdks/microsoft/windows": "*"
+            }
+        }
+    }
+}

@@ -10,6 +10,7 @@ namespace HelloCSharp.NETFramework
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Hello, World! (C#/.NETFramework4.7.2)");
         }
     }
 }

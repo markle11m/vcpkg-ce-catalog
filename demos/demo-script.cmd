@@ -251,9 +251,10 @@ echo Where is %~1?:
 where.exe %1
 exit /b 0
 
-:yesornoset _prompt=%~1
-set /P _responseT=%_prompt% [y/n] 
-if /I "%_responseT%:~0,1%" == "y" exit /b 0
+:yesorno
+set _prompt=%~1
+set /P _responseT=%~1 [y/n] 
+if /I "%_responseT:~0,1%" == "y" exit /b 0
 exit /b 1
 
 :done

@@ -1,7 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project>
-    
     <Import Condition="'$(UseVcpkg)' != ''" Project="$(MsbuildThisFileDirectory)EnableVcpkgArtifacts.props"/>
-
 </Project>
 
