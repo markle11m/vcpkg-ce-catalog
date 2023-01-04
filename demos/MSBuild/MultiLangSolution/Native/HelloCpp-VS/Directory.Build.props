@@ -3,8 +3,8 @@
     
     <PropertyGroup>
         <!-- This project should normally be built with VS -->
-        <!-- Don't override if there is no VS installation -->
-        <UseVcPkg Condition="'NoVSInstall' == 'true'">false</UseVcPkg>
+        <!-- Override this if there is a VS installation -->
+        <UseVcPkg Condition="'VSInstalled' == 'true'">false</UseVcPkg>
     </PropertyGroup>
     
     <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove('$(MSBuildThisFileDirectory)', 'EnableVcpkgArtifacts.props'))/EnableVcpkgArtifacts.props" />

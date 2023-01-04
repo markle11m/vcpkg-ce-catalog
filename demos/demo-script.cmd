@@ -195,7 +195,8 @@ set PROMPT=($D $T) [$+$P]$S
 set $_demoRoot=c:\VcpkgDemos
 rem Remove all .vcpkg subdirectories
 doskey rmdir_vcpkg=echo Removing .vcpkg directories... ^& for /F "delims=" %%d in ('dir "*vcpkg" /AD /B /S 2^^^>nul') do @if "%%~nxd" == ".vcpkg" rd /s /q "%%~d"
-doskey show_vcpkg_macros=echo Macros for vcpkg demos: ^& doskey /macros ^| findstr /i "_vcpkg vcpkg_"
+doskey run_vcpkg_demo_exes=if "$*" == "" (echo Please specify prefixes of .exes to run; e.g.: Hello MFC) else (for %%p in ($*) do @for /f "" %%e in ('where /r . %%p*.exe ^^^| findstr Release ^^^| findstr /iv obj') do @%%e)
+doskey show_vcpkg_macros=echo Macros for vcpkg demos: ^& for /f "usebackq tokens=1 delims==" %%m in (`doskey /macros ^^^| findstr _ ^^^| findstr /i vcpkg`) do @echo ^  %%m
 doskey where_vcpkg_tools=for %%t in (vcpkg dotnet msbuild cl csc vbc) do @for /f "tokens=1 delims=" %%p in ('where.exe %%t 2^^^>^^^&1') do @if "%%p" == "INFO: Could not find files for the given pattern(s)." (echo Where is %%t?:) else (echo Where is %%t?:  %%p)
 pushd %$_demoRoot%\msvc-experiments-demos\demos
 exit /b 0

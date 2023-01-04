@@ -49,6 +49,7 @@
             "requires": {
                 "mydemo:microsoft/msvc": "14.30.30705",
                 "mydemo:crts/microsoft/desktop": "14.30.30705",
+                "mydemo:crts/microsoft/asan": "14.30.30705",
                 "demo:sdks/microsoft/windows": "10.0.17763"
             }
         }
