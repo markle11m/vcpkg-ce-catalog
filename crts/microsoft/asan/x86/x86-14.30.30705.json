@@ -20,7 +20,7 @@
       ]
     },
     "msbuild-properties": {
-      "VC_LibraryPath_VC_x86_Desktop": "{root};$(VC_LibraryPath_VC_x86_Desktop)"
+      "VC_LibraryPath_VC_x86_Desktop": "{root}\\lib\\x86;$(VC_LibraryPath_VC_x86_Desktop)"
     }
   },
   "install": [
