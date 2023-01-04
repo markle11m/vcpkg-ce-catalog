@@ -13,7 +13,10 @@
     },
     "exports": {
         "paths": {
-            "PATH": "MSBuild/Current/Bin/amd64",
+            "PATH": [
+                "MSBuild/Current/Bin/amd64",
+                "MSBuild/Current/Bin/Roslyn"
+            ],
             "VCTargetsPath": "MSBuild/Microsoft/VC/v170/"
         },
         "environment": [

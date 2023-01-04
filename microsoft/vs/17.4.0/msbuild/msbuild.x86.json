@@ -13,7 +13,10 @@
     },
     "exports": {
         "paths": {
-            "PATH": "MSBuild/Current/bin",
+            "PATH": [
+                "MSBuild/Current/Bin/amd64",
+                "MSBuild/Current/Bin/Roslyn"
+            ],
             "VCTargetsPath0": "./Contents/MSBuild/Microsoft/VC/v170/",
             "VcpkgPathToVCSDKResolvers": "./Contents/Msbuild/Current/Bin",
             "VcpkgPathToNuGetSDKResolver": ".",
