@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project>
-    
+
     <PropertyGroup>
-        <!-- This project should normally be built with VS -->
-        <!-- Override this if there is a VS installation -->
-        <UseVcPkg Condition="'VSInstalled' == 'true'">false</UseVcPkg>
+        <!-- This project should normally be built with VS, so set BuildWithVS by default -->
+        <BuildWithVS>true</BuildWithVS>
+        <!-- This can be overridden by setting NoVSInstall=true -->
+        <BuildWithVS Condition="'$(NoVSInstall)' == 'true'">false</BuildWithVS>
     </PropertyGroup>
-    
-    <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove('$(MSBuildThisFileDirectory)', 'EnableVcpkgArtifacts.props'))/EnableVcpkgArtifacts.props" />
+
+    <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory)../, Directory.Build.props))\Directory.Build.props" Condition=" '$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory)../, Directory.Build.props))' != '' " />
 
 </Project>
-

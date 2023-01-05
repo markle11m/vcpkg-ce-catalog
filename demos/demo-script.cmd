@@ -1,5 +1,6 @@
 @echo off
 @rem Script/commands for vcpkg artifacts demos
+call :set_common_macros
 set _shellCount=4
 if "%1" == "" echo no demo# specified; please provide a number between 0 and %_shellCount%
 set demo0=
@@ -196,6 +197,7 @@ set $_demoRoot=c:\VcpkgDemos
 rem Remove all .vcpkg subdirectories
 doskey rmdir_vcpkg=echo Removing .vcpkg directories... ^& for /F "delims=" %%d in ('dir "*vcpkg" /AD /B /S 2^^^>nul') do @if "%%~nxd" == ".vcpkg" rd /s /q "%%~d"
 doskey run_vcpkg_demo_exes=if "$*" == "" (echo Please specify prefixes of .exes to run; e.g.: Hello MFC) else (for %%p in ($*) do @for /f "" %%e in ('where /r . %%p*.exe ^^^| findstr Release ^^^| findstr /iv obj') do @%%e)
+doskey show_vcpkg_demo_exes=for %%p in (Hello MFC) do @for /f "" %%e in ('where /r . %%p*.exe ^^^| findstr Release ^^^| findstr /iv obj') do @echo %%e
 doskey show_vcpkg_macros=echo Macros for vcpkg demos: ^& for /f "usebackq tokens=1 delims==" %%m in (`doskey /macros ^^^| findstr _ ^^^| findstr /i vcpkg`) do @echo ^  %%m
 doskey where_vcpkg_tools=for %%t in (vcpkg dotnet msbuild cl csc vbc) do @for /f "tokens=1 delims=" %%p in ('where.exe %%t 2^^^>^^^&1') do @if "%%p" == "INFO: Could not find files for the given pattern(s)." (echo Where is %%t?:) else (echo Where is %%t?:  %%p)
 pushd %$_demoRoot%\msvc-experiments-demos\demos
@@ -253,5 +255,9 @@ set _prompt=%~1
 set /P _responseT=%~1 [y/n] 
 if /I "%_responseT:~0,1%" == "y" exit /b 0
 exit /b 1
+
+:set_common_macros
+doskey cd=pushd $*
+exit /b 0
 
 :done
