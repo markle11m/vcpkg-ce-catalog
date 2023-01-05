@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" InitialTargets="ValidateSolutionConfiguration;ValidateToolsVersions;ValidateProjects" DefaultTargets="Build">
+  <PropertyGroup>
+    <MSBuildFileVersion>17.4.0.51802</MSBuildFileVersion>
+    <MSBuildSemanticVersion>17.4.0+18d5aef85</MSBuildSemanticVersion>
+    <MSBuildExtensionsPath32>c:\Users\markle.REDMOND\.vcpkg\downloads\artifacts\59b828b9\microsoft.vs.msbuild.x64\17.4.0\MSBuild</MSBuildExtensionsPath32>
+    <MSBuildExtensionsPath>c:\Users\markle.REDMOND\.vcpkg\downloads\artifacts\59b828b9\microsoft.vs.msbuild.x64\17.4.0\MSBuild</MSBuildExtensionsPath>
+    <MSBuildToolsPath32>c:\Users\markle.REDMOND\.vcpkg\downloads\artifacts\59b828b9\microsoft.vs.msbuild.x64\17.4.0\MSBuild\Current\Bin</MSBuildToolsPath32>
+    <MSBuildToolsPath64>c:\Users\markle.REDMOND\.vcpkg\downloads\artifacts\59b828b9\microsoft.vs.msbuild.x64\17.4.0\MSBuild\Current\Bin\amd64</MSBuildToolsPath64>
+    <MSBuildSDKsPath>c:\Users\markle.REDMOND\.vcpkg\downloads\artifacts\59b828b9\microsoft.vs.msbuild.x64\17.4.0\MSBuild\Sdks</MSBuildSDKsPath>
+    <FrameworkSDKRoot />
+    <MSBuildRuntimeVersion>4.0.30319</MSBuildRuntimeVersion>
+    <MSBuildFrameworkToolsPath>C:\Windows\Microsoft.NET\Framework\v4.0.30319\</MSBuildFrameworkToolsPath>
+    <MSBuildFrameworkToolsPath32>C:\Windows\Microsoft.NET\Framework\v4.0.30319\</MSBuildFrameworkToolsPath32>
+    <MSBuildFrameworkToolsPath64>C:\Windows\Microsoft.NET\Framework64\v4.0.30319\</MSBuildFrameworkToolsPath64>
+    <MSBuildFrameworkToolsRoot>C:\Windows\Microsoft.NET\Framework\</MSBuildFrameworkToolsRoot>
+    <SDK35ToolsPath />
+    <SDK40ToolsPath />
+    <WindowsSDK80Path />
+    <VsInstallRoot>c:\Users\markle.REDMOND\.vcpkg\downloads\artifacts\59b828b9\microsoft.vs.msbuild.x64\17.4.0</VsInstallRoot>
+    <MSBuildToolsRoot>c:\Users\markle.REDMOND\.vcpkg\downloads\artifacts\59b828b9\microsoft.vs.msbuild.x64\17.4.0\MSBuild</MSBuildToolsRoot>
+    <RoslynTargetsPath>c:\Users\markle.REDMOND\.vcpkg\downloads\artifacts\59b828b9\microsoft.vs.msbuild.x64\17.4.0\MSBuild\Current\Bin\Roslyn</RoslynTargetsPath>
+    <VCTargetsPath14>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\</VCTargetsPath14>
+    <VCTargetsPath12>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\</VCTargetsPath12>
+    <VCTargetsPath11>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V110\</VCTargetsPath11>
+    <VCTargetsPath10>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\</VCTargetsPath10>
+    <AndroidTargetsPath>c:\Users\markle.REDMOND\.vcpkg\downloads\artifacts\59b828b9\microsoft.vs.msbuild.x64\17.4.0\MSBuild\Microsoft\MDD\Android\V150\</AndroidTargetsPath>
+    <iOSTargetsPath>c:\Users\markle.REDMOND\.vcpkg\downloads\artifacts\59b828b9\microsoft.vs.msbuild.x64\17.4.0\MSBuild\Microsoft\MDD\iOS\V150\</iOSTargetsPath>
+    <VisualStudioVersion>17.0</VisualStudioVersion>
+    <_DirectorySolutionPropsFile>Directory.Solution.props</_DirectorySolutionPropsFile>
+    <_DirectorySolutionPropsBasePath />
+    <Configuration>Debug</Configuration>
+    <Platform>Any CPU</Platform>
+    <AspNetConfiguration>Debug</AspNetConfiguration>
+    <SolutionDir>c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\</SolutionDir>
+    <SolutionExt>.sln</SolutionExt>
+    <SolutionFileName>MultiLangSolution.sln</SolutionFileName>
+    <SolutionName>MultiLangSolution</SolutionName>
+    <SolutionPath>c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\MultiLangSolution.sln</SolutionPath>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <CurrentSolutionConfigurationContents>
+      <SolutionConfiguration xmlns="">
+  <ProjectConfiguration Project="{8EF87FFB-18D8-4F84-B7D4-7A0B4267B0FF}" AbsolutePath="c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\HelloCpp-Vcpkg1\HelloCpp-Vcpkg1.vcxproj" BuildProjectInSolution="True">Debug|x64</ProjectConfiguration>
+  <ProjectConfiguration Project="{ACB816F1-041D-4224-AC26-E3018B203334}" AbsolutePath="c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\HelloCpp-Vcpkg2\HelloCpp-Vcpkg2.vcxproj" BuildProjectInSolution="True">Debug|x64</ProjectConfiguration>
+  <ProjectConfiguration Project="{3EEC0669-7042-472A-A187-B44D337F8131}" AbsolutePath="c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\HelloCpp-Vcpkg2\HelloCpp-Vcpkg2-Nested\HelloCpp-Vcpkg2-Nested.vcxproj" BuildProjectInSolution="True">Debug|x64</ProjectConfiguration>
+  <ProjectConfiguration Project="{252AF16D-5B03-4B12-9AFB-98001FEFB981}" AbsolutePath="c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\HelloCpp-VS\HelloCpp-VS.vcxproj" BuildProjectInSolution="True">Debug|x64</ProjectConfiguration>
+  <ProjectConfiguration Project="{E13CB2C0-A91C-4120-8C1F-FC6B4F84554A}" AbsolutePath="c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\MFCApp-Vcpkg1\MFCApp-Vcpkg1.vcxproj" BuildProjectInSolution="True">Debug|x64</ProjectConfiguration>
+</SolutionConfiguration>
+    </CurrentSolutionConfigurationContents>
+    <_DirectorySolutionTargetsFile>Directory.Solution.targets</_DirectorySolutionTargetsFile>
+    <_DirectorySolutionTargetsBasePath />
+    <MSBuildAllProjects>c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\MultiLangSolution.sln.metaproj</MSBuildAllProjects>
+  </PropertyGroup>
+  <ItemDefinitionGroup />
+  <ItemGroup>
+    <SolutionConfiguration Include="Debug|Any CPU">
+      <Content>
+        <SolutionConfiguration xmlns="">
+  <ProjectConfiguration Project="{8EF87FFB-18D8-4F84-B7D4-7A0B4267B0FF}" AbsolutePath="c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\HelloCpp-Vcpkg1\HelloCpp-Vcpkg1.vcxproj" BuildProjectInSolution="True">Debug|x64</ProjectConfiguration>
+  <ProjectConfiguration Project="{ACB816F1-041D-4224-AC26-E3018B203334}" AbsolutePath="c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\HelloCpp-Vcpkg2\HelloCpp-Vcpkg2.vcxproj" BuildProjectInSolution="True">Debug|x64</ProjectConfiguration>
+  <ProjectConfiguration Project="{3EEC0669-7042-472A-A187-B44D337F8131}" AbsolutePath="c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\HelloCpp-Vcpkg2\HelloCpp-Vcpkg2-Nested\HelloCpp-Vcpkg2-Nested.vcxproj" BuildProjectInSolution="True">Debug|x64</ProjectConfiguration>
+  <ProjectConfiguration Project="{252AF16D-5B03-4B12-9AFB-98001FEFB981}" AbsolutePath="c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\HelloCpp-VS\HelloCpp-VS.vcxproj" BuildProjectInSolution="True">Debug|x64</ProjectConfiguration>
+  <ProjectConfiguration Project="{E13CB2C0-A91C-4120-8C1F-FC6B4F84554A}" AbsolutePath="c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\MFCApp-Vcpkg1\MFCApp-Vcpkg1.vcxproj" BuildProjectInSolution="True">Debug|x64</ProjectConfiguration>
+</SolutionConfiguration>
+      </Content>
+      <Platform>Any CPU</Platform>
+      <Configuration>Debug</Configuration>
+    </SolutionConfiguration>
+    <SolutionConfiguration Include="Debug|x64">
+      <Content>
+        <SolutionConfiguration xmlns="">
+  <ProjectConfiguration Project="{8EF87FFB-18D8-4F84-B7D4-7A0B4267B0FF}" AbsolutePath="c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\HelloCpp-Vcpkg1\HelloCpp-Vcpkg1.vcxproj" BuildProjectInSolution="True">Debug|x64</ProjectConfiguration>
+  <ProjectConfiguration Project="{ACB816F1-041D-4224-AC26-E3018B203334}" AbsolutePath="c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\HelloCpp-Vcpkg2\HelloCpp-Vcpkg2.vcxproj" BuildProjectInSolution="True">Debug|x64</ProjectConfiguration>
+  <ProjectConfiguration Project="{3EEC0669-7042-472A-A187-B44D337F8131}" AbsolutePath="c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\HelloCpp-Vcpkg2\HelloCpp-Vcpkg2-Nested\HelloCpp-Vcpkg2-Nested.vcxproj" BuildProjectInSolution="True">Debug|x64</ProjectConfiguration>
+  <ProjectConfiguration Project="{252AF16D-5B03-4B12-9AFB-98001FEFB981}" AbsolutePath="c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\HelloCpp-VS\HelloCpp-VS.vcxproj" BuildProjectInSolution="True">Debug|x64</ProjectConfiguration>
+  <ProjectConfiguration Project="{E13CB2C0-A91C-4120-8C1F-FC6B4F84554A}" AbsolutePath="c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\MFCApp-Vcpkg1\MFCApp-Vcpkg1.vcxproj" BuildProjectInSolution="True">Debug|x64</ProjectConfiguration>
+</SolutionConfiguration>
+      </Content>
+      <Platform>x64</Platform>
+      <Configuration>Debug</Configuration>
+    </SolutionConfiguration>
+    <SolutionConfiguration Include="Debug|x86">
+      <Content>
+        <SolutionConfiguration xmlns="">
+  <ProjectConfiguration Project="{8EF87FFB-18D8-4F84-B7D4-7A0B4267B0FF}" AbsolutePath="c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\HelloCpp-Vcpkg1\HelloCpp-Vcpkg1.vcxproj" BuildProjectInSolution="True">Debug|Win32</ProjectConfiguration>
+  <ProjectConfiguration Project="{ACB816F1-041D-4224-AC26-E3018B203334}" AbsolutePath="c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\HelloCpp-Vcpkg2\HelloCpp-Vcpkg2.vcxproj" BuildProjectInSolution="True">Debug|Win32</ProjectConfiguration>
+  <ProjectConfiguration Project="{3EEC0669-7042-472A-A187-B44D337F8131}" AbsolutePath="c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\HelloCpp-Vcpkg2\HelloCpp-Vcpkg2-Nested\HelloCpp-Vcpkg2-Nested.vcxproj" BuildProjectInSolution="True">Debug|Win32</ProjectConfiguration>
+  <ProjectConfiguration Project="{252AF16D-5B03-4B12-9AFB-98001FEFB981}" AbsolutePath="c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\HelloCpp-VS\HelloCpp-VS.vcxproj" BuildProjectInSolution="True">Debug|Win32</ProjectConfiguration>
+  <ProjectConfiguration Project="{E13CB2C0-A91C-4120-8C1F-FC6B4F84554A}" AbsolutePath="c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\MFCApp-Vcpkg1\MFCApp-Vcpkg1.vcxproj" BuildProjectInSolution="True">Debug|Win32</ProjectConfiguration>
+</SolutionConfiguration>
+      </Content>
+      <Platform>x86</Platform>
+      <Configuration>Debug</Configuration>
+    </SolutionConfiguration>
+    <SolutionConfiguration Include="Release|Any CPU">
+      <Content>
+        <SolutionConfiguration xmlns="">
+  <ProjectConfiguration Project="{8EF87FFB-18D8-4F84-B7D4-7A0B4267B0FF}" AbsolutePath="c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\HelloCpp-Vcpkg1\HelloCpp-Vcpkg1.vcxproj" BuildProjectInSolution="True">Release|x64</ProjectConfiguration>
+  <ProjectConfiguration Project="{ACB816F1-041D-4224-AC26-E3018B203334}" AbsolutePath="c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\HelloCpp-Vcpkg2\HelloCpp-Vcpkg2.vcxproj" BuildProjectInSolution="True">Release|x64</ProjectConfiguration>
+  <ProjectConfiguration Project="{3EEC0669-7042-472A-A187-B44D337F8131}" AbsolutePath="c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\HelloCpp-Vcpkg2\HelloCpp-Vcpkg2-Nested\HelloCpp-Vcpkg2-Nested.vcxproj" BuildProjectInSolution="True">Release|x64</ProjectConfiguration>
+  <ProjectConfiguration Project="{252AF16D-5B03-4B12-9AFB-98001FEFB981}" AbsolutePath="c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\HelloCpp-VS\HelloCpp-VS.vcxproj" BuildProjectInSolution="True">Release|x64</ProjectConfiguration>
+  <ProjectConfiguration Project="{E13CB2C0-A91C-4120-8C1F-FC6B4F84554A}" AbsolutePath="c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\MFCApp-Vcpkg1\MFCApp-Vcpkg1.vcxproj" BuildProjectInSolution="True">Release|x64</ProjectConfiguration>
+</SolutionConfiguration>
+      </Content>
+      <Platform>Any CPU</Platform>
+      <Configuration>Release</Configuration>
+    </SolutionConfiguration>
+    <SolutionConfiguration Include="Release|x64">
+      <Content>
+        <SolutionConfiguration xmlns="">
+  <ProjectConfiguration Project="{8EF87FFB-18D8-4F84-B7D4-7A0B4267B0FF}" AbsolutePath="c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\HelloCpp-Vcpkg1\HelloCpp-Vcpkg1.vcxproj" BuildProjectInSolution="True">Release|x64</ProjectConfiguration>
+  <ProjectConfiguration Project="{ACB816F1-041D-4224-AC26-E3018B203334}" AbsolutePath="c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\HelloCpp-Vcpkg2\HelloCpp-Vcpkg2.vcxproj" BuildProjectInSolution="True">Release|x64</ProjectConfiguration>
+  <ProjectConfiguration Project="{3EEC0669-7042-472A-A187-B44D337F8131}" AbsolutePath="c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\HelloCpp-Vcpkg2\HelloCpp-Vcpkg2-Nested\HelloCpp-Vcpkg2-Nested.vcxproj" BuildProjectInSolution="True">Release|x64</ProjectConfiguration>
+  <ProjectConfiguration Project="{252AF16D-5B03-4B12-9AFB-98001FEFB981}" AbsolutePath="c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\HelloCpp-VS\HelloCpp-VS.vcxproj" BuildProjectInSolution="True">Release|x64</ProjectConfiguration>
+  <ProjectConfiguration Project="{E13CB2C0-A91C-4120-8C1F-FC6B4F84554A}" AbsolutePath="c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\MFCApp-Vcpkg1\MFCApp-Vcpkg1.vcxproj" BuildProjectInSolution="True">Release|x64</ProjectConfiguration>
+</SolutionConfiguration>
+      </Content>
+      <Platform>x64</Platform>
+      <Configuration>Release</Configuration>
+    </SolutionConfiguration>
+    <SolutionConfiguration Include="Release|x86">
+      <Content>
+        <SolutionConfiguration xmlns="">
+  <ProjectConfiguration Project="{8EF87FFB-18D8-4F84-B7D4-7A0B4267B0FF}" AbsolutePath="c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\HelloCpp-Vcpkg1\HelloCpp-Vcpkg1.vcxproj" BuildProjectInSolution="True">Release|Win32</ProjectConfiguration>
+  <ProjectConfiguration Project="{ACB816F1-041D-4224-AC26-E3018B203334}" AbsolutePath="c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\HelloCpp-Vcpkg2\HelloCpp-Vcpkg2.vcxproj" BuildProjectInSolution="True">Release|Win32</ProjectConfiguration>
+  <ProjectConfiguration Project="{3EEC0669-7042-472A-A187-B44D337F8131}" AbsolutePath="c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\HelloCpp-Vcpkg2\HelloCpp-Vcpkg2-Nested\HelloCpp-Vcpkg2-Nested.vcxproj" BuildProjectInSolution="True">Release|Win32</ProjectConfiguration>
+  <ProjectConfiguration Project="{252AF16D-5B03-4B12-9AFB-98001FEFB981}" AbsolutePath="c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\HelloCpp-VS\HelloCpp-VS.vcxproj" BuildProjectInSolution="True">Release|Win32</ProjectConfiguration>
+  <ProjectConfiguration Project="{E13CB2C0-A91C-4120-8C1F-FC6B4F84554A}" AbsolutePath="c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\MFCApp-Vcpkg1\MFCApp-Vcpkg1.vcxproj" BuildProjectInSolution="True">Release|Win32</ProjectConfiguration>
+</SolutionConfiguration>
+      </Content>
+      <Platform>x86</Platform>
+      <Configuration>Release</Configuration>
+    </SolutionConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\HelloCpp-Vcpkg1\HelloCpp-Vcpkg1.vcxproj">
+      <AdditionalProperties>Configuration=Debug; Platform=x64</AdditionalProperties>
+      <Platform>x64</Platform>
+      <Configuration>Debug</Configuration>
+      <ToolsVersion>
+      </ToolsVersion>
+      <SkipNonexistentProjects>False</SkipNonexistentProjects>
+    </ProjectReference>
+    <ProjectReference Include="c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\HelloCpp-Vcpkg2\HelloCpp-Vcpkg2.vcxproj">
+      <AdditionalProperties>Configuration=Debug; Platform=x64</AdditionalProperties>
+      <Platform>x64</Platform>
+      <Configuration>Debug</Configuration>
+      <ToolsVersion>
+      </ToolsVersion>
+      <SkipNonexistentProjects>False</SkipNonexistentProjects>
+    </ProjectReference>
+    <ProjectReference Include="c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\HelloCpp-Vcpkg2\HelloCpp-Vcpkg2-Nested\HelloCpp-Vcpkg2-Nested.vcxproj">
+      <AdditionalProperties>Configuration=Debug; Platform=x64</AdditionalProperties>
+      <Platform>x64</Platform>
+      <Configuration>Debug</Configuration>
+      <ToolsVersion>
+      </ToolsVersion>
+      <SkipNonexistentProjects>False</SkipNonexistentProjects>
+    </ProjectReference>
+    <ProjectReference Include="c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\HelloCpp-VS\HelloCpp-VS.vcxproj">
+      <AdditionalProperties>Configuration=Debug; Platform=x64</AdditionalProperties>
+      <Platform>x64</Platform>
+      <Configuration>Debug</Configuration>
+      <ToolsVersion>
+      </ToolsVersion>
+      <SkipNonexistentProjects>False</SkipNonexistentProjects>
+    </ProjectReference>
+    <ProjectReference Include="c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\MFCApp-Vcpkg1\MFCApp-Vcpkg1.vcxproj">
+      <AdditionalProperties>Configuration=Debug; Platform=x64</AdditionalProperties>
+      <Platform>x64</Platform>
+      <Configuration>Debug</Configuration>
+      <ToolsVersion>
+      </ToolsVersion>
+      <SkipNonexistentProjects>False</SkipNonexistentProjects>
+    </ProjectReference>
+  </ItemGroup>
+  <Target Name="ValidateSolutionConfiguration">
+    <Error Condition="('$(CurrentSolutionConfigurationContents)' == '') and ('$(SkipInvalidConfigurations)' != 'true')" HelpKeyword="MSBuild.SolutionInvalidSolutionConfiguration" Code="MSB4126" Text="The specified solution configuration &quot;$(Configuration)|$(Platform)&quot; is invalid. Please specify a valid solution configuration using the Configuration and Platform properties (e.g. MSBuild.exe Solution.sln /p:Configuration=Debug /p:Platform=&quot;Any CPU&quot;) or leave those properties blank to use the default solution configuration." />
+    <Warning Condition="('$(CurrentSolutionConfigurationContents)' == '') and ('$(SkipInvalidConfigurations)' == 'true')" HelpKeyword="MSBuild.SolutionInvalidSolutionConfiguration" Code="MSB4126" Text="The specified solution configuration &quot;$(Configuration)|$(Platform)&quot; is invalid. Please specify a valid solution configuration using the Configuration and Platform properties (e.g. MSBuild.exe Solution.sln /p:Configuration=Debug /p:Platform=&quot;Any CPU&quot;) or leave those properties blank to use the default solution configuration." />
+    <Message Condition="'$(CurrentSolutionConfigurationContents)' != ''" Text="Building solution configuration &quot;$(Configuration)|$(Platform)&quot;." />
+  </Target>
+  <Target Name="ValidateToolsVersions">
+    <Error Condition="'$(MSBuildToolsVersion)' == '2.0' and ('$(ProjectToolsVersion)' != '2.0' and '$(ProjectToolsVersion)' != '')" HelpKeyword="MSBuild.SolutionToolsVersionDoesNotSupportProjectToolsVersion" Code="MSB4149" Text="The tools version &quot;$(MSBuildToolsVersion)&quot; of the solution does not support building projects with a different tools version." />
+  </Target>
+  <Target Name="ValidateProjects" />
+  <Target Name="GetSolutionConfigurationContents" Outputs="$(SolutionConfigurationContents)" />
+  <Target Name="Build" Outputs="@(CollectedBuildOutput)">
+    <MSBuild BuildInParallel="True" Projects="@(ProjectReference)" Properties="BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)">
+      <Output TaskParameter="TargetOutputs" ItemName="CollectedBuildOutput" />
+    </MSBuild>
+  </Target>
+  <Target Name="Clean">
+    <MSBuild BuildInParallel="True" Projects="@(ProjectReference-&gt;Reverse())" Targets="Clean" Properties="BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" />
+  </Target>
+  <Target Name="Rebuild" Outputs="@(CollectedBuildOutput)">
+    <MSBuild BuildInParallel="True" Projects="@(ProjectReference)" Targets="Rebuild" Properties="BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)">
+      <Output TaskParameter="TargetOutputs" ItemName="CollectedBuildOutput" />
+    </MSBuild>
+  </Target>
+  <Target Name="Publish">
+    <MSBuild BuildInParallel="True" Projects="@(ProjectReference)" Targets="Publish" Properties="BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" />
+  </Target>
+  <Target Name="Native\HelloCpp-Vcpkg1" Outputs="@(Native_HelloCpp-Vcpkg1BuildOutput)">
+    <MSBuild Condition="'%(ProjectReference.Identity)' == 'c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\HelloCpp-Vcpkg1\HelloCpp-Vcpkg1.vcxproj'" ToolsVersion="$(ProjectToolsVersion)" BuildInParallel="True" Projects="@(ProjectReference)" Properties="Configuration=Debug; Platform=x64;BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)">
+      <Output TaskParameter="TargetOutputs" ItemName="Native_HelloCpp-Vcpkg1BuildOutput" />
+    </MSBuild>
+  </Target>
+  <Target Name="Native\HelloCpp-Vcpkg1:Clean">
+    <MSBuild Condition="'%(ProjectReference.Identity)' == 'c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\HelloCpp-Vcpkg1\HelloCpp-Vcpkg1.vcxproj'" ToolsVersion="$(ProjectToolsVersion)" BuildInParallel="True" Projects="@(ProjectReference)" Targets="Clean" Properties="Configuration=Debug; Platform=x64;BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" />
+  </Target>
+  <Target Name="Native\HelloCpp-Vcpkg1:Rebuild" Outputs="@(Native_HelloCpp-Vcpkg1BuildOutput)">
+    <MSBuild Condition="'%(ProjectReference.Identity)' == 'c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\HelloCpp-Vcpkg1\HelloCpp-Vcpkg1.vcxproj'" ToolsVersion="$(ProjectToolsVersion)" BuildInParallel="True" Projects="@(ProjectReference)" Targets="Rebuild" Properties="Configuration=Debug; Platform=x64;BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)">
+      <Output TaskParameter="TargetOutputs" ItemName="Native_HelloCpp-Vcpkg1BuildOutput" />
+    </MSBuild>
+  </Target>
+  <Target Name="Native\HelloCpp-Vcpkg1:Publish">
+    <MSBuild Condition="'%(ProjectReference.Identity)' == 'c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\HelloCpp-Vcpkg1\HelloCpp-Vcpkg1.vcxproj'" ToolsVersion="$(ProjectToolsVersion)" BuildInParallel="True" Projects="@(ProjectReference)" Targets="Publish" Properties="Configuration=Debug; Platform=x64;BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" />
+  </Target>
+  <Target Name="Native\HelloCpp-Vcpkg2" Outputs="@(Native_HelloCpp-Vcpkg2BuildOutput)">
+    <MSBuild Condition="'%(ProjectReference.Identity)' == 'c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\HelloCpp-Vcpkg2\HelloCpp-Vcpkg2.vcxproj'" ToolsVersion="$(ProjectToolsVersion)" BuildInParallel="True" Projects="@(ProjectReference)" Properties="Configuration=Debug; Platform=x64;BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)">
+      <Output TaskParameter="TargetOutputs" ItemName="Native_HelloCpp-Vcpkg2BuildOutput" />
+    </MSBuild>
+  </Target>
+  <Target Name="Native\HelloCpp-Vcpkg2:Clean">
+    <MSBuild Condition="'%(ProjectReference.Identity)' == 'c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\HelloCpp-Vcpkg2\HelloCpp-Vcpkg2.vcxproj'" ToolsVersion="$(ProjectToolsVersion)" BuildInParallel="True" Projects="@(ProjectReference)" Targets="Clean" Properties="Configuration=Debug; Platform=x64;BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" />
+  </Target>
+  <Target Name="Native\HelloCpp-Vcpkg2:Rebuild" Outputs="@(Native_HelloCpp-Vcpkg2BuildOutput)">
+    <MSBuild Condition="'%(ProjectReference.Identity)' == 'c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\HelloCpp-Vcpkg2\HelloCpp-Vcpkg2.vcxproj'" ToolsVersion="$(ProjectToolsVersion)" BuildInParallel="True" Projects="@(ProjectReference)" Targets="Rebuild" Properties="Configuration=Debug; Platform=x64;BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)">
+      <Output TaskParameter="TargetOutputs" ItemName="Native_HelloCpp-Vcpkg2BuildOutput" />
+    </MSBuild>
+  </Target>
+  <Target Name="Native\HelloCpp-Vcpkg2:Publish">
+    <MSBuild Condition="'%(ProjectReference.Identity)' == 'c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\HelloCpp-Vcpkg2\HelloCpp-Vcpkg2.vcxproj'" ToolsVersion="$(ProjectToolsVersion)" BuildInParallel="True" Projects="@(ProjectReference)" Targets="Publish" Properties="Configuration=Debug; Platform=x64;BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" />
+  </Target>
+  <Target Name="Native\HelloCpp-Vcpkg2-Nested" Outputs="@(Native_HelloCpp-Vcpkg2-NestedBuildOutput)">
+    <MSBuild Condition="'%(ProjectReference.Identity)' == 'c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\HelloCpp-Vcpkg2\HelloCpp-Vcpkg2-Nested\HelloCpp-Vcpkg2-Nested.vcxproj'" ToolsVersion="$(ProjectToolsVersion)" BuildInParallel="True" Projects="@(ProjectReference)" Properties="Configuration=Debug; Platform=x64;BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)">
+      <Output TaskParameter="TargetOutputs" ItemName="Native_HelloCpp-Vcpkg2-NestedBuildOutput" />
+    </MSBuild>
+  </Target>
+  <Target Name="Native\HelloCpp-Vcpkg2-Nested:Clean">
+    <MSBuild Condition="'%(ProjectReference.Identity)' == 'c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\HelloCpp-Vcpkg2\HelloCpp-Vcpkg2-Nested\HelloCpp-Vcpkg2-Nested.vcxproj'" ToolsVersion="$(ProjectToolsVersion)" BuildInParallel="True" Projects="@(ProjectReference)" Targets="Clean" Properties="Configuration=Debug; Platform=x64;BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" />
+  </Target>
+  <Target Name="Native\HelloCpp-Vcpkg2-Nested:Rebuild" Outputs="@(Native_HelloCpp-Vcpkg2-NestedBuildOutput)">
+    <MSBuild Condition="'%(ProjectReference.Identity)' == 'c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\HelloCpp-Vcpkg2\HelloCpp-Vcpkg2-Nested\HelloCpp-Vcpkg2-Nested.vcxproj'" ToolsVersion="$(ProjectToolsVersion)" BuildInParallel="True" Projects="@(ProjectReference)" Targets="Rebuild" Properties="Configuration=Debug; Platform=x64;BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)">
+      <Output TaskParameter="TargetOutputs" ItemName="Native_HelloCpp-Vcpkg2-NestedBuildOutput" />
+    </MSBuild>
+  </Target>
+  <Target Name="Native\HelloCpp-Vcpkg2-Nested:Publish">
+    <MSBuild Condition="'%(ProjectReference.Identity)' == 'c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\HelloCpp-Vcpkg2\HelloCpp-Vcpkg2-Nested\HelloCpp-Vcpkg2-Nested.vcxproj'" ToolsVersion="$(ProjectToolsVersion)" BuildInParallel="True" Projects="@(ProjectReference)" Targets="Publish" Properties="Configuration=Debug; Platform=x64;BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" />
+  </Target>
+  <Target Name="Native\HelloCpp-VS" Outputs="@(Native_HelloCpp-VSBuildOutput)">
+    <MSBuild Condition="'%(ProjectReference.Identity)' == 'c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\HelloCpp-VS\HelloCpp-VS.vcxproj'" ToolsVersion="$(ProjectToolsVersion)" BuildInParallel="True" Projects="@(ProjectReference)" Properties="Configuration=Debug; Platform=x64;BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)">
+      <Output TaskParameter="TargetOutputs" ItemName="Native_HelloCpp-VSBuildOutput" />
+    </MSBuild>
+  </Target>
+  <Target Name="Native\HelloCpp-VS:Clean">
+    <MSBuild Condition="'%(ProjectReference.Identity)' == 'c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\HelloCpp-VS\HelloCpp-VS.vcxproj'" ToolsVersion="$(ProjectToolsVersion)" BuildInParallel="True" Projects="@(ProjectReference)" Targets="Clean" Properties="Configuration=Debug; Platform=x64;BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" />
+  </Target>
+  <Target Name="Native\HelloCpp-VS:Rebuild" Outputs="@(Native_HelloCpp-VSBuildOutput)">
+    <MSBuild Condition="'%(ProjectReference.Identity)' == 'c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\HelloCpp-VS\HelloCpp-VS.vcxproj'" ToolsVersion="$(ProjectToolsVersion)" BuildInParallel="True" Projects="@(ProjectReference)" Targets="Rebuild" Properties="Configuration=Debug; Platform=x64;BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)">
+      <Output TaskParameter="TargetOutputs" ItemName="Native_HelloCpp-VSBuildOutput" />
+    </MSBuild>
+  </Target>
+  <Target Name="Native\HelloCpp-VS:Publish">
+    <MSBuild Condition="'%(ProjectReference.Identity)' == 'c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\HelloCpp-VS\HelloCpp-VS.vcxproj'" ToolsVersion="$(ProjectToolsVersion)" BuildInParallel="True" Projects="@(ProjectReference)" Targets="Publish" Properties="Configuration=Debug; Platform=x64;BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" />
+  </Target>
+  <Target Name="Native\MFCApp-Vcpkg1" Outputs="@(Native_MFCApp-Vcpkg1BuildOutput)">
+    <MSBuild Condition="'%(ProjectReference.Identity)' == 'c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\MFCApp-Vcpkg1\MFCApp-Vcpkg1.vcxproj'" ToolsVersion="$(ProjectToolsVersion)" BuildInParallel="True" Projects="@(ProjectReference)" Properties="Configuration=Debug; Platform=x64;BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)">
+      <Output TaskParameter="TargetOutputs" ItemName="Native_MFCApp-Vcpkg1BuildOutput" />
+    </MSBuild>
+  </Target>
+  <Target Name="Native\MFCApp-Vcpkg1:Clean">
+    <MSBuild Condition="'%(ProjectReference.Identity)' == 'c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\MFCApp-Vcpkg1\MFCApp-Vcpkg1.vcxproj'" ToolsVersion="$(ProjectToolsVersion)" BuildInParallel="True" Projects="@(ProjectReference)" Targets="Clean" Properties="Configuration=Debug; Platform=x64;BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" />
+  </Target>
+  <Target Name="Native\MFCApp-Vcpkg1:Rebuild" Outputs="@(Native_MFCApp-Vcpkg1BuildOutput)">
+    <MSBuild Condition="'%(ProjectReference.Identity)' == 'c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\MFCApp-Vcpkg1\MFCApp-Vcpkg1.vcxproj'" ToolsVersion="$(ProjectToolsVersion)" BuildInParallel="True" Projects="@(ProjectReference)" Targets="Rebuild" Properties="Configuration=Debug; Platform=x64;BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)">
+      <Output TaskParameter="TargetOutputs" ItemName="Native_MFCApp-Vcpkg1BuildOutput" />
+    </MSBuild>
+  </Target>
+  <Target Name="Native\MFCApp-Vcpkg1:Publish">
+    <MSBuild Condition="'%(ProjectReference.Identity)' == 'c:\VcpkgDemos\msvc-experiments-demos\demos\MSBuild\MultiLangSolution\Native\MFCApp-Vcpkg1\MFCApp-Vcpkg1.vcxproj'" ToolsVersion="$(ProjectToolsVersion)" BuildInParallel="True" Projects="@(ProjectReference)" Targets="Publish" Properties="Configuration=Debug; Platform=x64;BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" />
+  </Target>
+</Project>
