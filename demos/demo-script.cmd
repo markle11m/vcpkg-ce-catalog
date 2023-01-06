@@ -212,7 +212,7 @@ set PROMPT=($D $T) [$+$P]$S
 set $_demoRoot=c:\VcpkgDemos
 rem Remove all .vcpkg subdirectories
 doskey rmdir_vcpkg=echo Removing .vcpkg directories... ^& for /F "delims=" %%d in ('dir "*vcpkg" /AD /B /S 2^^^>nul') do @if "%%~nxd" == ".vcpkg" rd /s /q "%%~d"
-doskey report_demo_tools=echo Scanning msbuild.log ^& findstr /i "cl.exe" msbuild.log ^^^| findstr "@" ^& for /f "tokens=1 delims=/" %%i in ('findstr /i "csc.exe vbc.exe" msbuild.log') do @echo %%i
+doskey report_demo_tools=echo Scanning msbuild.log ^& (for /f "tokens=1" %%i in ('findstr /i "cl.exe" msbuild.log ^^^| findstr "@"') do @echo %%i) ^& for /f "tokens=1 delims=/" %%i in ('findstr /i "csc.exe vbc.exe" msbuild.log') do @for /f "tokens=1" %%j in ('echo %%i') do @echo %%j
 doskey run_demo_exes=if "$*" == "" (echo Please specify prefixes of .exes to run; e.g.: Hello MFC) else (for %%p in ($*) do @for /f "" %%e in ('where /r . %%p*.exe ^^^| findstr Release ^^^| findstr /iv obj') do @%%e)
 doskey show_demo_exes=for %%p in (Hello MFC) do @for /f "" %%e in ('where /r . %%p*.exe ^^^| findstr Release ^^^| findstr /iv obj') do @echo %%e
 doskey show_demo_macros=echo Macros for vcpkg demos: ^& for /f "usebackq tokens=1 delims==" %%m in (`doskey /macros ^^^| findstr _ ^^^| findstr /i "demo vcpkg"`) do @echo ^  %%m
