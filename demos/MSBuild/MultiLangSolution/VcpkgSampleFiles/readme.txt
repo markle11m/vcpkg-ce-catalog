@@ -4,7 +4,7 @@ Files:
 
 Directory.Build.props:			
     Implicit import (MSBuild 15.0+) file for setting properties common to its directory and subdirectories
-    MSBuild search up the directory tree for it; i.e., lower Directory.Build.props files in the tree override higher ones
+    MSBuild searches up the directory tree for it; i.e., lower Directory.Build.props files in the tree override higher ones
 
 EnableVcpkgArtifacts.props:		
     Standalone file defining properties needed to enable vcpkg artifact integration with MSBuild 

@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project>
     <Choose>
-        <When Condition="'$(UseVcpkg)' != ''">
+        <!-- Projects that should normally be built with VS can override UseVcpkg by setting BuildWithVS.  -->
+        <When Condition="'$(UseVcpkg)' != '' and '$(BuildWithVS)' != 'true'">
             <PropertyGroup>
                 <!-- Enable msbuild integration with vcpkg artifacts (currently disabled by default) -->
                 <EnableVcpkgArtifactsIntegration Condition="'$(EnableVcpkgArtifactsIntegration)' == ''">true</EnableVcpkgArtifactsIntegration>

@@ -1,10 +1,10 @@
 @echo off
 @rem Script/commands for vcpkg artifacts demos
 call :set_common_macros
-set _shellCount=4
+set _shellCount=5
 if "%1" == "" echo no demo# specified; please provide a number between 0 and %_shellCount%
 set demo0=
-for /l %%n in (0,1,4) do if "%1" == "%%n" goto :setup_shell_%%n
+for /l %%n in (0,1,5) do if "%1" == "%%n" goto :setup_shell_%%n
 echo invalid demo# '%1' specified; please provide a number between 0 and %_shellCount%
 goto :done
 
@@ -139,6 +139,22 @@ call :msbuild_demo_common
 pushd MSBuild\NativeProjectsSolution 
 goto :done
 
+@rem 5. Demo #5 - MSBuild MultiLangSolution (vcpkg)
+@rem Similar to Demo #3, but a full multi-language solution (vcpkg)
+:setup_shell_5
+title Demo #5 - MSBuild MultiLangSolution (vcpkg)
+call :demo_common
+set _CL_=
+call :setup_vcpkg
+call :add_msbuild
+set $_msbuildUseVcpkg=/p:UseVcpkg=true /p:NoVSInstall=true
+set demo0=MSBuild restore
+doskey d0=for %%s in ("Demo0: MSBuild restore" "msbuild /t:restore") do @echo %%~s
+doskey r0=msbuild /t:restore
+call :msbuild_demo_common
+pushd MSBuild\MultiLangSolution 
+goto :done
+
 @rem Demo #4 - Command Shell builds
 @rem Shows activations, switching MSVC & WinSDK versions, adding features (MFC, ASAN)
 @rem Available versions:
@@ -196,10 +212,13 @@ set PROMPT=($D $T) [$+$P]$S
 set $_demoRoot=c:\VcpkgDemos
 rem Remove all .vcpkg subdirectories
 doskey rmdir_vcpkg=echo Removing .vcpkg directories... ^& for /F "delims=" %%d in ('dir "*vcpkg" /AD /B /S 2^^^>nul') do @if "%%~nxd" == ".vcpkg" rd /s /q "%%~d"
-doskey run_vcpkg_demo_exes=if "$*" == "" (echo Please specify prefixes of .exes to run; e.g.: Hello MFC) else (for %%p in ($*) do @for /f "" %%e in ('where /r . %%p*.exe ^^^| findstr Release ^^^| findstr /iv obj') do @%%e)
-doskey show_vcpkg_demo_exes=for %%p in (Hello MFC) do @for /f "" %%e in ('where /r . %%p*.exe ^^^| findstr Release ^^^| findstr /iv obj') do @echo %%e
-doskey show_vcpkg_macros=echo Macros for vcpkg demos: ^& for /f "usebackq tokens=1 delims==" %%m in (`doskey /macros ^^^| findstr _ ^^^| findstr /i vcpkg`) do @echo ^  %%m
-doskey where_vcpkg_tools=for %%t in (vcpkg dotnet msbuild cl csc vbc) do @for /f "tokens=1 delims=" %%p in ('where.exe %%t 2^^^>^^^&1') do @if "%%p" == "INFO: Could not find files for the given pattern(s)." (echo Where is %%t?:) else (echo Where is %%t?:  %%p)
+doskey report_demo_tools=echo Scanning msbuild.log ^& findstr /i "cl.exe" msbuild.log ^^^| findstr "@" ^& for /f "tokens=1 delims=/" %%i in ('findstr /i "csc.exe vbc.exe" msbuild.log') do @echo %%i
+doskey run_demo_exes=if "$*" == "" (echo Please specify prefixes of .exes to run; e.g.: Hello MFC) else (for %%p in ($*) do @for /f "" %%e in ('where /r . %%p*.exe ^^^| findstr Release ^^^| findstr /iv obj') do @%%e)
+doskey show_demo_exes=for %%p in (Hello MFC) do @for /f "" %%e in ('where /r . %%p*.exe ^^^| findstr Release ^^^| findstr /iv obj') do @echo %%e
+doskey show_demo_macros=echo Macros for vcpkg demos: ^& for /f "usebackq tokens=1 delims==" %%m in (`doskey /macros ^^^| findstr _ ^^^| findstr /i "demo vcpkg"`) do @echo ^  %%m
+doskey show_demo_vars=echo Environment variables for vcpkg demos: ^^^& set $
+doskey where_demo_tools=for %%t in (vcpkg dotnet msbuild cl csc vbc) do @for /f "tokens=1 delims=" %%p in ('where.exe %%t 2^^^>^^^&1') do @if "%%p" == "INFO: Could not find files for the given pattern(s)." (echo Where is %%t?:) else (echo Where is %%t?:  %%p)
+
 pushd %$_demoRoot%\msvc-experiments-demos\demos
 exit /b 0
 
@@ -216,7 +235,11 @@ exit /b 0
 
 :add_msbuild
 echo Adding msbuild to PATH...
-set PATH=%PATH%;C:\Program Files\Microsoft Visual Studio\2022\Preview\MSBuild\Current\Bin\amd64
+for %%s in (Preview Enterprise Professional Community) do (
+    if exist "C:\Program Files\Microsoft Visual Studio\2022\%%s\MSBuild\Current\Bin\amd64" (
+        set PATH=%PATH%;C:\Program Files\Microsoft Visual Studio\2022\%%s\MSBuild\Current\Bin\amd64
+    )
+)
 exit /b 0
 
 :msbuild_demo_common
