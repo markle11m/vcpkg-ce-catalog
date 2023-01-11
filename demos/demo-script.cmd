@@ -61,6 +61,25 @@ if not errorlevel 1 (
 )
 :end_install_vs
 
+@rem Install .NET SDKs
+:install_dotnetsdks
+set _fInstallingDotNetSDKS=false
+if "%_fInteractiveMode%" == "false" goto :end_install_dotnetsdks
+call :yesorno "Install .NET SDKs?"
+if not errorlevel 1 (
+    setlocal enabledelayedexpansion
+    echo - Please install:
+    echo ^  - .NET Core 6.0 and 7.0: Visual Studio 2022 SDKs for x64
+    echo ^  - .NET Framework 4.7.2:  Developer Pack
+    pushd %TEMP%
+    rem .NET SDKs: https://dotnet.microsoft.com/en-us/download/visual-studio-sdks
+    start https://dotnet.microsoft.com/en-us/download/visual-studio-sdks
+    set _fInstallingDotNetSDKS=true
+    popd
+    endlocal
+)
+:end_install_dotnetsdks
+
 @rem Install and bootstrap vcpkg
 @rem To install a particular release of the vcpkg tool (by release date)
 @rem curl -LO https://github.com/microsoft/vcpkg-tool/releases/download/2022-09-20/vcpkg-init.cmd
