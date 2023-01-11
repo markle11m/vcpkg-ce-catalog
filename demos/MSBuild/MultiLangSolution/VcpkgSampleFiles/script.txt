@@ -1,5 +1,7 @@
-@rem   *** Build only with VS ***
-@rem   
+@rem   ***
+@rem   *** Build only with VS
+@rem   ***
+@rem
 @rem   First, I’m going to build our solution using tools installed with Visual Studio
 @rem   in a VS Developer Command Prompt.
 -----
@@ -13,7 +15,9 @@ dir msbuild*
 run_demo_exes
 -----
 
+@rem   ***
 @rem   *** Hybrid build – managed projects build w/VS-installed tools, native projects w/vcpkg-acquired tools ***
+@rem   ***
 @rem   
 @rem   Now, I’m going to build our solution using a mix of tools installed
 @rem   with Visual Studio and tools acquired by vcpkg artifacts.
@@ -85,4 +89,17 @@ vcpkg activate --target:x64
 where clang*.dll
 popd
 run_demo_exes hello mfc
+-----
+
+@rem   This build ran quickly because I preloaded the x64-targeting C++ toolset and 
+@rem   WinSDK packages ahead of time. On a developer desktop, the tools can be acquired
+@rem   dynamically when they are needed. Here we will rebuild targeting x86 and I will
+@rem   change the console logging so you can see the vcpkg invocations and toolset downloads:
+-----
+notepad Directory.Build.rsp 
+copy VcpkgSampleFiles\vcpkg-configuration.json-uncached Native\vcpkg-configuration.json [change MSVC to 14.28.29915, WinSDK to 10.0.18362]
+msbuild /t:rebuild MultiLangSolution.sln /p:UseVcpkg=true /p:Platform=x86
+show_demo_exes
+report_demo_tools
+run_demo_exes hello
 -----
