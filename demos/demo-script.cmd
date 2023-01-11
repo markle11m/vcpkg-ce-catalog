@@ -123,7 +123,7 @@ if "%_vsdevcmd%" == "" (
     echo Unable to find a VS installation and/or VsDevCmd.bat; this console will not work
     echo *** WARNING ***
 ) else (
-    call "%_vsdevcmd%"
+    call "%_vsdevcmd%" -arch=x64
 )
 call :demo_common
 pushd MSBuild\MultiLangSolution
@@ -249,7 +249,7 @@ echo Adding vcpkg to PATH...
 set PATH=%PATH%;%VCPKG_ROOT%
 set $_vcpkgCmd="%VCPKG_ROOT%\vcpkg-init.cmd"
 rem call :show_where vcpkg.exe
-doskey reset_vcpkg_artifact_cache=echo Killing processes... ^& taskkill /IM mspdbsrv.exe /F ^& taskkill /IM msbuild.exe /F ^& for %%p in (.vcpkg .\Outputs %USERPROFILE%\.vcpkg\downloads\artifacts) do @if exist %%p echo Deleting %%p... ^& @rd /s /q %%p ^>nul
+doskey reset_vcpkg_artifact_cache=echo Killing processes... ^& taskkill /IM mspdbsrv.exe /F ^& taskkill /IM msbuild.exe /F ^& taskkill /IM vbcscompiler.exe /F ^& for %%p in (.vcpkg .\Outputs %USERPROFILE%\.vcpkg\downloads\artifacts) do @if exist %%p echo Deleting %%p... ^& @rd /s /q %%p ^>nul
 exit /b 0
 
 :add_msbuild
