@@ -5,14 +5,20 @@
 @rem   First, I’m going to build our solution using tools installed with Visual Studio
 @rem   in a VS Developer Command Prompt.
 -----
+pushd ..\..
+git checkout -f
+git clean -df
+git status
+popd
+-----
 msbuild /t:rebuild MultiLangSolution.sln
-show_demo_exes
-report_demo_tools
 dir msbuild*
+report_demo_tools
+show_demo_exes
 -----
 @rem   All projects built successfully and can be run in this shell.
 -----
-run_demo_exes
+run_demo_exes Hello MFC
 -----
 
 @rem   ***
@@ -21,7 +27,13 @@ run_demo_exes
 @rem   
 @rem   Now, I’m going to build our solution using a mix of tools installed
 @rem   with Visual Studio and tools acquired by vcpkg artifacts.
-
+-----
+pushd ..\..
+git checkout -f
+git clean -df
+git status
+popd
+-----
 @rem   Here, we are going to use an ordinary cmd.exe prompt and add the MSBuild .exe 
 @rem   installed with VS to the path.
 @rem   
@@ -33,9 +45,10 @@ run_demo_exes
 @rem   VS and the native projects all use tools acquired by vcpkg. And we can build the 
 @rem   entire solution just as on the other machine.
 -----
+rmdir_vcpkg
 msbuild /t:rebuild MultiLangSolution.sln /p:UseVcpkg=true
-show_demo_exes
 report_demo_tools
+show_demo_exes
 -----
 @rem   All the builds succeeded. The log shows that the managed projects and the 
 @rem   native Hello-VS project that explicitly disables vcpkg integration build with 
@@ -63,7 +76,13 @@ where /r Native vcpkg-configuration.json
 @rem   
 @rem   Now, I’m going to build our solution using a mix of tools installed with 
 @rem   Visual Studio and tools acquired by vcpkg artifacts.
-@rem   
+-----
+pushd ..\..
+git checkout -f
+git clean -df
+git status
+popd
+-----
 @rem   Again, we are using an ordinary cmd.exe prompt, but in this case, I am going to use 
 @rem   vcpkg artifacts to acquire MSBuild and the Roslyn tools required. At this point, we 
 @rem   have vcpkg and the dotnet SDKs installed, but do not yet have a version of MSBuild 
@@ -83,9 +102,10 @@ popd
 @rem   We now have MSBuild and Roslyn compilers in our environment, but no C++ compiler.
 @rem   We can proceed to build the entire solution with vcpkg enabled just as we did before.
 -----
+rmdir_vcpkg
 msbuild /t:rebuild MultiLangSolution.sln /p:UseVcpkg=true
-show_demo_exes
 report_demo_tools
+show_demo_exes
 type msbuild.err
 -----
 @rem   Hello-VS fails to build as expected, since it explicitly disables vcpkg integration,
@@ -112,5 +132,5 @@ copy VcpkgSampleFiles\vcpkg-configuration.json-uncached Native\vcpkg-configurati
 msbuild /t:rebuild MultiLangSolution.sln /p:UseVcpkg=true /p:Platform=x86
 show_demo_exes
 report_demo_tools
-run_demo_exes hello
+run_demo_exes Hello
 -----
