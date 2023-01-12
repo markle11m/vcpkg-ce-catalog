@@ -1,16 +1,35 @@
 @rem   ***
+@rem   *** Preload x64-targeting artifacts
+@rem   ***
+@rem 
+-----
+pushd Native
+for /f "" %i in ('where /r . vcpkg-configuration.json') do @echo %i & pushd %~dpi & vcpkg activate --target:x64 --x64 & popd
+for /f "" %i in ('where /r . vcpkg-configuration.json') do @echo %i & pushd %~dpi & vcpkg activate --target:x64 --x64 & popd
+-----
+
+@rem   ***
+@rem   *** First machine overview
+@rem   ***
+@rem
+-----
+appwiz.cpl
+where /r Native vcpkg-configuration.json
+notepad Native\Directory.Build.props
+-----
+@rem   This machine has VS 17.4.0 installed along with vcpkg.
+@rem   The only additions made to support vcpkg artifacts are these configuration files,
+@rem   and some additions to Directory.Build.props to enable vcpkg artifacts using a 
+@rem   single property - UseVcpkg.
+
+@rem   ***
 @rem   *** Build only with VS
 @rem   ***
 @rem
 @rem   First, I’m going to build our solution using tools installed with Visual Studio
 @rem   in a VS Developer Command Prompt.
 -----
-pushd ..\..
-git checkout -f
-git clean -df
-git status
-popd
------
+pushd ..\.. & git checkout -f & git clean -df & git status & popd & pause
 msbuild /t:rebuild MultiLangSolution.sln
 dir msbuild*
 report_demo_tools
@@ -27,13 +46,6 @@ run_demo_exes Hello MFC
 @rem   
 @rem   Now, I’m going to build our solution using a mix of tools installed
 @rem   with Visual Studio and tools acquired by vcpkg artifacts.
------
-pushd ..\..
-git checkout -f
-git clean -df
-git status
-popd
------
 @rem   Here, we are going to use an ordinary cmd.exe prompt and add the MSBuild .exe 
 @rem   installed with VS to the path.
 @rem   
@@ -45,10 +57,12 @@ popd
 @rem   VS and the native projects all use tools acquired by vcpkg. And we can build the 
 @rem   entire solution just as on the other machine.
 -----
+pushd ..\.. & git checkout -f & git clean -df & git status & popd & pause
 rmdir_vcpkg
 msbuild /t:rebuild MultiLangSolution.sln /p:UseVcpkg=true
 report_demo_tools
 show_demo_exes
+dir msbuild*
 -----
 @rem   All the builds succeeded. The log shows that the managed projects and the 
 @rem   native Hello-VS project that explicitly disables vcpkg integration build with 
@@ -70,19 +84,33 @@ run_demo_exes Hello MFC
 @rem   one project explicitly disables use of vcpkg; that one will fail on this machine.
 -----
 where /r Native vcpkg-configuration.json
+notepad Native\vcpkg-configuration.json & pause
+for %i in (HelloCpp-Vcpkg2 HelloCpp-Vcpkg2\HelloCpp-Vcpkg2-Nested MFCApp) do @notepad %i\vcpkg-configuration.json & pause
+-----
+
+@rem   Vcpkg artifacts can also be used to acquire tools dynamically.
+@rem   First change the console logging back to to normal.
+-----
+notepad Directory.Build.rsp & pause
+msbuild /t:rebuild MultiLangSolution.sln /p:UseVcpkg=true /p:Platform=x86
+show_demo_exes
+report_demo_tools
+run_demo_exes Hello MFC
+-----
+@rem   We can also change the compiler and Windows SDK version.
+-----
+copy VcpkgSampleFiles\vcpkg-configuration.json-uncached Native\vcpkg-configuration.json
+msbuild /t:rebuild MultiLangSolution.sln /p:UseVcpkg=true /p:Platform=x86
+show_demo_exes
+report_demo_tools
+run_demo_exes Hello
 -----
 
 @rem   *** Build both managed and native projects with vcpkg-acquired tools (no VS installation) ***
 @rem   
 @rem   Now, I’m going to build our solution using a mix of tools installed with 
 @rem   Visual Studio and tools acquired by vcpkg artifacts.
------
-pushd ..\..
-git checkout -f
-git clean -df
-git status
-popd
------
+@rem 
 @rem   Again, we are using an ordinary cmd.exe prompt, but in this case, I am going to use 
 @rem   vcpkg artifacts to acquire MSBuild and the Roslyn tools required. At this point, we 
 @rem   have vcpkg and the dotnet SDKs installed, but do not yet have a version of MSBuild 
@@ -102,6 +130,7 @@ popd
 @rem   We now have MSBuild and Roslyn compilers in our environment, but no C++ compiler.
 @rem   We can proceed to build the entire solution with vcpkg enabled just as we did before.
 -----
+pushd ..\.. & git checkout -f & git clean -df & git status & popd & pause
 rmdir_vcpkg
 msbuild /t:rebuild MultiLangSolution.sln /p:UseVcpkg=true
 report_demo_tools
@@ -122,15 +151,4 @@ where clang*.dll
 popd
 run_demo_exes Hello MFC
 -----
-@rem   This build ran quickly because I preloaded the x64-targeting C++ toolset and 
-@rem   WinSDK packages ahead of time. On a developer desktop, the tools can be acquired
-@rem   dynamically when they are needed. Here we will rebuild targeting x86 and I will
-@rem   change the console logging so you can see the vcpkg invocations and toolset downloads:
------
-notepad Directory.Build.rsp 
-copy VcpkgSampleFiles\vcpkg-configuration.json-uncached Native\vcpkg-configuration.json [change MSVC to 14.28.29915, WinSDK to 10.0.18362]
-msbuild /t:rebuild MultiLangSolution.sln /p:UseVcpkg=true /p:Platform=x86
-show_demo_exes
-report_demo_tools
-run_demo_exes Hello
------
+
