@@ -3,6 +3,15 @@
 @rem   ***
 @rem 
 -----
+rem Empty primary vcpkg cache
+pushd %VCPKG_ROOT%\downloads
+for %e in (msbuild mspdbsrv vbcscompiler) do @taskkill /F /IM %e.exe
+rd /s /q artifacts 
+for %p in (asan atl crt mfc microsoft sdks tools) do @del %p*.zip
+dir *.zip
+popd
+-----
+rem Activate all configs to preload cache
 pushd Native
 for /f "" %i in ('where /r . vcpkg-configuration.json') do @echo %i & pushd %~dpi & vcpkg activate --target:x64 --x64 & popd
 for /f "" %i in ('where /r . vcpkg-configuration.json') do @echo %i & pushd %~dpi & vcpkg activate --target:x64 --x64 & popd
@@ -15,7 +24,7 @@ for /f "" %i in ('where /r . vcpkg-configuration.json') do @echo %i & pushd %~dp
 -----
 appwiz.cpl
 where /r Native vcpkg-configuration.json
-notepad Native\Directory.Build.props
+for %f in (Directory.Build EnableVcpkgArtifacts) do @pause & notepad Native\%f.props 
 -----
 @rem   This machine has VS 17.4.0 installed along with vcpkg.
 @rem   The only additions made to support vcpkg artifacts are these configuration files,
