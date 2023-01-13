@@ -100,7 +100,7 @@ for %i in (HelloCpp-Vcpkg2 HelloCpp-Vcpkg2\HelloCpp-Vcpkg2-Nested MFCApp) do @no
 @rem   Vcpkg artifacts can also be used to acquire tools dynamically.
 @rem   First change the console logging back to to normal.
 -----
-notepad Directory.Build.rsp & pause
+notepad Directory.Build.rsp
 msbuild /t:rebuild MultiLangSolution.sln /p:UseVcpkg=true /p:Platform=x86
 show_demo_exes
 report_demo_tools
