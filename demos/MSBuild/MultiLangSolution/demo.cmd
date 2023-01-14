@@ -14,7 +14,10 @@ set PROMPT=($T) [$+$P]$S
 
 set $_isVSDevCmdPrompt=false
 if defined VSINSTALLDIR if defined VSCMD_VER set $_isVSDevCmdPrompt=true
-if "%$_isVSDevCmdPrompt%" == "true" call :vsdevcmd_demo
+if "%$_isVSDevCmdPrompt%" == "true" (
+    call :vsdevcmd_demo
+    goto :done
+)
 
 where.exe /r " C:\Program Files\Microsoft Visual Studio" VSDevCmd.bat >nul 2>&1
 if errorlevel 1 (
@@ -28,7 +31,7 @@ if errorlevel 1 (
 goto :done
 
 :vsdevcmd_demo
-call :list_vcpkg_configs
+rem call :list_vcpkg_configs
 rem call :show_props_files
 call :clean_demo_workspace
 call :build_solution
@@ -130,6 +133,7 @@ set _msbuildArgs=%~1
 call :yesorno "Build solution?"
 if errorlevel 1 (
     pushd %$_root%
+    call :rmdir_vcpkg
     call :run_command "msbuild.exe /t:rebuild MultiLangSolution.sln %_msbuildArgs%"
     popd
 )
@@ -137,21 +141,17 @@ if errorlevel 1 (
 exit /b 0
 
 :build_native_project
-set _projectDir=%~1
+set _projectName=%~1
 set _msbuildArgs=%~2
 set _exitCode=0
-if not exist %$_root%\Native\%_projectDir% echo *** ERROR: native project directory '%_projectDir%' not found & exit /b 1
-call :yesorno "Build project %_projectDir%?"
+set _projectFile=
+for /f "" %p in ('where /r Native %_projectName%.vcxproj') do set _projectFile=%%~p
+if "%_projectFile%" == "" echo *** ERROR: %_projectFile% not found & exit /b 1
+call :yesorno "Build project %_projectName%?"
 if errorlevel 1 (
     pushd %$_root%
-    set _projectFile=
-    for /f "" %%p in ('dir /b Native\%_projectDir%\*.vcxproj') do set _projectFile=%%~p
-    if "!_projectFile!" NEQ "" (
-        call :run_command "msbuild.exe /t:rebuild %_projectDir%\!_projectFile! %_msbuildArgs%"
-    ) else (
-        echo *** ERROR: no .vcxproj found in "Native\%_projectDir%"
-        set _exitCode=2
-    )
+    call :rmdir_vcpkg
+    call :run_command "msbuild.exe /t:rebuild !_projectFile! %_msbuildArgs%"
     popd
 )
 :end_build_native_project
@@ -218,7 +218,7 @@ if errorlevel 1 (
 exit /b 0
 
 :rmdir_vcpkg
-call :yesorno "Remove .vcpkg directories?"
+call :yesorno_skip_line_echo "Remove .vcpkg directories?"
 pushd %$_root%
 for /F "delims=" %%d in ('dir "*vcpkg" /AD /B /S 2^>nul') do (
     if "%%~nxd" == ".vcpkg" (
@@ -233,8 +233,11 @@ exit /b 0
 call :yesorno "Add ASAN runtime DLLs to the environment?"
 if errorlevel 1 (
     pushd %VCPKG_ROOT%
-    for /f "" %%f in ('where /r downloads\artifacts clang_rt.asan*_dynamic-x86_64.dll ^| findstr /i asan.x64 ^| findstr /i Hostx64') do (
-	    copy /y %%f %$_root%\..\..\..\..\redist\%%f >nul 2>&1
+    set _redistDir=%$_demoRoot%\redist
+    if not exist !_redistDir! md !_redistDir! >nul 2>&1
+    set PATH=%PATH%;%!_redistDir!
+    for /f "usebackq" %%f in (`where /r downloads\artifacts clang_rt.asan*_dynamic-x86_64.dll ^| findstr /i asan.x64 ^| findstr /i Hostx64`) do (
+	    copy /y %%f !_redistDir!\%%~nxf >nul 2>&1
     )
     call :run_command "where clang*.dll"
     popd
