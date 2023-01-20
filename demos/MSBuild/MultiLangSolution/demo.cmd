@@ -55,6 +55,7 @@ call :open_msbuild_response_file
 call :build_solution "/p:UseVcpkg=true /p:Platform=x86"
 call :show_demo_exes
 call :report_demo_tools
+call :add_asan_runtime_files
 call :run_demo_exes "Hello MFC"
 call :update_toplevel_vcpkg_config
 if errorlevel 1 (
@@ -160,7 +161,7 @@ set _projectName=%~1
 set _msbuildArgs=%~2
 set _exitCode=0
 set _projectFile=
-for /f "" %p in ('where /r Native %_projectName%.vcxproj') do set _projectFile=%%~p
+for /f "" %%p in ('where /r Native %_projectName%.vcxproj') do set _projectFile=%%~p
 if "%_projectFile%" == "" echo *** ERROR: %_projectFile% not found & exit /b 1
 call :yesorno "Build project %_projectName%?"
 if errorlevel 1 (
@@ -274,19 +275,17 @@ if errorlevel 1 (
 exit /b 0
 
 :update_toplevel_vcpkg_config
-set _exitCode=1
 call :yesorno "Change top-level compiler and Windows SDK versions?"
 if errorlevel 1 (
     pushd %$_root%
     call :run_command "copy VcpkgSampleFiles\vcpkg-configuration.json-uncached Native\vcpkg-configuration.json"
-    set _exitCode=0
     popd
 )
 :end_update_toplevel_vcpkg_config
-exit /b %_exitCode%
+exit /b 0
 
 :template
-call :yesorno "?"
+call :yesorno "{action}?"
 if errorlevel 1 (
     pushd %$_root%
     popd
