@@ -63,22 +63,42 @@ if not errorlevel 1 (
 
 @rem Install .NET SDKs
 :install_dotnetsdks
-set _fInstallingDotNetSDKS=false
+set _fInstallingDotNetSDKs=false
 if "%_fInteractiveMode%" == "false" goto :end_install_dotnetsdks
 call :yesorno "Install .NET SDKs?"
 if not errorlevel 1 (
-    setlocal enabledelayedexpansion
     echo - Please install:
     echo ^  - .NET Core 6.0 and 7.0: Visual Studio 2022 SDKs for x64
     echo ^  - .NET Framework 4.7.2:  Developer Pack
     pushd %TEMP%
-    rem .NET SDKs: https://dotnet.microsoft.com/en-us/download/visual-studio-sdks
     start https://dotnet.microsoft.com/en-us/download/visual-studio-sdks
-    set _fInstallingDotNetSDKS=true
+    set _fInstallingDotNetSDKs=true
     popd
-    endlocal
 )
 :end_install_dotnetsdks
+
+@rem Install latest VS2002 VC runtime
+:install_vcruntime
+set _fInstallingVCRuntime=false
+if "%_fInteractiveMode%" == "false" goto :end_install_vcruntime
+call :yesorno "Install VC Runtime?"
+if not errorlevel 1 (
+    echo - Installing latest VC runtime for both x64 and x86:
+    pushd %TEMP%
+    for %%a in (x64 x86) do (
+        echo ^  - %%a
+        del VC_redist.%%a.exe >nul 2>&1
+        curl -LO https://aka.ms/vs/17/release/VC_redist.x86.exe
+        if exist VC_redist.%%a.exe (
+            VC_redist.%%a.exe /install /quite /norestart
+        ) else (
+            echo ^  - - skipped; error downloading installer
+        )
+    )
+    set _fInstallingVCRuntime=true
+    popd
+)
+:end_install_vcruntime
 
 @rem Install and bootstrap vcpkg
 @rem To install a particular release of the vcpkg tool (by release date)
@@ -231,6 +251,7 @@ set PROMPT=($D $T) [$+$P]$S
 set $_demoRoot=c:\VcpkgDemos
 rem Remove all .vcpkg subdirectories
 doskey rmdir_vcpkg=echo Removing .vcpkg directories... ^& for /F "delims=" %%d in ('dir "*vcpkg" /AD /B /S 2^^^>nul') do @if "%%~nxd" == ".vcpkg" rd /s /q "%%~d"
+doskey kill_demo_processes=for %%e in (msbuild mspdbsrv vbcscompiler cl) do @taskkill /F /IM %%e.exe
 doskey report_demo_tools=echo Scanning msbuild.log... ^& (for /f "tokens=1*" %%i in ('findstr /i "cl.exe" msbuild.log ^^^| findstr "@"') do @for /f "tokens=1 delims=@" %%p in ('echo "%%i %%j"') do @echo %%~p) ^& for /f "tokens=1 delims=/" %%i in ('findstr /i "csc.exe vbc.exe" msbuild.log') do @for /f "tokens=1*" %%j in ('echo %%i') do @echo %%j %%k
 doskey run_demo_exes=if "$*" == "" (echo Please specify prefixes of .exes to run; e.g.: Hello MFC) else (for %%p in ($*) do @for /f "" %%e in ('where /r . %%p*.exe ^^^| findstr Release ^^^| findstr /iv obj') do @%%e)
 doskey show_demo_exes=for %%p in (Hello MFC) do @for /f "" %%e in ('where /r . %%p*.exe ^^^| findstr Release ^^^| findstr /iv obj') do @echo %%e

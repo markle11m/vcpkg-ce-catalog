@@ -63,6 +63,8 @@ if errorlevel 1 (
     call :report_demo_tools
     call :run_demo_exes "Hello"
 )
+call :restore_solution "/p:UseVcpkg=true"
+
 exit /b 0
 
 :vcpkg_only_demo
@@ -126,6 +128,19 @@ if errorlevel 1 (
     popd
 )
 :end_clean_demo_workspace
+exit /b 0
+
+:restore_solution
+set _msbuildArgs=%~1
+call :yesorno "Restore solution?"
+if errorlevel 1 (
+    pushd %$_root%
+    call :rmdir_vcpkg
+    call :run_command "msbuild.exe /t:restore MultiLangSolution.sln %_msbuildArgs% /p:Platform=x64"
+    call :run_command "msbuild.exe /t:restore MultiLangSolution.sln %_msbuildArgs% /p:Platform=x86"
+    popd
+)
+:end_
 exit /b 0
 
 :build_solution
@@ -236,8 +251,11 @@ if errorlevel 1 (
     set _redistDir=%$_demoRoot%\redist
     if not exist !_redistDir! md !_redistDir! >nul 2>&1
     set PATH=%PATH%;%!_redistDir!
-    for /f "usebackq" %%f in (`where /r downloads\artifacts clang_rt.asan*_dynamic-x86_64.dll ^| findstr /i asan.x64 ^| findstr /i Hostx64`) do (
-	    copy /y %%f !_redistDir!\%%~nxf >nul 2>&1
+    rem add clang_rt.asan*dynamic-*.dll for both x64 (x86_64) and x86 (i386)
+    for %%t in (x64 x86) do (
+        for /f "usebackq" %%f in (`where /r downloads\artifacts clang_rt.asan*_dynamic-*.dll ^| findstr /i asan.%%t ^| findstr /i Host%%t`) do (
+	        copy /y %%f !_redistDir!\%%~nxf >nul 2>&1
+        )
     )
     call :run_command "where clang*.dll"
     popd
