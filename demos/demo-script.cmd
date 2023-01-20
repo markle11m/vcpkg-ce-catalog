@@ -88,7 +88,7 @@ if not errorlevel 1 (
     for %%a in (x64 x86) do (
         echo ^  - %%a
         del VC_redist.%%a.exe >nul 2>&1
-        curl -LO https://aka.ms/vs/17/release/VC_redist.x86.exe
+        curl -LO https://aka.ms/vs/17/release/VC_redist.%%a.exe
         if exist VC_redist.%%a.exe (
             VC_redist.%%a.exe /install /quite /norestart
         ) else (
