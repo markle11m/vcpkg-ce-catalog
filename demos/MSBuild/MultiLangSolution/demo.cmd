@@ -234,15 +234,18 @@ if errorlevel 1 (
 exit /b 0
 
 :rmdir_vcpkg
-call :yesorno_skip_line_echo "Remove .vcpkg directories?"
-pushd %$_root%
-for /F "delims=" %%d in ('dir "*vcpkg" /AD /B /S 2^>nul') do (
-    if "%%~nxd" == ".vcpkg" (
-        call :run_command " rd /s /q %%~d"
+dir ".vcpkg" /AD /B /S >nul 2>&1
+if not errorlevel 1 (
+    call :yesorno_skip_line_echo "Remove .vcpkg directories?"
+    pushd %$_root%
+    for /F "delims=" %%d in ('dir "*vcpkg" /AD /B /S 2^>nul') do (
+        if "%%~nxd" == ".vcpkg" (
+            call :run_command " rd /s /q %%~d"
+        )
     )
+    popd
 )
-popd
-:end_
+:end_rmdir_vcpkg
 exit /b 0
 
 :add_asan_runtime_files
@@ -275,14 +278,16 @@ if errorlevel 1 (
 exit /b 0
 
 :update_toplevel_vcpkg_config
+set _exitCode=0
 call :yesorno "Change top-level compiler and Windows SDK versions?"
 if errorlevel 1 (
     pushd %$_root%
     call :run_command "copy VcpkgSampleFiles\vcpkg-configuration.json-uncached Native\vcpkg-configuration.json"
+    set _exitCode=1
     popd
 )
 :end_update_toplevel_vcpkg_config
-exit /b 0
+exit /b %_exitCode%
 
 :template
 call :yesorno "{action}?"
