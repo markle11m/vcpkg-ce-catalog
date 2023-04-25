@@ -1,0 +1,8 @@
+{
+  "version": "1.0",
+  "components": [
+    "Microsoft.VisualStudio.Component.VC.CoreIDE",
+    "Microsoft.Component.MSBuild",
+    "Microsoft.VisualStudio.Component.VC.CoreBuildTools"
+  ]
+}

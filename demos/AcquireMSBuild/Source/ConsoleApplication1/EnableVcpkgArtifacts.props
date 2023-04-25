@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+    <Choose>
+        <!-- Projects that should normally be built with VS can override UseVcpkg by setting BuildWithVS.  -->
+        <When Condition="'$(UseVcpkg)' != '' and '$(BuildWithVS)' != 'true'">
+            <PropertyGroup>
+                <!-- Enable msbuild integration with vcpkg artifacts (currently disabled by default) -->
+                <EnableVcpkgArtifactsIntegration Condition="'$(EnableVcpkgArtifactsIntegration)' == ''">true</EnableVcpkgArtifactsIntegration>
+                <!-- Use this property if the build is expected to use only downloaded tools and not the ones installed by VS -->
+                <DisableRegistryUse Condition="'$(DisableRegistryUse)' == ''">true</DisableRegistryUse>
+                <!-- currently needed to avoid build warnings/errors about mismatch of MSVC and cpp targets versions as we don’t have artifacts for v143 MSVC yet. 
+                     Not recommended to use in the future. -->
+                <CheckMSVCComponents Condition="'$(CheckMSVCComponents)' == ''">false</CheckMSVCComponents>
+                <!-- currently needs to be specified explicitly for proper artifacts selection -->
+                <!--PreferredToolArchitecture Condition="'$(PreferredToolArchitecture)' == ''">x64</PreferredToolArchitecture-->
+            </PropertyGroup>
+        </When>
+    </Choose>
+</Project>

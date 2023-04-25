@@ -1,0 +1,92 @@
+﻿{
+  "include": [
+    {
+      "path": "Common7\\IDE\\Extensions\\Microsoft\\Azure Storage Emulator\\notice.txt"
+    },
+    {
+      "path": "MSBuild",
+      "except": [
+        "Sdks",
+        "Xamarin",
+        "Novell",
+        "microsoft\\visualstudio\\xamarin",
+        "microsoft\\vc\\v170\\application type\\ios",
+        "microsoft\\vc\\v170\\application type\\android",
+        "microsoft\\vc\\v160\\application type\\ios",
+        "microsoft\\vc\\v160\\application type\\android",
+        "microsoft\\vc\\v150\\application type",
+        "microsoft\\mdd",
+        "current\\microsoft.common.targets\\importafter\\xamarin.common.targets",
+        "current\\microsoft.common.crosstargeting.targets\\importbefore\\xamarin.common.crosstargeting.targets"
+      ]
+    },
+    {
+      "path": "Common7\\IDE\\CommonExtensions\\Microsoft\\NuGet",
+      "except": [
+        "Plugins"
+      ]
+    },
+    {
+      "path": "Common7\\IDE\\CommonExtensions\\Microsoft\\FSharp"
+    },
+    {
+      "path": "Common7\\IDE\\CommonExtensions\\Microsoft\\FSharpSdk"
+    },
+    {
+      "path": "Common7\\IDE\\CommonExtensions\\Microsoft\\FSharpTemplates"
+    },
+    {
+      "path": "Common7\\IDE\\CommonExtensions\\Microsoft\\IntelliTrace"
+    },
+    {
+      "path": "Common7\\IDE\\CommonExtensions\\Microsoft\\TestWindow"
+    },
+    {
+      "path": "Common7\\IDE\\CommonExtensions\\Platform\\InstrumentationEngine"
+    },
+    {
+      "path": "Common7\\IDE\\Extensions\\Microsoft\\CodeCoverage.Console"
+    },
+    {
+      "path": "Common7\\IDE\\Extensions\\TestPlatform"
+    },
+    {
+      "path": "Common7\\IDE\\Extensions\\Microsoft\\SQLDB\\DAC"
+    },
+    {
+      "path": "Common7\\IDE\\ReferenceAssemblies",
+      "except": [
+        "Microsoft"
+      ]
+    },
+    {
+      "path": "Common7\\IDE\\PublicAssemblies"
+    },
+    {
+      "path": "Team Tools\\Dynamic Code Coverage Tools"
+    },
+    {
+      "path": "Team Tools\\Static Analysis Tools"
+    },
+    {
+      "path": "Common7\\IDE\\PrivateAssemblies\\Microsoft.IntelliTrace.Core.dll"
+    },
+    {
+      "path": "Common7\\IDE\\PrivateAssemblies\\Microsoft.VisualStudio.ArchitectureTools.PEReader.dll"
+    },
+    {
+      "path": "Program Files\\MSBuild\\Microsoft"
+    }
+  ],
+  "move": [],
+  "cleanup": [
+    "Common7\\IDE\\CommonExtensions\\Microsoft\\NuGetRecommender",
+    "Program Files\\MSBuild\\Microsoft.Cpp"
+  ],
+  "outputPackageData": [
+    "Microsoft.AspNetCore.SharedFramework*",
+    "Microsoft.NetCore.SharedFramework*",
+    "Microsoft.NetCore.Toolset*",
+    "Microsoft.WindowsDesktop.SharedFramework*"
+  ]
+}
