@@ -29,10 +29,10 @@ if errorlevel 1 call :set_error_info 100 "'%_toolExe%' not found on path" & goto
 :run_installer
 call :echo_action Using '%_toolExe%' to install MSBuild...
 set _argAddComponents=--add Microsoft.Component.MSBuild --add Microsoft.VisualStudio.Component.VC.CoreBuildTools
-set _cmdT=%_toolExe% %_argAddComponents% --path install="%_vsInstallDir%" --passive
+set _cmdT=%_toolExe% %_argAddComponents% --path install="%_vsInstallDir%" --passive --wait
 echo call %_cmdT%
 call %_cmdT%
-set PATH=%PATH%;%_vsInstallDir%\MSBuild\Current\Bin\amd64
+set PATH=%_vsInstallDir%\MSBuild\Current\Bin\amd64;%PATH%
 
 goto :done
 

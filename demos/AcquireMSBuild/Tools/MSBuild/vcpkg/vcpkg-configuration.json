@@ -20,35 +20,12 @@
             "kind": "artifact",
             "location": "https://github.com/markle11m/vcpkg-ce-catalog/archive/refs/heads/msvc-experiments.zip",
             "name": "mydemo"
-        },
-        {
-            "kind": "artifact",
-            "location": "c:/VcpkgDemos/catalogs/vcpkg-ce-catalog.demo",
-            "name": "local"
         }
     ],
     "demands": {
         "tag:msbuild-bootstrap": {
             "requires": {
                 "mydemo:microsoft.vs.msbuild": "17.4.0"
-            }
-        },
-        "tag:msbuild-only": {
-            "requires": {
-                "mydemo:microsoft.vs.msbuild.vc.v143": "17.4.0"
-            }
-        },
-        "tag:headers": {
-            "requires": {
-                "demo:crts/microsoft/headers": "14.30.30705",
-                "demo:sdks/microsoft/windows/core": "*"
-            }
-        },
-        "not tag": {
-            "requires": {
-                "mydemo:microsoft/msvc": "14.30.30705",
-                "mydemo:crts/microsoft/desktop": "14.30.30705",
-                "demo:sdks/microsoft/windows": "*"
             }
         }
     }

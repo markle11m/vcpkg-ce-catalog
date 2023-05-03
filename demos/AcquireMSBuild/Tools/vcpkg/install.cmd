@@ -40,7 +40,7 @@ if exist %_toolFullPath% (
 )
 
 :download_installer
-echo call :echo_action Downloading installer '%_toolExe%'...
+call :echo_action Downloading installer '%_toolExe%'...
 pushd %_toolPath%
 curl -LO %_toolURL%
 popd

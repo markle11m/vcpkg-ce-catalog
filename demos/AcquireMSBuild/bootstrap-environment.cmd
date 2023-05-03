@@ -23,7 +23,7 @@ set _cmdT=%$_demoToolsRoot%\MSBuild\%_demoID%\install.cmd
 call %_cmdT%
 if /I "%_demoID%" NEQ "vcpkg" call %$_demoToolsRoot%\vcpkg\install.cmd
 
-set PROMPT=($T) [$+$P:%_demoID%]$S
+set PROMPT={demo:%_demoID%} ($T) [$+$P]$S
 set DEMO_ID=%_demoID%
 
 :done

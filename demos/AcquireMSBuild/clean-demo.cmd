@@ -17,6 +17,7 @@ rem call :remove_directory "%USERPROFILE%\.vcpkg"
 call :remove_directory "%$_demoToolsRoot%\MSBuild\CatalogExtraction\VSInstallDir"
 call :remove_directory "%$_demoToolsRoot%\MSBuild\CloudBuild\CloudBuild.Tools.MSBuild"
 call :remove_directory "%$_demoToolsRoot%\MSBuild\VSBuildTools\VSInstallDir"
+rem Bin\vs_BuildTools.exe uninstall --installpath "C:\Demo\Tools\MSBuild\VSBuildTools\VSInstallDir" --passive
 
 goto :done
 
