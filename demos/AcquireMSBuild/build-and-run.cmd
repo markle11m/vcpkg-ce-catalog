@@ -33,6 +33,7 @@ if exist %_exe% (
 	call :echo_info Running exe...
 	echo.
 	call %_exe%
+	echo.
 )
 
 popd

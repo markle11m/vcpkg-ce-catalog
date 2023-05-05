@@ -2,8 +2,7 @@
 @setlocal enabledelayedexpansion
 
 set PROMPT=($T) [$+$P]$S
-color 60
-goto init
+goto :init
 
 :usage
 echo usage: %$_name% [OPTIONS]
@@ -41,7 +40,18 @@ call :echo_info Logfile is '%$_logFile%'
 @rem Validate inputs
 if "%_demoRoot%" == "" set _demoRoot=%_demoRootDefault%
 if "%_listDemos%" == "" set _listDemos=%_listDemosDefault%
-if exist "%_demoRoot%" set $_errorCode=100& call :fatal_error directory '%_demoRoot%' already exists & exit /b !$_errorCode!
+if exist "%_demoRoot%" (
+    set _altDemoSuffix=%TIME::=%
+    set _altDemoSuffix=!_altDemoSuffix:.=!
+    set _altDemoRoot=%_demoRoot%-!_altDemoSuffix!
+    call :echo_warning directory '%_demoRoot%' exists
+    call :yesnoquit "Would you like to use '!_altDemoRoot!' instead?"
+    if not errorlevel 1 (
+        set $_errorCode=98& call :fatal_error directory '%_demoRoot%' already exists & exit /b !$_errorCode!
+    )
+    set _demoRoot=!_altDemoRoot!
+)
+
 for %%d in (%_listDemos%) do (
     set _fValidOption=false
     for %%o in (%_listDemoOptions%) do (
@@ -127,8 +137,7 @@ exit /b 0
 
 :set_demo_color_scheme
 set _idT=%~1
-rem set _demoColorSchemes=CatalogExtraction:30 CloudBuild:20 vcpkg:60 VSBuildTools:a0
-set _demoColorSchemes=CatalogExtraction:03 CloudBuild:02 vcpkg:06 VSBuildTools:0a
+set _demoColorSchemes=CatalogExtraction:30 CloudBuild:20 vcpkg:60 VSBuildTools:A0
 for %%s in (%_demoColorSchemes%) do (
     for /f "tokens=1,2 delims=:" %%i in ('echo %%s') do (
         if /I "%%i" == "%_idT%" color %%j
@@ -146,37 +155,45 @@ set $_timestamp=%_yyyy%-%_mm%-%_dd%-%_tt%
 exit /b 0
 
 :fatal_error
-set _msgId=FATAL__
-set _msgErrCode=fatal error %$_errorCode%:
-goto :echo_time_message
+set _msgId=FATAL__& set _msgErrCode=fatal error %$_errorCode%:& goto :echo_time_message
 :echo_error
-set _msdId=ERROR__
-set _msgErrCode=error %$_errorCode%:
-goto :echo_time_message
+set _msdId=ERROR__& set _msgErrCode=error %$_errorCode%:& goto :echo_time_message
+:echo_warning
+set _msgId=WARNING& goto :echo_time_message
 :echo_command
-set _msgId=COMMAND
-set _msgShowCommand=true
-goto :echo_time_message
+set _msgId=COMMAND& set _msgShowCommand=true& goto :echo_time_message
 :echo_action
-set _msgId=ACTION_
-goto :echo_time_message
+set _msgId=ACTION_& goto :echo_time_message
 :echo_info
-set _msgId=INFO___
-goto :echo_time_message
+set _msgId=INFO___& goto :echo_date_message
 :echo_time_message
-set _msgTime=%TIME:~,8%
-set _msgTime=%_msgTime: =0%
-set _msgPrefix=[%_msgTime% %_msgId%]
-goto :echo_message
+set _msgTimestamp=%TIME:~,8%
+set _msgTimestamp=%_msgTimestamp: =0%& goto :echo_message
+:echo_date_message
+set _msgTimestamp=%DATE:~4,6%%DATE:~12%& goto :echo_message
 :echo_message
 set _msg=%*
 if "%_msgErrCode%" NEQ "" set _msg=%_msgErrCode% %_msg%
+if "%_msgTimestamp%" NEQ "" set _msg=[%_msgTimestamp% %_msgId%] %_msg%
 if "%_msgShowCommand%" == "true" set _msg=%_msg% (%$_cmdT%)
-set _msg= %_msgPrefix% %_msg%
 echo %_msg%
 if "%$_logFile%" NEQ "" echo %_msg%>>"%$_logFile%"
 for /f "tokens=1 delims==" %%v in ('set _msg') do set %%v=
 goto :eof
+
+:yesnoquit
+@rem ;; int yesnoquit(promptString)
+@rem ;; Echoes 'promptString [y/n/q]' to console and reads the user response.
+@rem ;; Returns 1 for yes, 0 for no, -1 for quit; default is yes.
+@rem ;; Looks only at the first character of the response.
+set _promptT=%~1
+set _responseT=
+set /P _responseT=%_promptT% [y/n/q] 
+if not defined _responseT exit /b 1
+if /I "%_responseT:~0,1%" == "y" exit /b 1
+if /I "%_responseT:~0,1%" == "n" exit /b 0
+if /I "%_responseT:~0,1%" == "q" exit /b -1
+exit /b 1
 
 :done
 
