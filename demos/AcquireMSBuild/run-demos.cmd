@@ -20,7 +20,10 @@ if not exist "%$_logDir%" (
     md "%$_logDir%" >nul 2>&1
     if errorlevel 1 set $_errorCode=99& call :fatal_error unable to create log directory '%$_logDir%' & exit /b !$_errorCode!
 )
-rem TODO: add usage
+rem TODO:
+rem -?, -??, -help
+rem -interactive, -i
+rem -passive
 
 :getargs
 set _argT=%~1
@@ -87,6 +90,7 @@ popd
 
 :summary
 call :echo_info Done.
+echo.
 
 goto :done
 
