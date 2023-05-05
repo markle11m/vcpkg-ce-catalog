@@ -127,7 +127,8 @@ exit /b 0
 
 :set_demo_color_scheme
 set _idT=%~1
-set _demoColorSchemes=CatalogExtraction:30 CloudBuild:20 vcpkg:60 VSBuildTools:a0
+rem set _demoColorSchemes=CatalogExtraction:30 CloudBuild:20 vcpkg:60 VSBuildTools:a0
+set _demoColorSchemes=CatalogExtraction:03 CloudBuild:02 vcpkg:06 VSBuildTools:0a
 for %%s in (%_demoColorSchemes%) do (
     for /f "tokens=1,2 delims=:" %%i in ('echo %%s') do (
         if /I "%%i" == "%_idT%" color %%j
