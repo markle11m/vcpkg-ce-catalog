@@ -6,53 +6,73 @@ color 60
 goto init
 
 :usage
-echo usage: %_name% [OPTIONS]
+echo usage: %$_name% [OPTIONS]
 echo.
 echo OPTIONS:
 echo.
-echo ^  DEMOS               List of demos to run (options=%_listDemos%; default=all)
+echo ^  DEMOS               List of demos to run (options=%_listDemoOptions%; default=%_listDemosDefault%)
 echo ^  -dir:{DEMO-ROOT}    Copies the demo tree to {DIR} [default=%__demoRootDefault%]
 echo.
 exit /b -1
 
 :init
 call :initialize
+if not exist "%$_logDir%" (
+    md "%$_logDir%" >nul 2>&1
+    if errorlevel 1 set $_errorCode=99& call :fatal_error unable to create log directory '%$_logDir%' & exit /b !$_errorCode!
+)
 rem TODO: add usage
 
 :getargs
-set _demoRoot=%~1
+set _argT=%~1
+if "%_argT%" == "" goto :start
+if "%_argT:~,5%" == "-dir:" set _demoRoot=%_argT:~5%& goto :nextarg
+set _listDemos=%_listDemos% %_argT%
+:nextarg
+shift
+goto :getargs
 
 :start
 
 @rem Begin output
 call :echo_info Running '%$_command%' from '%CD%' at %DATE% %TIME%.
-call :echo_info Logfile is '%$logfile%'
+call :echo_info Logfile is '%$_logFile%'
 
 @rem Validate inputs
 if "%_demoRoot%" == "" set _demoRoot=%_demoRootDefault%
-if exist "%_demoRoot%" set $_errorCode=100& call :fatal_error "directory '%_demoRoot%' already exists" & exit /b !$_errorCode!
+if "%_listDemos%" == "" set _listDemos=%_listDemosDefault%
+if exist "%_demoRoot%" set $_errorCode=100& call :fatal_error directory '%_demoRoot%' already exists & exit /b !$_errorCode!
+for %%d in (%_listDemos%) do (
+    set _fValidOption=false
+    for %%o in (%_listDemoOptions%) do (
+        if /I "%%d" == "%%o" set _fValidOption=true
+    )
+    if "!_fValidOption!" == "true" (
+        set _listDemosToRun=!_listDemosToRun! %%d
+    ) else (
+        call :echo_warning '%%d' is not a supported demo, ignoring it
+    )
+)
 
 @rem Execute actions
 
 :copy_demo
 rem Copy the demo directory to a temporary location. 
 call :echo_action Copying demo directory tree to '%_demoRoot%'...
-set $_cmdT=robocopy /MIR "%~dp0" "%_demoRoot%"
+set $_cmdT=robocopy /MIR "%_demoSourceRoot%" "%_demoRoot%"
 call :echo_command - robocopy
 call %$_cmdT%
-if errorlevel 1 set $_errorCode=%ERRORLEVEL%& call :fatal_error "copying to '%_demoRoot%' failed " & exit /b !$_errorCode!
-
+if errorlevel 2 set $_errorCode=%ERRORLEVEL%& call :fatal_error copying to '%_demoRoot%' failed & exit /b !$_errorCode!
 pushd "%_demoRoot%"
 call :echo_action Copying CatalogExtractionTool package...
 set $_cmdT=copy /y "%_srcCatXToolZip%" "%_demoRoot%\Tools\CatalogExtraction\"
-call :echo_command - copy
+call :echo_command - copy package
 call %$_cmdT%
 
 :run_demos
-call :run_demo vcpkg vcpkg1
-call :run_demo CatalogExtraction cx1
-call :run_demo CloudBuild cb1
-call :run_demo VSBuildTools vs1
+for %%d in (%_listDemosToRun%) do (
+    call :run_demo %%d
+)
 popd
 
 :summary
@@ -65,17 +85,22 @@ goto :done
 :initialize
 @rem Common variables
 set $_name=%~n0
-set $_command='%_name%'
-if "%*" NEQ "" set _command='%_name% %*'
+set $_command=%$_name%
+if "%*" NEQ "" set _command=%$_name% %*
 call :get_timestamp
 @rem Logging variables
-set $_logBase=%_name%
-set $_logDir=%USERPROFILE%\Temp\Logs\AcquireMSBuild-Demos\%_logBase%.%$_timestamp%
-set $_logFile=%$_logDir%\%_name%.full.log
+set $_logBase=%$_name%
+set $_logDir=%USERPROFILE%\Temp\Logs\AcquireMSBuild-Demos\%$_logBase%.%$_timestamp%
+set $_logFile=%$_logDir%\%$_name%.full.log
 @rem Script-specific vars
-set _demoRootDefault=C:\Temp
+set _demoRootDefault=C:\Demo
 set _demoRoot=
-set _listDemos=CatalogExtraction CloudBuild vcpkg VSBuildTools
+set _demoSourceRoot=%~dp0
+set _demoSourceRoot=%_demoSourceRoot:~,-1%
+set _listDemoOptions=CatalogExtraction CloudBuild vcpkg VSBuildTools
+set _listDemosToRun=
+set _listDemosDefault=CatalogExtraction CloudBuild VSBuildTools
+set _listDemos=
 set _srcCatXToolZip=\\markle-d1\c$\Users\markle\OneDrive - Microsoft\Work\ToolsetAcquisition\CatalogExtraction\Demo\Tools\CatalogExtraction\CatalogExtractionTool-3.6.28.zip
 exit /b 0
 
@@ -83,21 +108,31 @@ exit /b 0
 setlocal
 set _demoID=%~1
 set _demoDir=%~2
-if "%_demoID%" == "" set _errorMsg=run_demo: no demo ID specified, cannot run demo& set _errorCode=-20& call :error & exit /b !_errorCode!
-if "%_demoDir%" == "" set _errorMsg=run_demo: no demo directory specified, cannot run demo& set _errorCode=-21& call :error & exit /b !_errorCode!
-set _outputLog=%$_logDir%\output.%_demoID%.%_timestamp%.log
+if "%_demoID%" == "" set $_errorCode=-100& call :echo_error directory no demo ID specified, cannot run demo & exit /b !$_errorCode!
+if "%_demoDir%" == "" set _demoDir=%_demoID%
 pushd "%_demoRoot%"
 call :echo_info Running %_demoID% demo...
+call :set_demo_color_scheme %_demoID%
 call :echo_action - cleaning demo tree...
-call clean-demo.cmd >> %_outputLog% 2>&1
+call clean-demo.cmd 
 call :echo_action - cloning solution into directory '%_demoDir%'...
-call clone-repo.cmd %_demoDir% >> %_outputLog% 2>&1
+call clone-repo.cmd %_demoDir%
 call :echo_action - bootstrapping %_demoID%...
-call "%_demoRoot%\bootstrap-environment.cmd" %_demoID% >> %_outputLog% 2>&1
+call "%_demoRoot%\bootstrap-environment.cmd" %_demoID%
 call :echo_action - build solution and run...
-call "%_demoRoot%\build-and-run.cmd" >> %_outputLog% 2>&1
+call "%_demoRoot%\build-and-run.cmd"
 popd
 endlocal
+exit /b 0
+
+:set_demo_color_scheme
+set _idT=%~1
+set _demoColorSchemes=CatalogExtraction:30 CloudBuild:20 vcpkg:60 VSBuildTools:a0
+for %%s in (%_demoColorSchemes%) do (
+    for /f "tokens=1,2 delims=:" %%i in ('echo %%s') do (
+        if /I "%%i" == "%_idT%" color %%j
+    )
+)
 exit /b 0
 
 @rem Utility functions
@@ -109,10 +144,17 @@ set _tt=%_tt::=-%
 set $_timestamp=%_yyyy%-%_mm%-%_dd%-%_tt%
 exit /b 0
 
+:fatal_error
+set _msgId=FATAL__
+set _msgErrCode=fatal error %$_errorCode%:
+goto :echo_time_message
 :echo_error
 set _msdId=ERROR__
+set _msgErrCode=error %$_errorCode%:
+goto :echo_time_message
 :echo_command
 set _msgId=COMMAND
+set _msgShowCommand=true
 goto :echo_time_message
 :echo_action
 set _msgId=ACTION_
@@ -121,15 +163,18 @@ goto :echo_time_message
 set _msgId=INFO___
 goto :echo_time_message
 :echo_time_message
-set _time=%TIME:~,8%
-set _time=%_time: =0%
-set _msg=[%_time% %_msgId%] %*
+set _msgTime=%TIME:~,8%
+set _msgTime=%_msgTime: =0%
+set _msgPrefix=[%_msgTime% %_msgId%]
 goto :echo_message
 :echo_message
+set _msg=%*
+if "%_msgErrCode%" NEQ "" set _msg=%_msgErrCode% %_msg%
+if "%_msgShowCommand%" == "true" set _msg=%_msg% (%$_cmdT%)
+set _msg= %_msgPrefix% %_msg%
 echo %_msg%
-if "%_msgID%" == "COMMAND" if "%$_cmdT%" NEQ "" set _msg=%_msg% (%$_cmdT%)
 if "%$_logFile%" NEQ "" echo %_msg%>>"%$_logFile%"
-set _msgId=& set _msg=& set _time=
+for /f "tokens=1 delims==" %%v in ('set _msg') do set %%v=
 goto :eof
 
 :done
